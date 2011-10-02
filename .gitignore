@@ -1,0 +1,16 @@
+# .gitignore
+
+# OS noise
+.svn
+.DS_Store
+profile
+*.tmproj
+.buildpath
+.project
+.settings
+.settings/*
+
+# no db info
+application/configs/application.ini
+library/Zend/*
+
