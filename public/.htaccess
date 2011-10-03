@@ -1,8 +1,9 @@
+AddHandler php5-script .php
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^.*$ - [NC,L]
-RewriteRule ^.*$ index.php [NC,L]
+RewriteRule ^.*$ index.php [NC,L] 
 RewriteRule ^(\w+)/(\w+)/?$ /#/$1/$2/ [NE,R,L] 

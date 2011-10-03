@@ -55,10 +55,9 @@ mainController.change 	= function ($e){
 			*
 			*	"/" OR "" 	= mainController.homeHandler()
 			* 	"learn"		= mainController.defaultHandler()
-			*	"news"		= newsManager.change()
-			*	"schedule"	= mainController.defaultHanlder()	
-			*	"photos"	= photosManager.change()
-			*	"map"		= mainController.mapHandler()
+			*	"campaign"	= newsManager.change()
+			*	"contact"	= mainController.defaultHanlder()	
+			*	"shipping"		= mainController.mapHandler()
 			*	"video"		= mainController.videoHandler()
 			*
 			//*****************************************************/           
