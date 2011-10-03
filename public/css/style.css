@@ -246,7 +246,6 @@ h1{
 	margin: 0 auto;
 }
 #main{
-	overflow: auto;
 	padding-bottom: 88px;
 }
 a,a:hover, a:active, a:focus {
