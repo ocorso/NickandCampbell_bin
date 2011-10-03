@@ -12,5 +12,6 @@ profile
 
 # no db info
 application/configs/application.ini
+library/Zend
 library/Zend/*
 html
