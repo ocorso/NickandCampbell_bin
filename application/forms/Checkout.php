@@ -2,7 +2,20 @@
 
 class Application_Form_Checkout extends Zend_Form
 {
-
+	//http://www.zend.com//code/codex.php?ozid=1320&single=1
+// From a previous HTML Form, pass the following fields: 
+// $FirstName = Customer's First Name 
+// $LastName = Customer's Last Name 
+// $Address = Customer's Address 
+// $City = Customer's City 
+// $State = Customer's State (Should be 2 letter code, CA, AZ, etc.) 
+// $Zip = Customer's Zip Code 
+// $Email = Customer's Email Address 
+// $cost = Total Price of purchase 
+// $CardNum = Customer's Credit Card Number 
+// $Month = Customer's Credit Card Expiration Month (Should be 01, 02, etc.) 
+// $Year = Customer's Credit Card Expiration Year (Should be 2003, 2004, etc.) 
+	
     public function init()
     {
 		$this->setMethod("post");
@@ -61,13 +74,13 @@ class Application_Form_Checkout extends Zend_Form
 		
 		));
 		
-		//state
-		$this->addElement('select','state',array(
-			'label'		=> 	'State:',
-			'required'	=>	true,
-			'options'	=> 	array('nj'=>'NJ')//todo: fill out data provider
+		$statesArr = array('AL'=>'Alabama','AK'=>'Alaska','AZ'=>'Arizona','AR'=>'Arkansas','CA'=>'California','CO'=>'Colorado','CT'=>'Connecticut','DE'=>'Delaware','DC'=>'District Of Columbia','FL'=>'Florida','GA'=>'Georgia','HI'=>'Hawaii','ID'=>'Idaho','IL'=>'Illinois', 'IN'=>'Indiana', 'IA'=>'Iowa',  'KS'=>'Kansas','KY'=>'Kentucky','LA'=>'Louisiana','ME'=>'Maine','MD'=>'Maryland', 'MA'=>'Massachusetts','MI'=>'Michigan','MN'=>'Minnesota','MS'=>'Mississippi','MO'=>'Missouri','MT'=>'Montana','NE'=>'Nebraska','NV'=>'Nevada','NH'=>'New Hampshire','NJ'=>'New Jersey','NM'=>'New Mexico','NY'=>'New York','NC'=>'North Carolina','ND'=>'North Dakota','OH'=>'Ohio','OK'=>'Oklahoma', 'OR'=>'Oregon','PA'=>'Pennsylvania','RI'=>'Rhode Island','SC'=>'South Carolina','SD'=>'South Dakota','TN'=>'Tennessee','TX'=>'Texas','UT'=>'Utah','VT'=>'Vermont','VA'=>'Virginia','WA'=>'Washington','WV'=>'West Virginia','WI'=>'Wisconsin','WY'=>'Wyoming'); 
+		$state = new Zend_Form_Element_Select('state');
+		$state->setLabel('State')
+		->setMultiOptions($statesArr)
+		->setRegisterInArrayValidator(false);
 		
-		));
+		$this->addElement($state);
 		
 		//zip
 		$this->addElement('text','zip',array(

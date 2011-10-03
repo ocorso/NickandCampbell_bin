@@ -6,6 +6,7 @@ class CheckoutController extends Zend_Controller_Action
     public function init()
     {
         /* Initialize action controller here */
+    	 require_once 'anet_php_sdk/AuthorizeNet.php'; 
     }
 
     public function indexAction()
