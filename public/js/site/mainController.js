@@ -43,11 +43,8 @@ mainController.change 	= function ($e){
 	
 	    //determine main nav
 		mainController.dlArr 		= $.address.pathNames()[0] ? $.address.pathNames() : ["/"];//set deeplink if you can
-		$('#main-nav li').removeClass('current-section');
-		//$('#bing-map-popup').hide();
-
-
-			 updateShare();
+		$('nav ul li a').removeClass('current-section');
+		$('#s_loader').show();
    			
     		/*****************************************************
 			* oc: EXPECTED PATHS FOR MAIN NAV:
@@ -65,14 +62,11 @@ mainController.change 	= function ($e){
             switch(mainController.dlArr[0]){
             
             	case "/":
-            	case "" : 			$('#l-0').addClass('current-section').focus(); vidManager.isDefault ? mainController.homeHandler() :  $.address.value("/home/"+vidManager.name); break;//if we wrote new vid, we're not at orig home
-               	case "news": 		$('#l-2').addClass('current-section').focus(); newsManager.change(); break;      	
-				case "photos": 		$('#l-4').addClass('current-section').focus(); photosManager.change(); break;
-				case "schedule": 	$('#l-3').addClass('current-section').focus(); mapManager.change(mainController.dlArr[0]); mainController.defaultHandler(); break;
-				case "map": 		$('#l-5').addClass('current-section').focus(); mapManager.change(mainController.dlArr[0]); mainController.defaultHandler(); break;
-				case "about":		$('#l-1').addClass('current-section').focus(); mainController.defaultHandler(); break;//located in mapManager.js
-				case "home":
-				case "video": 		$('#l-0').addClass('current-section').focus();mainController.videoHandler(); break;
+            	case "" : 			$('#l-0').addClass('current-section').focus(); mainController.homeHandler(); break;//if we wrote new vid, we're not at orig home
+            	case "learn":		$('#l-1').addClass('current-section').focus(); mainController.learnHandler(); break;//located in mapManager.js
+               	case "shop": 		$('#l-2').addClass('current-section').focus(); newsManager.change(); break;      	
+				case "campaign": 	$('#l-4').addClass('current-section').focus(); photosManager.change(); break;
+				case "contact": 	$('#l-3').addClass('current-section').focus(); mapManager.change(mainController.dlArr[0]); mainController.defaultHandler(); break;
             	default : log("deeplink unexpected path...");//add greater than 1 level depth handling here...;
 
             }//end switch
@@ -86,120 +80,33 @@ mainController.change 	= function ($e){
 //oc: Handler for the Homepage initial display
 //*****************************************************
 mainController.homeHandler = function(){
-	//log("we're home, don't show overlay");
+	log("we're home");
 	
+	$('#s_loader, section').hide();
 	//hide main overlay
 	$('#overlay').hide();
 
 	//oc: resume previous state of the homepage
-	if (vidManager.isPlaying) {
-		jw ? jwplayer('jw').play() : vidManager.video.play();	
-	} else {
-		$('#home_overlay').fadeIn("slow");//show home overlay
-		if (vidManager.isDefault) {
-			log("is default vid");
-			$('#home_poster').fadeIn('slow');
-		}
-		//hide home overlay on play
-		$('.ghinda-video-play, #movie, #home_poster').click(mainController.disableHome);
+	$('#s_home').fadeIn("slow");//show home overlay
 
-		//show and make controls persistent 
-		$('#video-extras,#gallery-strip').show();
-		
-		$('.ghinda-video-player').removeClass('controls-hideable');
-	
-	}//end else
 
-	//hide overlay and sections
-	$('#overlay, .section').hide();
-	
-	//hide fancybox gallery photo if its open
-	$('#fancybox-close').trigger('click');
-	
 }//end function homeHandler
 
 //********************************************************************
 //oc: Default Handling for Main Nav ie: about, news, schedule
 //********************************************************************
-mainController.defaultHandler = function(){
+mainController.learnHandler = function(){
+	log("learn bang");
 	
-	//pause the vid.
-	jw ? jwplayer('jw').pause(true) : vidManager.video.pause(); 
-
+	$('section').hide();
 	//show main overlay
 	mainController.showOverlay();
 	
-	//close fancebox
-	$('#fancybox-close').trigger('click');
+	//$('#s_learn').show('slow');
 	
 }//end function defaultHandler
 
 
-//*****************************************************
-//oc: Handler for a single video
-//*****************************************************
-mainController.videoHandler = function(){
-	log("videoHandler: "+ mainController.dlArr[1]);
-	
-	//oc: todo: find the title and location using the name;
-	var t 					= $('#video_'+ mainController.dlArr[1]); 
-	vidManager.curLocation 	= t.attr("title");
-	vidManager.curTitle 	= t.find('a').attr("title");	
-	vidManager.isDefault	= false;
-	
-	//set vidManager.curDuration 
-	if (vidManager.vidArr){
-
-		log("we're at a video: "+ vidManager.name );
-		$.each(vidManager.vidArr, function($i, $o) { 
-  			if ($o.link == mainController.dlArr[1]) vidManager.curDuration = $o.duration;
-		});//if name in video array matches our deeplink, update vidManager.curDuration
-
-		
-	}//end if we can set vidManager.curDuration
-	
-	$('#video-title h4').text(vidManager.curTitle);
-	$('#video-title h5').text(vidManager.curLocation);
-	
-	//hide main overlay
-	$('#overlay').hide();
-	
-	//hide home_overlay
-	$('#home_overlay, #home_poster').hide();
-	
-	//enable controls show/hide behavior
-	$('.ghinda-video-player').addClass('controls-hideable');
-	
-	if (vidManager.name != mainController.dlArr[1]) {
-		log("video changed!");
-		vidManager.name = mainController.dlArr[1];
-	
-		var file = vidManager.name + '.mp4';
-
-		//if we have flash, call jwplayer.load, 		if we have Html5, write new div
-		if (jw){
-			var newFile = vidManager.cdnPrefix + file;
-			
-			jwplayer('jw').load(newFile);
-			//re-init video
-			//$('#movie').gVideo();
-			vidManager.createSeek();
-		}else {
-			 mainController._writeNewVideo(vidManager.name);
-		}		
-
-	}//end if the current video has been changed.
-		
-	////play if appropriate
-	if(mainController.dlArr[0] != "home"){
-
-		vidManager.isPlaying = true;
-		jw ? jwplayer('jw').play() : vidManager.video.play();
-	} else {
-		mainController.enableHome();
-	}
-	
-}//end function videoHandler
 
 //*****************************************************
 //oc: Utility
