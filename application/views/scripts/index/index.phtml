@@ -1,14 +1,52 @@
+<?php 
+	$totalLookbookPages = 10;
+	$campaignDivWidth	= $totalLookbookPages*1024;
+?>
 <div id="main" role="main">
 	<div id="s_loader" >
 		<img src="img/loader/ajax-loader.gif" />
 	</div>
+	
+	
 	<section id="s_home" style="display:none">
 		<img width="1024" height="619" src="img/slides/f1.jpg" />
 	</section>
+	
+	
 	<section id="s_learn" style="display:none">
-		<h1>Learn</h1>
-		<p>ABOUT NICK + CAMPBELL</p>
-		<p>After 10 years – a rarity – in the cutthroat world of modeling, Nicholas Lemons finds himself in the enviable position of being one of the most sought after faces in the industry. As the face of numerous luxury fashion brands around the globe. Nicholas has spent years being fit by mastor tailors and thus has developed an innate sense of how garments should fit, feel and look on the body. With Nick + Campbell, Nicholas now brings forth his vision for the every foundation of a well-dressed gentleman’s wardrobe: his underwear.  Using natural fibers such as cotton and sustainable bamboo, Nick + Campbell offers four distinct cuts that move with the body and offer the utmost degree of comfort.</p>
+		<div class="sidebar">
+			<h1>Learn</h1>
+			<img src="img/learn/crest.png" alt="Nick and Campbell Crest" />
+		</div>
+		<div style="display:none;" class="section-content">
+			<h2>ABOUT NICK + CAMPBELL</h2>
+			<p>After 10 years – a rarity – in the cutthroat world of modeling, Nicholas Lemons finds himself in the enviable position of being one of the most sought after faces in the industry. As the face of numerous luxury fashion brands around the globe. Nicholas has spent years being fit by mastor tailors and thus has developed an innate sense of how garments should fit, feel and look on the body. With Nick + Campbell, Nicholas now brings forth his vision for the every foundation of a well-dressed gentleman’s wardrobe: his underwear.  Using natural fibers such as cotton and sustainable bamboo, Nick + Campbell offers four distinct cuts that move with the body and offer the utmost degree of comfort.</p>
+			<img class="right" src="img/learn/nick.jpg" alt="Nicholas Lemons" />
+		</div>
+	</section>
+	
+	<section id="s_campaign" style="display:none">
+		<div id="lookbook_container" style="width: <?= $campaignDivWidth; ?>;">
+			<?php for($i=1;$i<=$totalLookbookPages ;$i++): ?>
+			<img src="img/lookbook/<?= $i; ?>.jpg" alt="Nick and Campbell Lookbook Page <?= $i; ?>" />
+			<?php endfor; ?>
+		</div>	
+	</section>
+	
+	
+	<section id="s_contact" style="display:none">
+		<div class="sidebar">
+			<h1>Contact</h1>
+			<img src="img/learn/crest.png" alt="Nick and Campbell Crest" />
+		</div>
+		<div class="section-content">
+			<h2>Contact Us Today</h2>
+			<h4>info@nickandcampbell.com</h4>	
+			<h4>office.917.328.6408</h4>	
+			<h4>inquiries welcome</h4>	
+			<?= $this->contactForm; ?>
+			<div class="clearfix"></div>
+		</div>
 	</section>
 	<div id='overlay'></div>
 </div>

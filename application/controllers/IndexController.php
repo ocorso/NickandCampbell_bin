@@ -10,7 +10,13 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
+        $contactForm				= new Application_Form_Contact();
+        $contactForm->setAction("/contact");
+        $this->view->contactForm	= $contactForm;
+    }
+    public function shopAction()
+    {
+ 		echo "hey dog";
     }
 
 

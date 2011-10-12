@@ -222,6 +222,9 @@ h1, h2,h3,h4,h5,p, a, form{
 /* =============================================================================
    @Global
    ========================================================================== */
+.left{float:left;}
+.right{float:right;}
+
 html{
 	height: 100%;
 }
@@ -312,6 +315,77 @@ nav ul li a:hover, .current-section{
 	overflow:hidden;
 }
 /* =============================================================================
+   @Sections
+   ========================================================================== */
+.sidebar{
+	float:left;
+	width: 243px;
+}
+.sidebar h1{
+	margin-bottom: 20px;
+}
+.section-content{
+	float:left;
+	width: 781px;
+	
+}
+#s_learn p{
+	width: 500px;
+	float: left;
+	font-size: 20px;
+}
+/* =============================================================================
+   @Campaign
+   ========================================================================== */
+#s_campaign{
+	height: 683px;
+	position: relative;
+	overflow: hidden;
+}
+#lookbook_container{
+	position: absolute;
+	left: 0px;
+}
+#s_campaign img{
+	float:left;
+}
+.arrow{
+	position: absolute;	
+	top: 256px;
+	width: 96px;
+	height: 96px;
+	cursor: pointer;
+	display:none;
+}
+#prev_arrow{
+	background: url('../img/icons/prev.png');
+}
+#next_arrow{
+	background: url('../img/icons/next.png');
+	right: 0;
+}
+/* =============================================================================
+   @Contact
+   ========================================================================== */
+#s_contact h2{
+	color: #999999 ;
+	font-size: 62px;
+	font-weight: normal;
+	text-align: center;
+	margin: 0;
+}
+#s_contact h4{
+	color: #fff ;
+	font-size: 34px;
+	font-weight: normal;
+	text-align: center;
+	margin: 0;
+}
+#s_contact form{
+	margin-top: 50px;
+	margin-left: 100px;
+}
+/* =============================================================================
    @Footer
    ========================================================================== */
 ie6#container, ie8#container{
@@ -370,13 +444,40 @@ form{
 	color: #aaa;
 }
 input{
-	border-color: white;
+	border-color: #333;
 	border-style: solid;
 	border-width: 1px;
 	background-color: #000;
 	color: #aaa;
 	margin: 3px;
-	height: 20px;
+	height: 26px;
+}
+textarea{
+	background: none repeat scroll 0 0 black;
+	border: 1px solid #333;
+	overflow: auto;
+	vertical-align: top;
+	height: 128px;
+	margin-top: 10px;
+}
+input, textarea{
+	width: 250px;
+}
+.form-label{
+	float:left;
+	width: 180px;
+	color: #666666;
+	font-size: 34px;
+	line-height: 30px;
+	text-align: right;
+	margin-right: 30px;
+}
+dd{
+	margin-left: 150px;
+	line-height: 45px;
+}
+#submit-element{
+	margin-left: 207px;
 }
 /* =============================================================================
    @Home
@@ -386,6 +487,7 @@ h4{
 	font-size: 46px;
 	font-weight: normal;
 	text-align: center;
+	margin: 0;
 }
 /* =============================================================================
    Non-semantic helper classes

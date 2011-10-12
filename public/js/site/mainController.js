@@ -3,28 +3,25 @@ var mainController 				= {};//object to hold all deeplink data
 mainController.which_content 	= "";//overlay to show
 mainController.dlArr			= [];//array of deeplinks
 
+var shopController				= {};
+var campaign					= {};
+
 //*****************************************************
-//oc: Address Change Handler Function
+//oc: Address Change Handler Functions
 //*****************************************************
 mainController.init 	= function (){
-	log("main init");
-			    
-			
-			mainController.config();
-			mainController.change();
-
-}//end init
-
-mainController.config = function (){
 	
-	log("config site");
+	log("init site");
 	
 	$.address.init(function(){})
-	.change(mainController.change)//end address change function
-	.internalChange(mainController.inChange)
-	.externalChange(mainController.exChange);
+	.change(mainController.change);//end address change function
+	//.internalChange(mainController.inChange)
+	//.externalChange(mainController.exChange);
 	
-}//end function config
+	//browser resize
+	$(window).resize(mainController.handleResize);
+	
+}//end init
 
 mainController.inChange 	= function ($e){
 	log("internal change");
@@ -54,8 +51,8 @@ mainController.change 	= function ($e){
 			* 	"learn"		= mainController.defaultHandler()
 			*	"campaign"	= newsManager.change()
 			*	"contact"	= mainController.defaultHanlder()	
-			*	"shipping"		= mainController.mapHandler()
-			*	"video"		= mainController.videoHandler()
+			*	"shipping"	= mainController.mapHandler()
+			*	"returns"	= mainController.videoHandler()
 			*
 			//*****************************************************/           
             
@@ -64,9 +61,9 @@ mainController.change 	= function ($e){
             	case "/":
             	case "" : 			$('#l-0').addClass('current-section').focus(); mainController.homeHandler(); break;//if we wrote new vid, we're not at orig home
             	case "learn":		$('#l-1').addClass('current-section').focus(); mainController.learnHandler(); break;//located in mapManager.js
-               	case "shop": 		$('#l-2').addClass('current-section').focus(); newsManager.change(); break;      	
-				case "campaign": 	$('#l-4').addClass('current-section').focus(); photosManager.change(); break;
-				case "contact": 	$('#l-3').addClass('current-section').focus(); mapManager.change(mainController.dlArr[0]); mainController.defaultHandler(); break;
+               	case "shop": 		$('#l-2').addClass('current-section').focus(); shopController.change(); break;      	
+				case "campaign": 	$('#l-4').addClass('current-section').focus(); campaign.change(); break;
+				case "contact": 	$('#l-3').addClass('current-section').focus(); mainController.contactHandler(); break;
             	default : log("deeplink unexpected path...");//add greater than 1 level depth handling here...;
 
             }//end switch
@@ -93,16 +90,25 @@ mainController.homeHandler = function(){
 }//end function homeHandler
 
 //********************************************************************
-//oc: Default Handling for Main Nav ie: about, news, schedule
+//oc: Learn Handler
 //********************************************************************
 mainController.learnHandler = function(){
-	log("learn bang");
+
+	//hide stuff
+	$('#s_loader, #s_learn .section-content, section').hide();
+	//show learn elements the way i want.
+	$('#s_learn').show('slow', function(){$('#s_learn .section-content').fadeIn('fast');});
 	
-	$('section').hide();
-	//show main overlay
-	mainController.showOverlay();
 	
-	//$('#s_learn').show('slow');
+}//end function defaultHandler
+//********************************************************************
+//oc: Contact Handler
+//********************************************************************
+mainController.contactHandler = function(){
+	log("contact bang");
+	
+	$('#s_loader, #s_contact .section-content, section').hide();
+	$('#s_contact').show('slow', function(){$('#s_contact .section-content').fadeIn('fast');});
 	
 }//end function defaultHandler
 
@@ -111,35 +117,6 @@ mainController.learnHandler = function(){
 //*****************************************************
 //oc: Utility
 //*****************************************************
-mainController._writeNewVideo = function ($v){
-log("name of vid: "+ $v);
-
-	$('#movie,.ghinda-video-controls').remove();
-	$('#video-extras').append("<div class=\"ghinda-video-controls\">" +
-											"<a class=\"ghinda-video-play\" title=\"Play/Pause\"></a>" +
-											"<div class=\"ghinda-video-seek\"></div>" +
-											"<div class=\"ghinda-video-timer\">00:00</div>" +
-											"<div class=\"ghinda-volume-box\">" +
-												"<div class=\"ghinda-volume-slider\"></div>" +
-													"<a class=\"ghinda-volume-button\" title=\"Mute/Unmute\"></a>" +
-												"</div>" +
-											"</div>");
-	$('.ghinda-video-player').prepend("<video id=\"movie\" class=\"change\" poster='images/video-posters/"+$v+"-poster.jpg' preload controls >" +
-													"<source src=\""+ vidManager.cdnPrefix + $v + ".mp4\" />" + 
-													"<source src=\""+ vidManager.cdnPrefix + $v + ".webm\" />" + 
-													"<source src=\""+ vidManager.cdnPrefix + $v + ".ogv\" />" + 
-												"</video>");
-	
-	//set newly created vid to our global var
-	vidManager.video = document.getElementsByTagName('video')[0];
-	
-	//re-init video
-	$('#movie').gVideo();
-	
-	//resize now that we manipulated the DOM
-	windowSize();
-	
-}//end function writeNewVideo
 
 //
 //this function shows the main content overlay and div 
@@ -173,56 +150,7 @@ mainController.showOverlay = function (){
 	}//end show proper .section
 
 }//end function show overlay
+mainController.handleResize 	= function ($e){
+	log('resize');
+}	
 
-//
-//this function removes the home page presentation layer attributes
-//
-mainController.disableHome = function ($e){
-
-	$('#home_overlay, #home_poster').hide(); 
-	$('.ghinda-video-player').addClass('controls-hideable');
-	vidManager.isPlaying = true;
-	
-	//play vid if poster_image was clicked
-	if ($(this).attr('id') == "home_poster") 
-		jw ? jwplayer('jw').play() : vidManager.video.play();
-	
-	//ored: hide controls and carousel on play.
-	if (isiPad){
-		$('#video-extras, #gallery-strip').hide();
-	}
-	//change home deeplink to video
-	if (mainController.dlArr[0] == "home") $.address.value("/video/"+vidManager.name)
-	
-	
-	
-}//end function disableHome
-
-mainController.enableHome = function ($e){
-
-	log("enable home");
-	
-	//pause the vid.
-	jw ? jwplayer('jw').pause(true) : vidManager.video.pause(); 
-	vidManager.isPlaying = false;
-	mainController.homeHandler();
-
-}//end function enableHome
-
-
-function updateShare(){
-
-		var url_location = $.address.baseURL() + $.address.path();
-		
-		$('footer a').attr("target","_blank");
-		
-		//twitter
-		$('#l-s-a').attr("href",'http://twitter.com/home?status=My%20Decision' + url_location +'&t=My%20Decision')
-
-		// fb
-		$('#l-s-b').attr("href",'http://www.facebook.com/sharer.php?u=' + url_location +'&t=My%20Decision');
-
-		// delicious
-		$('#l-s-c').attr("href",'http://del.icio.us/post?url=' + url_location + '&title=My%20Decision');
-
-}
