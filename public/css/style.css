@@ -362,7 +362,7 @@ nav ul li a:hover, .current-section{
 }
 #next_arrow{
 	background: url('../img/icons/next.png');
-	right: 0;
+	left: 928px;
 }
 /* =============================================================================
    @Contact

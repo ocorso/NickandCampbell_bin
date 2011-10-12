@@ -29,10 +29,10 @@ campaign.nextHandler = function($e){
 	
 	//make sure they don't keep clicking
 	campaign.removeListeners();
-	log("current left value: "+ $('#lookbook_container').css('left') );
 	//find new offset
-	var offset = $('#lookbook_container').css('left') -1024;
+	var offset = parseInt($('#lookbook_container').css('left')) - 1024;
+	log("offset: "+offset );
 	
 	//go
-	$('#lookbook_container').animate({'left':offset}, campaign.onAnimateIn);
+	$('#lookbook_container').animate({'left':offset});
 }//end next handler
