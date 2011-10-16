@@ -21,6 +21,7 @@ mainController.init 	= function (){
 	//browser resize
 	$(window).resize(mainController.handleResize);
 	
+	campaign.init();
 }//end init
 
 mainController.inChange 	= function ($e){
@@ -151,6 +152,7 @@ mainController.showOverlay = function (){
 
 }//end function show overlay
 mainController.handleResize 	= function ($e){
-	log('resize');
+	log('resize. window width: '+window.width);
+
 }	
 

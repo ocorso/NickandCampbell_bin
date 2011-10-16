@@ -6,7 +6,9 @@ campaign.change = function (){
 
 campaign.init = function (){
 	//todo: create a horizontal viewing system.
-	campaign.curPage = mainController.dlArr[1];
+	campaign.curPage 	= mainController.dlArr[1];
+	campaign.leftOffset	=  parseInt($('#lookbook_container').css('left'));
+	log("campaign init, left offset: "+campaign.leftOffset);
 }
 
 campaign.onAnimateIn = function(){
@@ -18,6 +20,7 @@ campaign.onAnimateIn = function(){
 	);
 	
 	$('#next_arrow').bind('click', campaign.nextHandler);
+	$('#prev_arrow').bind('click', campaign.prevHandler);
 }
 
 campaign.removeListeners = function(){
@@ -30,9 +33,21 @@ campaign.nextHandler = function($e){
 	//make sure they don't keep clicking
 	campaign.removeListeners();
 	//find new offset
-	var offset = parseInt($('#lookbook_container').css('left')) - 1024;
-	log("offset: "+offset );
+	campaign.leftOffset -= 1024;
+	log("offset: "+campaign.leftOffset );
 	
 	//go
-	$('#lookbook_container').animate({'left':offset});
+	$('#lookbook_container').animate({'left':campaign.leftOffset});
 }//end next handler
+campaign.prevHandler = function($e){
+	log ("prevClick");
+	
+	//make sure they don't keep clicking
+	campaign.removeListeners();
+	//find new offset
+	campaign.leftOffset += 1024;
+	log("offset: "+campaign.leftOffset );
+	
+	//go
+	$('#lookbook_container').animate({'left':campaign.leftOffset});
+}//end prev handler

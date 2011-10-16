@@ -258,6 +258,9 @@ section, #s_loader{
 	width: 1024px;
 	height: 619px;
 }
+.sidebar img{
+	margin-top: 20px;
+}
 /* =============================================================================
    @Header
    ========================================================================== */
@@ -333,6 +336,49 @@ nav ul li a:hover, .current-section{
 	width: 500px;
 	float: left;
 	font-size: 20px;
+}
+/* =============================================================================
+   @Shop
+   ========================================================================== */
+#shop_sidenav{
+	background-color: #ccc;
+	text-align: right;
+	padding-right: 13px;
+	padding-bottom: 13px;
+	border-right: solid 1px black;
+}
+#shop_sidenav ul, #shop_sidenav h2{
+	padding-left: 0;
+	margin: 0;
+}
+#shop_sidenav h2 a, #shop_sidenav h2 a:visited {
+	color: #999;
+	font-size: 34px;
+	text-decoration: none;
+	font-weight: lighter;
+}
+#shop_sidenav li a, #shop_sidenav li a:visited {
+	color: #333;
+	font-size: 26px;
+	text-decoration: none;
+}
+.sidebar h3{
+	font-size: 34px;
+	color: #999;
+	text-align: right;
+	margin: 0;
+	line-height: 26px;
+	font-weight: lighter;
+}
+#shop_grid{
+	background-color: #ccc;
+	float: left;
+	width: 100%;
+	
+}
+.product{
+	display: inline-block;
+	float: left;
 }
 /* =============================================================================
    @Campaign
