@@ -1,7 +1,3 @@
-<?php 
-	$totalLookbookPages = 10;
-	$campaignDivWidth	= $totalLookbookPages*1024;
-?>
 <div id="main" role="main">
 	<div id="s_loader" >
 		<img src="img/loader/ajax-loader.gif" />
@@ -40,7 +36,11 @@
 		</div>
 		<div style="display:none;" class="section-content">	
 			<div id="shop_grid">
-				<a class="product" href="#" title="Click to View">Classic Boxer Brief<img src="img/shop/products/product-1.png" /></a>
+				<div class="product">
+					<a href="#" title="Click to View"><img src="img/shop/products/product-1.png" /></a>
+					<a href="#" title="Click to View">Classic Boxer Brief</a>
+					<a href="#" title="Click to View">$19.95</a>
+				</div>
 			</div>
 			<img class="right" src="img/shop/shop-side.jpg" alt="Nick and Campbell Mens Underwear">
 			<div class="clearfix"></div>
@@ -48,8 +48,8 @@
 	</section>
 	
 	<section id="s_campaign" style="display:none">
-		<div id="lookbook_container" style="width: <?= $campaignDivWidth; ?>px;">
-			<?php for($i=1;$i<=$totalLookbookPages ;$i++): ?>
+		<div id="lookbook_container" style="width: <?= $this->campaignDivWidth; ?>px;">
+			<?php for($i=1;$i<=$this->totalLookbookPages ;$i++): ?>
 			<img src="img/lookbook/<?= $i; ?>.jpg" alt="Nick and Campbell Lookbook Page <?= $i; ?>" />
 			<?php endfor; ?>
 			<div class="clearfix"></div>

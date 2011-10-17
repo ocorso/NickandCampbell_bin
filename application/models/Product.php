@@ -4,14 +4,15 @@ class Application_Model_Product
 {
 	protected $_id;
 	protected $_name;
+	protected $_description;
 	protected $_style_num;
 	protected $_variation;
 	protected $_size;
-	protected $_price;
 	protected $_color;
-	protected $_description;
 	protected $_category;
 	protected $_gender;
+	protected $_weight;
+	protected $_price;
 	
 	public function __set($name, $value){
 		

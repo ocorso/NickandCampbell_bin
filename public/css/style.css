@@ -378,6 +378,12 @@ nav ul li a:hover, .current-section{
 }
 .product{
 	display: inline-block;
+	background-color: red;
+	text-align: center;
+	height: 200px;
+}
+.product a{
+	display: inline-block;
 	float: left;
 }
 /* =============================================================================

@@ -63,8 +63,8 @@ mainController.change 	= function ($e){
             	case "" : 			$('#l-0').addClass('current-section').focus(); mainController.homeHandler(); break;//if we wrote new vid, we're not at orig home
             	case "learn":		$('#l-1').addClass('current-section').focus(); mainController.learnHandler(); break;//located in mapManager.js
                	case "shop": 		$('#l-2').addClass('current-section').focus(); shopController.change(); break;      	
-				case "campaign": 	$('#l-4').addClass('current-section').focus(); campaign.change(); break;
-				case "contact": 	$('#l-3').addClass('current-section').focus(); mainController.contactHandler(); break;
+				case "campaign": 	$('#l-3').addClass('current-section').focus(); campaign.change(); break;
+				case "contact": 	$('#l-4').addClass('current-section').focus(); mainController.contactHandler(); break;
             	default : log("deeplink unexpected path...");//add greater than 1 level depth handling here...;
 
             }//end switch
