@@ -320,6 +320,7 @@ nav ul li a:hover, .current-section{
 /* =============================================================================
    @Sections
    ========================================================================== */
+section{ display: none;}
 .sidebar{
 	float:left;
 	width: 243px;
@@ -392,6 +393,12 @@ nav ul li a:hover, .current-section{
 #s_campaign{
 	height: 683px;
 	position: relative;
+}
+#lookbook_wrapper{
+	display: block;
+	height: 683px;
+	width: 1024px;
+	position: relative;
 	overflow: hidden;
 }
 #lookbook_container{
@@ -403,11 +410,10 @@ nav ul li a:hover, .current-section{
 }
 .arrow{
 	position: absolute;	
-	top: 256px;
+	top: 280px;
 	width: 96px;
 	height: 96px;
 	cursor: pointer;
-	display:none;
 }
 #prev_arrow{
 	background: url('../img/icons/prev.png');

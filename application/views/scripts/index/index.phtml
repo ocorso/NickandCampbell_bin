@@ -4,12 +4,12 @@
 	</div>
 	
 	
-	<section id="s_home" style="display:none">
+	<section id="s_home">
 		<img width="1024" height="619" src="img/slides/f1.jpg" />
 	</section>
 	
 	
-	<section id="s_learn" style="display:none">
+	<section id="s_learn">
 		<div class="sidebar">
 			<h1>Learn</h1>
 			<img src="img/learn/crest.png" alt="Nick and Campbell Crest" />
@@ -21,7 +21,7 @@
 			<div class="clearfix"></div>
 		</div>
 	</section>
-	<section id="s_shop" style="display:none">
+	<section id="s_shop">
 		<div class="sidebar">
 			<h1>Shop</h1>
 			<div id="shop_sidenav">
@@ -34,10 +34,13 @@
 			<h3>Womens Collection <br/> Coming Soon</h3>
 			<img src="img/learn/crest.png" alt="Nick and Campbell Crest" />
 		</div>
-		<div style="display:none;" class="section-content">	
-			<div id="shop_grid">
+		<div style="display:none;" class="section-content">
+			<div class="product-detail">
+				
+			</div>	
+			<div id="shop_grid" style="display:none;">
 				<div class="product">
-					<a href="#" title="Click to View"><img src="img/shop/products/product-1.png" /></a>
+					<a href="#" title="Click to View"><img src="img/shop/mens/underwear/thumbs/product-1.png" /></a>
 					<a href="#" title="Click to View">Classic Boxer Brief</a>
 					<a href="#" title="Click to View">$19.95</a>
 				</div>
@@ -47,19 +50,21 @@
 		</div>
 	</section>
 	
-	<section id="s_campaign" style="display:none">
+	<section id="s_campaign">
+	<div id="lookbook_wrapper">
 		<div id="lookbook_container" style="width: <?= $this->campaignDivWidth; ?>px;">
 			<?php for($i=1;$i<=$this->totalLookbookPages ;$i++): ?>
 			<img src="img/lookbook/<?= $i; ?>.jpg" alt="Nick and Campbell Lookbook Page <?= $i; ?>" />
 			<?php endfor; ?>
 			<div class="clearfix"></div>
 		</div>	
+	</div>
 		<div id="prev_arrow" class="arrow"></div>
 		<div id="next_arrow" class="arrow"></div>
 	</section>
 	
 	
-	<section id="s_contact" style="display:none">
+	<section id="s_contact">
 		<div class="sidebar">
 			<h1>Contact</h1>
 			<img src="img/learn/crest.png" alt="Nick and Campbell Crest" />
@@ -70,6 +75,40 @@
 			<h4>office.917.328.6408</h4>	
 			<h4>inquiries welcome</h4>	
 			<?= $this->contactForm; ?>
+			<div class="clearfix"></div>
+		</div>
+	</section>
+<!-- footer sections	-->
+	<section id="s_shipping">
+		<div class="sidebar">
+			<h1>Shipping</h1>
+			<img src="img/learn/crest.png" alt="Nick and Campbell Crest" />
+		</div>
+		<div class="section-content">
+			<h2>Please review our shipping policy</h2>
+			<p>Lorem ispson dolor</p>
+			<div class="clearfix"></div>
+		</div>
+	</section>
+	<section id="s_returns">
+		<div class="sidebar">
+			<h1>Returns</h1>
+			<img src="img/learn/crest.png" alt="Nick and Campbell Crest" />
+		</div>
+		<div class="section-content">
+			<h2>Please review our returns policy</h2>
+			<p>Lorem ispson dolor</p>
+			<div class="clearfix"></div>
+		</div>
+	</section>
+	<section id="s_sitemap">
+		<div class="sidebar">
+			<h1>Sitemap</h1>
+			<img src="img/learn/crest.png" alt="Nick and Campbell Crest" />
+		</div>
+		<div class="section-content">
+			<h2>Here is our sitemap</h2>
+			<p>Lorem ispson dolor</p>
 			<div class="clearfix"></div>
 		</div>
 	</section>

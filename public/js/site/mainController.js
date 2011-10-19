@@ -13,15 +13,19 @@ mainController.init 	= function (){
 	
 	log("init site");
 	
+	//enable deeplinking
 	$.address.init(function(){})
 	.change(mainController.change);//end address change function
 	//.internalChange(mainController.inChange)
 	//.externalChange(mainController.exChange);
 	
+	//init sections
+	shopController.init();
+	campaign.init();
+	
 	//browser resize
 	$(window).resize(mainController.handleResize);
 	
-	campaign.init();
 }//end init
 
 mainController.inChange 	= function ($e){
@@ -65,6 +69,9 @@ mainController.change 	= function ($e){
                	case "shop": 		$('#l-2').addClass('current-section').focus(); shopController.change(); break;      	
 				case "campaign": 	$('#l-3').addClass('current-section').focus(); campaign.change(); break;
 				case "contact": 	$('#l-4').addClass('current-section').focus(); mainController.contactHandler(); break;
+				case "shipping": 
+				case "returns":
+				case "sitemap": mainController.defaultHandler(mainController.dlArr[0]); break;
             	default : log("deeplink unexpected path...");//add greater than 1 level depth handling here...;
 
             }//end switch
@@ -111,48 +118,32 @@ mainController.contactHandler = function(){
 	$('#s_loader, #s_contact .section-content, section').hide();
 	$('#s_contact').show('slow', function(){$('#s_contact .section-content').fadeIn('fast');});
 	
-}//end function defaultHandler
+}//end function contactHandler
 
-
+//********************************************************************
+//oc: Default Handler
+//********************************************************************
+mainController.defaultHandler 	= function ($whichSection){
+	
+	var section = "#s_" + $whichSection;
+	log("defaultHandler: "+section);
+	
+	$('#s_loader, section, '+ section+' .section-content').hide();
+	$(section).show('slow', function(){$("#s_"+mainController.dlArr[0] +' .section-content').fadeIn('fast');});
+	
+}//end function
 
 //*****************************************************
 //oc: Utility
 //*****************************************************
 
-//
-//this function shows the main content overlay and div 
-//
-mainController.showOverlay = function (){
-	
-	//hide home_overlay
-	$('#home_overlay, #home_poster, #video-extras, #gallery-strip').hide();
-	
-	mainController.which_content 	= "#content-" + mainController.dlArr[0];
-
-	if ($('#overlay').is(':hidden'))	$('#overlay').fadeIn();
-	if ($(mainController.which_content).is(':hidden'))	{
-		$('.section').hide();
-		$(mainController.which_content).fadeIn(300,function(){
-		
-			//bring in maps now that their able to have focus
-			mapManager.init();
-		 	
-		 	//oc: custom scrollbars
-		 	$('.scroll-pane').jScrollPane({showArrows: true});//oc: autoReinitialise: true to do all the time  
-
-			//oc: init gallery hoverscroll
-			$('.photos').hoverscroll({
-				width: '720',
-				height: '60',
-				debug:false//debug:true
-			});
-
-	});
-	}//end show proper .section
-
-}//end function show overlay
 mainController.handleResize 	= function ($e){
-	log('resize. window width: '+window.width);
+	var w		= window.innerWidth;
+	log('resize. window width: '+w);
+	if (w > 1024 + 96* 2){
+//		$('#prev_arrow').animate({left: "-96px"});
+//		$('#next_arrow').animate({right: "-96px"});
+	}
 
 }	
 
