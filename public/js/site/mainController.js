@@ -75,7 +75,8 @@ mainController.change 	= function ($e){
             	default : log("deeplink unexpected path...");//add greater than 1 level depth handling here...;
 
             }//end switch
-	
+    		$('nav ul li a:not(.current-section)').unbind().hover(function(){$(this).addClass('current-section');},function(){$(this).removeClass('current-section');});
+
 	
 }//end address change function
 

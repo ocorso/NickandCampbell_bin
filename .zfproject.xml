@@ -10,15 +10,26 @@
       <controllersDirectory>
         <controllerFile controllerName="Index">
           <actionMethod actionName="index"/>
+          <actionMethod actionName="shop"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Checkout">
           <actionMethod actionName="index"/>
+          <actionMethod actionName="test"/>
         </controllerFile>
         <controllerFile controllerName="Contact">
           <actionMethod actionName="index"/>
         </controllerFile>
         <controllerFile controllerName="ShoppingCart">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+        <controllerFile controllerName="Shop">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+        <controllerFile controllerName="Learn">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+        <controllerFile controllerName="Product">
           <actionMethod actionName="index"/>
         </controllerFile>
       </controllersDirectory>
@@ -34,7 +45,41 @@
         <modelFile modelName="ProductMapper"/>
         <modelFile modelName="Product"/>
       </modelsDirectory>
-      <modulesDirectory enabled="false"/>
+      <modulesDirectory>
+        <moduleDirectory moduleName="Shop">
+          <apisDirectory enabled="false"/>
+          <configsDirectory enabled="false"/>
+          <controllersDirectory>
+            <controllerFile controllerName="Mens">
+              <actionMethod actionName="index"/>
+              <actionMethod actionName="underwear"/>
+            </controllerFile>
+            <controllerFile controllerName="Womens">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+          </controllersDirectory>
+          <formsDirectory enabled="false"/>
+          <layoutsDirectory enabled="false"/>
+          <modelsDirectory>
+            <dbTableDirectory enabled="false"/>
+          </modelsDirectory>
+          <viewsDirectory>
+            <viewScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Mens">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Womens">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Mens">
+                <viewScriptFile forActionName="underwear"/>
+              </viewControllerScriptsDirectory>
+            </viewScriptsDirectory>
+            <viewHelpersDirectory/>
+            <viewFiltersDirectory/>
+          </viewsDirectory>
+        </moduleDirectory>
+      </modulesDirectory>
       <viewsDirectory>
         <viewScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
@@ -50,6 +95,21 @@
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="ShoppingCart">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Checkout">
+            <viewScriptFile forActionName="test"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="shop"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Shop">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Learn">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Product">
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>

@@ -1,0 +1,10 @@
+<br /><br />
+<div id="view-content">
+	<p>View script for controller <b>Product</b> and script/action name <b>index</b></p>
+</div>
+<dl>
+	<?php foreach ($this->products as $p): ?>
+	<dt><?= $this->escape($p->id); ?></dt>
+	<dd><?= $this->escape($p->name); ?></dd>
+	<?php endforeach; ?>
+</dl>

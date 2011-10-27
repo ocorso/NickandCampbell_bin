@@ -18,7 +18,6 @@ jQuery(function($) {
 					    $("#logo_on").fadeOut('fast');
 					  }
 					);
-
 	};
 	
 	log("doc is ready yo");

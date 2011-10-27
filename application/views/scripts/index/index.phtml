@@ -38,14 +38,20 @@
 			<div class="product-detail">
 				
 			</div>	
-			<div id="shop_grid" style="display:none;">
-				<div class="product">
+			<div id="shop_grid">
+				<ul id="shop_subnav" class="subnav-grad">
+				<li>View</li>
+				<li><a href="#" title="View All Items">ALL</a></li>
+				</ul>
+			<?php for($i=0; $i<5; $i++): ?>
+				<div class="product mens underwear">
 					<a href="#" title="Click to View"><img src="img/shop/mens/underwear/thumbs/product-1.png" /></a>
 					<a href="#" title="Click to View">Classic Boxer Brief</a>
 					<a href="#" title="Click to View">$19.95</a>
 				</div>
+			<?php endfor; ?>
 			</div>
-			<img class="right" src="img/shop/shop-side.jpg" alt="Nick and Campbell Mens Underwear">
+			<img class="right-img" src="img/shop/shop-side.jpg" alt="Nick and Campbell Mens Underwear">
 			<div class="clearfix"></div>
 		</div>
 	</section>
@@ -86,7 +92,12 @@
 		</div>
 		<div class="section-content">
 			<h2>Please review our shipping policy</h2>
-			<p>Lorem ispson dolor</p>
+			<p>We ship almost entirely via <a href="http://www.ups.com/" title="United Parcel Service">United Parcel Service</a> (UPS). For orders that weigh less than two pounds, you will find <a href="http://usps.com" title="United States Postal Service">United States Postal Service</a> (USPS) more economical.</p>
+			<p>International orders are shipped primarily by USPS. International customers are encouraged to place and order. We will not charge your credit card until we send and you accept a shipping quote.</p>
+			<p>Under normal circumstances, most orders ship out within 24-48 hours. However, due to large order volumes, weather conditions or circumstances beyond our control, we will ship your order out as soon as possible. We use recycled boxes and packing materials for mail orders.</p>
+			<p>* To see your shipping charges in advance of placing an order, place the desired items into your shopping cart by clicking on the buy buttons. Then click on the small picture of the shopping cart in the upper right hand corner (located next to 'log In'). This will bring up a page that show you all the items in your cart. Enter your zip code in the box labeled 'Destination Zip Code'. You can try different shipping methods by clicking on the down arrow located next to 'Shipping'. Select a shipping method (e.g. USPS, UPS, Fed Ex, 3 day select etc...) and then click Recalculate. This will show you shipping charges before placing your order or entering any personal information.</p>
+			<h2>Shipping Times</h2>
+			<p>Most orders are shipped within 24-48 hours. Do not count the day the order was shipped. Fed Ex Home Delivery delivers on Saturday at no extra charge but does not deliver on Monday. Small orders that weigh less than two pounds are best shipped via USPS Priority Mail</p>
 			<div class="clearfix"></div>
 		</div>
 	</section>

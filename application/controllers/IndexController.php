@@ -19,11 +19,14 @@ class IndexController extends Zend_Controller_Action
 		$this->view->totalLookbookPages = 10;
 		$this->view->campaignDivWidth	= $this->view->totalLookbookPages*1024;
     }
+
     public function shopAction()
     {
- 		echo "hey dog";
+        // action body
     }
 
 
 }
+
+
 
