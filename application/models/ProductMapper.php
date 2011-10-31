@@ -30,6 +30,7 @@ class Application_Model_ProductMapper
 			'id'			=> $product->getId(),
 			'sid'			=> $product->getSid(),
 			'name'			=> $product->getName(),
+			'pretty'		=> $product->getPretty(),
 			'description1'	=> $product->getDescription1(),
 			'description2'	=> $product->getDescription2(),
 			'campaign'		=> $product->getCampaign(),
@@ -59,6 +60,7 @@ class Application_Model_ProductMapper
 		$product->setId($row->id)
 				->setSid($row->sid)
 				->setName($row->name)
+				->setPretty($row->pretty)
 				->setDescription1($row->description1)
 				->setDescription2($row->description2)
 				->setCampaign($row-campaign)

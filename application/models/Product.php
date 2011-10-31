@@ -5,6 +5,7 @@ class Application_Model_Product
 	protected $_id;
 	protected $_sid;
 	protected $_name;
+	protected $_pretty;
 	protected $_description1;
 	protected $_description2;
 	protected $_campaign;
@@ -84,6 +85,13 @@ class Application_Model_Product
 		return $this;
 	}
 	public function getName(){ return $this->_name; }
+	
+	//pretty name for url
+	public function setPretty($prettyName){
+		$this->_pretty		= (string) $prettyName;
+		return $this;
+	}
+	public function getPretty(){ return $this->_pretty; }
 	
 	//description1
 	public function setDescription1($d){
