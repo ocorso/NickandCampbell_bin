@@ -25,6 +25,8 @@
         </controllerFile>
         <controllerFile controllerName="Shop">
           <actionMethod actionName="index"/>
+          <actionMethod actionName="mens"/>
+          <actionMethod actionName="womens"/>
         </controllerFile>
         <controllerFile controllerName="Learn">
           <actionMethod actionName="index"/>
@@ -111,6 +113,12 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Product">
             <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Shop">
+            <viewScriptFile forActionName="mens"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Shop">
+            <viewScriptFile forActionName="womens"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

@@ -1,4 +1,4 @@
-<!doctype html>
+<?= $this->doctype() ?>
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
@@ -35,7 +35,9 @@
 			</ul>
 		</nav>
 		<div class="clearfix"></div>
-		<div id="shopping_cart"></div>
+		<div id="shopping_cart">
+			<a id="open_close" href="#" title="Open">Shopping Cart</a>
+		</div>
 	</header>
 <?php echo $this->layout()->content; ?>
 	<footer>

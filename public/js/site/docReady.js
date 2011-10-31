@@ -17,8 +17,16 @@ jQuery(function($) {
 				function () {
 					    $("#logo_on").fadeOut('fast');
 					  }
-					);
-	};
+		);//end hover
+	
+		$('.product a').click(function($e){
+			$e.preventDefault();
+			$('#product_detail').show();
+			return false;
+		});
+		
+		
+	};//end function addSitehandlers
 	
 	log("doc is ready yo");
 	mainController.init();

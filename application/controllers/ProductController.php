@@ -2,7 +2,14 @@
 
 class ProductController extends Zend_Controller_Action
 {
-
+    		/*****************************************************
+			* oc: EXPECTED CATEGORIES FOR PRODUCT QUERIES:
+			*
+			*	MENS
+			*	MENS UNDERWEAR
+			*
+			*
+			//*****************************************************/ 
     public function init()
     {
         /* Initialize action controller here */

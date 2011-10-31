@@ -5,12 +5,12 @@ class LearnController extends Zend_Controller_Action
 
     public function init()
     {
-        /* Initialize action controller here */
+        $this->_redirector = $this->_helper->getHelper('Redirector');	
     }
 
     public function indexAction()
     {
-        // action body
+       $this->_redirector->gotoUrl("/#/learn/");	
     }
 
 

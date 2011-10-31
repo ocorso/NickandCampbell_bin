@@ -165,7 +165,11 @@ button, input { line-height: normal; *overflow: visible; }
  * 2. Allow styling of clickable form elements in iOS
  */
 
-button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { 
+	cursor: pointer; 
+	-webkit-appearance: button;
+	padding: 0;
+}
 
 /*
  * Consistent box sizing and appearance
@@ -224,7 +228,7 @@ h1, h2,h3,h4,h5,p, a, form{
    ========================================================================== */
 .left{float:left;}
 .right{float:right;}
-.right-img{float:right;}
+
 .shadow {
 	-moz-box-shadow: -5px -5px 5px #0cc;
   	-webkit-box-shadow: 5px 5px 5px #ccc;
@@ -274,7 +278,7 @@ section, #s_loader{
    @Header
    ========================================================================== */
 header{
-
+	position: relative;
 }
 #logo{
 	width: 230px;	
@@ -329,7 +333,11 @@ nav ul li a, nav ul li a:visited{
 /* =============================================================================
    @Sections
    ========================================================================== */
-section{ display: none;}
+section{ 
+	display: none;
+	position: relative;
+	
+}
 .sidebar{
 	float:left;
 	width: 243px;
@@ -339,6 +347,7 @@ section{ display: none;}
 	margin-bottom: 20px;
 }
 .section-content{
+	postion: relative;
 	float:left;
 	width: 781px;
 	
@@ -359,6 +368,19 @@ section{ display: none;}
 /* =============================================================================
    @Shop
    ========================================================================== */
+#s_shop .section-content{
+	overflow: hidden;
+	position: relative;
+}
+#s_shop .section-content-wrapper{
+	width: 1562px;
+	position: absolute;
+}
+#s_shop .right-img{
+	position: absolute;
+	left: 540px;
+	top: 0;
+}
 #shop_sidenav{
 	background-color: #ccc;
 	text-align: right;
@@ -386,8 +408,10 @@ section{ display: none;}
 	color: #999;
 	text-align: right;
 	margin: 0;
+	margin-right: 10px;
 	line-height: 26px;
 	font-weight: lighter;
+	
 }
 .subnav-grad{
 background: rgb(255,255,255); /* Old browsers */
@@ -430,6 +454,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	line-height: 19px;
 }
 
+#product_detail{
+	background-color: #ccc;
+	height: 560px;
+}
 
 /* =============================================================================
    @Campaign
@@ -540,6 +568,31 @@ footer aside ul li a:hover{
 	color: #f00; 
 }
 /* =============================================================================
+   @ShoppingCart
+   ========================================================================== */
+#shopping_cart{
+	position: absolute;
+	right: 0; 
+	width: 155px;
+	border: solid 1px #999;
+}
+#shopping_cart #open_close{
+	color: #fff;
+	text-decoration: none;
+	font-size: 18px;
+	
+}
+#shopping_cart #open_close:after{
+	content: url('../img/icons/sprite-sheet.png');
+	float:right;
+	width: 8px;
+	height: 9px;
+	padding-top: 10px;
+	padding-right: 27px;
+}
+
+
+/* =============================================================================
    @Forms
    ========================================================================== */
 form{
@@ -561,9 +614,12 @@ textarea{
 	vertical-align: top;
 	height: 128px;
 	margin-top: 10px;
+	color: #aaa;
+	padding: 4px;
 }
 input, textarea{
 	width: 250px;
+	padding-left: 4px;
 }
 .form-label{
 	float:left;
@@ -580,6 +636,9 @@ dd{
 }
 #submit-element{
 	margin-left: 207px;
+}
+#s_contact form button, input[type="button"], input[type="reset"], input[type="submit"] {
+	width: 257px;
 }
 /* =============================================================================
    @Home

@@ -6,7 +6,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
 		Zend_Registry::set('config', new Zend_Config($this->getOptions()));
 	}
-
+	
+	protected function _initDocType(){
+		$this->bootstrap('View');
+		$view = $this->getResource('View');
+		$view->doctype('HTML5');
+	}
 	protected function _initDatabase()
     {
 		$config	= $this->getOptions();
@@ -18,6 +23,27 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		Zend_Registry::set("db",$db);
     	
     }//end function
-	
+	protected function _initRouter()
+    {
+        $front = Zend_Controller_Front::getInstance();
+        $router = $front->getRouter();
+
+        // Add some routes
+        $mensRoute	= new Zend_Controller_Router_Route(	'shop/mens/:category/:product',
+        														array(	'controller'	=> 'shop',
+        																'action'		=> 'mens')
+        					);
+        $womensRoute	= new Zend_Controller_Router_Route(	'shop/womens/:category/:product',
+        														array(	'controller'	=> 'shop',
+        																'action'		=> 'womens')
+        					);
+        $router->addRoute(	'mensroute', $mensRoute);
+        $router->addRoute(	'womensroute', $womensRoute);
+
+        // Returns the router resource to bootstrap resource registry
+        return $router;
+    }
+    
 }//end bootstrap
 
+	

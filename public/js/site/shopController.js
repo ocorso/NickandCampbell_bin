@@ -12,5 +12,5 @@ shopController.init		= function (){
 shopController.change 	= function (){
 	log("shopController change");
 	$('section, #s_loader, #s_shop .section-content, #s_shop .right-img').hide();
-	$('#s_shop').show('slow', function(){$('#s_shop .section-content').show('fast', function(){$('#s_shop .right-img').show();});});
+	$('#s_shop').show('slow', function(){$('#s_shop .section-content:not(#product_detail)').show('fast', function(){$('#s_shop .right-img').show();});});
 }//end change function
