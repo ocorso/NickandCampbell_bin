@@ -12,7 +12,7 @@ class ProductController extends Zend_Controller_Action
     {
         $products = new Application_Model_ProductMapper();
     	$this->view->products = $products->fetchAll();
-    
+    	
     }
 
 

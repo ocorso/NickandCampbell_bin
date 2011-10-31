@@ -27,8 +27,19 @@ class Application_Model_ProductMapper
 	
 	public function save(Application_Model_Product $product){
 		$data = array(
-			'id'	=> $product->getId(),
-			'name'	=> $product->getName()
+			'id'			=> $product->getId(),
+			'sid'			=> $product->getSid(),
+			'name'			=> $product->getName(),
+			'description1'	=> $product->getDescription1(),
+			'description2'	=> $product->getDescription2(),
+			'campaign'		=> $product->getCampaign(),
+			'label'			=> $product->getLabel(),
+			'size'			=> $product->getSize(),
+			'color'			=> $product->getColor(),
+			'category'		=> $product->getCategory(),
+			'gender'		=> $product->getGender(),
+			'weight'		=> $product->getWeight(),
+			'price'			=> $product->getPrice()
 		);
 		if (null === ($id = $product->getId())){
 			unset($data['id']);
@@ -38,6 +49,28 @@ class Application_Model_ProductMapper
 		}//endif
 		
 	}//end function 
+	
+	public function find($id, Application_Model_Product $product){
+		$result 	= $this->getDbTable()->find($id);
+		if (0 == count($result)){
+			return;
+		}//endif
+		$row 		= $result->current();
+		$product->setId($row->id)
+				->setSid($row->sid)
+				->setName($row->name)
+				->setDescription1($row->description1)
+				->setDescription2($row->description2)
+				->setCampaign($row-campaign)
+				->setLabel($row->label)
+				->setSize($row->size)
+				->setColor($row-color)
+				->setCategory($row->category)
+				->setGender($row->gender)
+				->setWeight($row->weight)
+				->setPrice($row->price);
+				
+	}//endfunction
 	
 	public function fetchAll(){
 
