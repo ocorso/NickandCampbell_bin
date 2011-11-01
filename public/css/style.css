@@ -371,6 +371,7 @@ section{
 #s_shop .section-content{
 	overflow: hidden;
 	position: relative;
+	height: 786px;
 }
 #s_shop .section-content-wrapper{
 	width: 1562px;

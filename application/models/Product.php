@@ -16,6 +16,7 @@ class Application_Model_Product
 	protected $_gender;
 	protected $_weight;
 	protected $_price;
+	protected $_quantity;
 	
 	
         
@@ -163,6 +164,12 @@ class Application_Model_Product
 	}
 	public function getPrice(){ return $this->_price; }
 	
+	//quantity
+	public function setQuantity($q){
+		$this->_quantity		= (int) $q;
+		return $this;
+	}
+	public function getQuantity(){ return $this->_quantity; }
 // =================================================
 // ================ Constructor
 // =================================================

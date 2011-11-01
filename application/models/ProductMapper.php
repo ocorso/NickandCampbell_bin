@@ -40,7 +40,8 @@ class Application_Model_ProductMapper
 			'category'		=> $product->getCategory(),
 			'gender'		=> $product->getGender(),
 			'weight'		=> $product->getWeight(),
-			'price'			=> $product->getPrice()
+			'price'			=> $product->getPrice(),
+			'quantity'		=> $product->getQuantity()
 		);
 		if (null === ($id = $product->getId())){
 			unset($data['id']);
@@ -56,21 +57,22 @@ class Application_Model_ProductMapper
 		if (0 == count($result)){
 			return;
 		}//endif
-		$row 		= $result->current();
+		$row 	= $result->current();
 		$product->setId($row->id)
 				->setSid($row->sid)
 				->setName($row->name)
 				->setPretty($row->pretty)
 				->setDescription1($row->description1)
 				->setDescription2($row->description2)
-				->setCampaign($row-campaign)
+				->setCampaign($row->campaign)
 				->setLabel($row->label)
 				->setSize($row->size)
-				->setColor($row-color)
+				->setColor($row->color)
 				->setCategory($row->category)
 				->setGender($row->gender)
 				->setWeight($row->weight)
-				->setPrice($row->price);
+				->setPrice($row->price)
+				->setQuantity($row->quantity);
 				
 	}//endfunction
 	
@@ -81,7 +83,53 @@ class Application_Model_ProductMapper
 		foreach($resultSet as $row){
 			$entry 	= new Application_Model_Product();
 			$entry->setId($row->id)
-					->setName($row->name);
+				->setName($row->name)
+				->setPretty($row->pretty)
+				->setDescription1($row->description1)
+				->setDescription2($row->description2)
+				->setCampaign($row->campaign)
+				->setLabel($row->label)
+				->setSize($row->size)
+				->setColor($row->color)
+				->setCategory($row->category)
+				->setGender($row->gender)
+				->setWeight($row->weight)
+				->setPrice($row->price)
+				->setQuantity($row->quantity);
+			$entries[]	= $entry; 
+		}// endforeach
+		
+		return $entries;
+		
+	}//end function
+	public function fetchAllWithOptions($opts){
+		
+		$table 		= $this->getDbTable();
+		$resultSet	= $table->fetchAll(
+			$table->select()
+				->where('gender = ?', $opts['gender'])
+				->order('sid ASC')
+		);
+		
+		
+		$resultSet 	= $this->getDbTable()->fetchAll();
+		$entries	= array();
+		foreach($resultSet as $row){
+			$entry 	= new Application_Model_Product();
+			$entry->setId($row->id)
+				->setName($row->name)
+				->setPretty($row->pretty)
+				->setDescription1($row->description1)
+				->setDescription2($row->description2)
+				->setCampaign($row->campaign)
+				->setLabel($row->label)
+				->setSize($row->size)
+				->setColor($row->color)
+				->setCategory($row->category)
+				->setGender($row->gender)
+				->setWeight($row->weight)
+				->setPrice($row->price)
+				->setQuantity($row->quantity);
 			$entries[]	= $entry; 
 		}// endforeach
 		

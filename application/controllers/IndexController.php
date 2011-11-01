@@ -10,22 +10,21 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    	//contact stuff
+		//shop
+        $products 					= new Application_Model_ProductMapper();	
+        $options					= array('gender'=>'mens', 'category'=>'underwear');
+        $this->view->products		= $products->fetchAllWithOptions($options);
+        
+        //lookbook stuff
+		$this->view->lookbookPgs 	= 10;
+		$this->view->campaignWidth	= $this->view->totalLookbookPages*1024;
+
+		//contact stuff
         $contactForm				= new Application_Form_Contact();
         $contactForm->setAction("/contact");
         $this->view->contactForm	= $contactForm;
-		
-        //lookbook stuff
-		$this->view->totalLookbookPages = 10;
-		$this->view->campaignDivWidth	= $this->view->totalLookbookPages*1024;
+
     }
-
-    public function shopAction()
-    {
-        // action body
-    }
-
-
 }
 
 

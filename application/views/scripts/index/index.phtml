@@ -41,13 +41,15 @@
 						<li>View</li>
 						<li><a href="#" title="View All Items">ALL</a></li>
 						</ul>
-						<?php for($i=0; $i<5; $i++): ?>
-						<div class="product mens underwear">
-							<a href="#" title="Click to View"><img src="img/shop/mens/underwear/thumbs/product-1.png" /></a>
+						<?php 
+
+						foreach($this->products as $p): ?>
+						<div class="product">
+							<a href="shop/mens/underwear/sexy-campbell-brief" rel="address:/shop/mens/underwear/sexy-campbell-brief" title="Click to View"><img src="img/shop/mens/underwear/thumbs/product-1.png" /></a>
 							<a href="#" title="Click to View">Classic Boxer Brief</a>
 							<a href="#" title="Click to View">$19.95</a>
 						</div>
-						<?php endfor; ?>
+						<?php endforeach; ?>
 						<img class="right-img" src="img/shop/shop-side.jpg" alt="Nick and Campbell Mens Underwear">
 					</div>
 					<div id="product_detail">this will be ajaxed in :)</div>
@@ -58,8 +60,8 @@
 	
 	<section id="s_campaign">
 	<div id="lookbook_wrapper">
-		<div id="lookbook_container" style="width: <?= $this->campaignDivWidth; ?>px;">
-			<?php for($i=1;$i<=$this->totalLookbookPages ;$i++): ?>
+		<div id="lookbook_container" style="width: <?= $this->campaignWidth; ?>px;">
+			<?php for($i=1;$i<=$this->lookbookPages ;$i++): ?>
 			<img src="img/lookbook/<?= $i; ?>.jpg" alt="Nick and Campbell Lookbook Page <?= $i; ?>" />
 			<?php endfor; ?>
 			<div class="clearfix"></div>
