@@ -83,6 +83,7 @@ class Application_Model_ProductMapper
 		foreach($resultSet as $row){
 			$entry 	= new Application_Model_Product();
 			$entry->setId($row->id)
+				->setSid($row->sid)
 				->setName($row->name)
 				->setPretty($row->pretty)
 				->setDescription1($row->description1)
@@ -108,16 +109,18 @@ class Application_Model_ProductMapper
 		$resultSet	= $table->fetchAll(
 			$table->select()
 				->where('gender = ?', $opts['gender'])
+				->where('category = ?', $opts['category'])
 				->order('sid ASC')
 		);
 		
 		
-		$resultSet 	= $this->getDbTable()->fetchAll();
+		//$resultSet 	= $this->getDbTable()->fetchAll();
 		$entries	= array();
 		foreach($resultSet as $row){
 			$entry 	= new Application_Model_Product();
 			$entry->setId($row->id)
 				->setName($row->name)
+				->setSid($row->sid)
 				->setPretty($row->pretty)
 				->setDescription1($row->description1)
 				->setDescription2($row->description2)

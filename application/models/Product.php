@@ -3,14 +3,14 @@
 class Application_Model_Product
 {
 	protected $_id;
-	protected $_sid;
+	protected $_sid;		//style id
 	protected $_name;
-	protected $_pretty;
+	protected $_pretty;		//pretty url	
 	protected $_description1;
 	protected $_description2;
 	protected $_campaign;
-	protected $_label; 	//black, regular
-	protected $_size;	//
+	protected $_label; 		//black, regular
+	protected $_size;		//
 	protected $_color;
 	protected $_category;
 	protected $_gender;

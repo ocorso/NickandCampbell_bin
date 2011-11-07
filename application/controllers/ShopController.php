@@ -30,12 +30,11 @@ class ShopController extends Zend_Controller_Action
     		
     		//get product info since we're ajaxing it in
     		$products = new Application_Model_ProductMapper();
-    		//$this->view->products = $products->find();
+    		$this->view->products = $products->find();
     		
     		echo "this is xml request";
     	} else {
 			$deeplink 	= $this->_deeplinkBase;
-			
 			$deeplink  .= $req->getParam('category') ? $req->getParam('category')."/" : "";
 			$deeplink  .= $req->getParam('product') ? $req->getParam('product')."/" : "";
 			
