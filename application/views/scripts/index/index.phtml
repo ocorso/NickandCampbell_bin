@@ -37,7 +37,7 @@
 			<div style="display:none;" class="section-content">
 				<div class="section-content-wrapper">
 					<div id="shop_grid">
-						<ul id="shop_subnav" class="subnav-grad">
+						<ul class="shop-subnav subnav-grad">
 						<li>View</li>
 						<li><a href="#" title="View All Items">ALL</a></li>
 						</ul>
@@ -61,7 +61,7 @@
 	<section id="s_campaign">
 	<div id="lookbook_wrapper">
 		<div id="lookbook_container" style="width: <?= $this->campaignWidth; ?>px;">
-			<?php for($i=1;$i<=$this->lookbookPages ;$i++): ?>
+			<?php for($i=1;$i<=$this->lookbookPgs ;$i++): ?>
 			<img src="img/lookbook/<?= $i; ?>.jpg" alt="Nick and Campbell Lookbook Page <?= $i; ?>" />
 			<?php endfor; ?>
 			<div class="clearfix"></div>

@@ -41,7 +41,7 @@ class Application_Model_ProductMapper
 			'gender'		=> $product->getGender(),
 			'weight'		=> $product->getWeight(),
 			'price'			=> $product->getPrice(),
-			'quantity'		=> $product->getQuantity()
+			'sku'		=> $product->getSku()
 		);
 		if (null === ($id = $product->getId())){
 			unset($data['id']);
@@ -72,7 +72,7 @@ class Application_Model_ProductMapper
 				->setGender($row->gender)
 				->setWeight($row->weight)
 				->setPrice($row->price)
-				->setQuantity($row->quantity);
+				->setSku($row->sku);
 				
 	}//endfunction
 	
@@ -95,7 +95,7 @@ class Application_Model_ProductMapper
 				->setGender($row->gender)
 				->setWeight($row->weight)
 				->setPrice($row->price)
-				->setQuantity($row->quantity);
+				->setSku($row->sku);
 			$entries[]	= $entry; 
 		}// endforeach
 		
@@ -129,7 +129,7 @@ class Application_Model_ProductMapper
 				->setGender($row->gender)
 				->setWeight($row->weight)
 				->setPrice($row->price)
-				->setQuantity($row->quantity);
+				->setSku($row->sku);
 			$entries[]	= $entry; 
 		}// endforeach
 		

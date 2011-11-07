@@ -230,9 +230,9 @@ h1, h2,h3,h4,h5,p, a, form{
 .right{float:right;}
 
 .shadow {
-	-moz-box-shadow: -5px -5px 5px #0cc;
-  	-webkit-box-shadow: 5px 5px 5px #ccc;
-  	box-shadow: 5px 5px 5px #ccc;
+  -moz-box-shadow: 5px 5px 5px #000;
+  -webkit-box-shadow: 5px 5px 5px #000;
+  box-shadow: 5px 5px 5px #000;
 }
 .red-grad{
 	background-image: -moz-linear-gradient(center bottom , #7C150A 25%, #B71301 75%);
@@ -250,7 +250,7 @@ body{
 }
 h1{
 	font-weight: lighter;
-	margin-top:-25px;
+
 	margin-bottom: 0;
 	font-size: 70px;
 	line-height: 51px;
@@ -264,9 +264,13 @@ h1{
 #main{
 	padding-bottom: 88px;
 }
-a,a:hover, a:active, a:focus {
+
+a, a:visited{ color: #676767;}
+a:hover, a:active, a:focus, .current-section {
    outline: 0;
+	color: #f00;
 }
+
 section, #s_loader{
 	width: 1024px;
 	height: 619px;
@@ -279,6 +283,8 @@ section, #s_loader{
    ========================================================================== */
 header{
 	position: relative;
+	z-index: 1;
+	margin-bottom: 35px;
 }
 #logo{
 	width: 230px;	
@@ -293,6 +299,7 @@ nav{
 	height: 25px;
 	float: right;
 	margin-top: 45px;
+	z-index: 1;
 }
 nav img, nav ul {float:left;}
 nav ul{
@@ -307,15 +314,12 @@ nav ul li{
 }
 nav ul li a, nav ul li a:visited{
 	text-decoration: none;
-	color: #676767;
 	display: inline-block;
 	width: 150px;
 	margin-left: 40px;
 	margin-bottom: 4px;
 }
-.current-section{
-	color: #f00; 
-}
+
 #overlay{
 	position: absolute;
 	background-color: #0ff;
@@ -341,9 +345,10 @@ section{
 .sidebar{
 	float:left;
 	width: 243px;
-	margin-top: 37px;
+
 }
 .sidebar h1{
+	margin-top: -25px;
 	margin-bottom: 20px;
 }
 .section-content{
@@ -374,7 +379,7 @@ section{
 	height: 786px;
 }
 #s_shop .section-content-wrapper{
-	width: 1562px;
+	width: 1567px;
 	position: absolute;
 }
 #s_shop .right-img{
@@ -426,14 +431,18 @@ background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(204,204,204,1) 
 background: linear-gradient(top, rgba(255,255,255,1) 0%,rgba(204,204,204,1) 73%,rgba(155,155,155,1) 99%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#9b9b9b',GradientType=0 ); /* IE6-8 */
 }
-#shop_subnav{
+.shop-subnav{
 	height: 46px;
 	margin: 0;
 	list-style: none;
 }
-#shop_subnav li{
+.shop-subnav li{
 	display: inline-block;
 	margin-top: 5px;
+}
+.shop-subnav a{
+	font-size: 20px;
+	text-decoration: none;
 }
 #shop_grid{
 	background-color: #ccc;
@@ -458,7 +467,59 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 #product_detail{
 	background-color: #ccc;
 	height: 560px;
+	width: 781px;
+	float: right;
+	    
 }
+.product-content{
+	padding: 25px;
+}
+.product-content h1{
+	color: #333;
+	font-weight: normal;
+	font-size: 50px;
+	margin-top: -20px;
+	margin-bottom: 10px;
+	
+}
+/* =============================================================================
+   @ShoppingCart
+   ========================================================================== */
+#cart_pulldown{
+	z-index: 0;
+	position: absolute;
+	overflow: hidden;
+	background-color: #000;
+	top: 70px;
+	right: 2px; 
+	width: 155px;
+	height: 23px;
+	padding: 5px;
+	border-bottom: solid 1px #999;
+	border-right: solid 1px #999;
+	border-left: solid 1px #999;
+}
+#cart_pulldown #open_close{
+	color: #fff;
+	text-decoration: none;
+	font-size: 18px;
+	
+}
+#cart_pulldown #open_close:hover{
+	color: #f00;
+}
+#cart_pulldown span.cart-arrow{
+	background: url('../img/icons/sprite-sheet.png') no-repeat;
+	width: 8px;
+	height: 8px;
+	float: right;
+	margin-top: 8px;
+	margin-right: 11px;
+}
+#cart_pulldown h2{
+	font-weight: normal;
+}
+
 
 /* =============================================================================
    @Campaign
@@ -568,30 +629,6 @@ footer aside ul li a, footer aside ul li a:visited{
 footer aside ul li a:hover{
 	color: #f00; 
 }
-/* =============================================================================
-   @ShoppingCart
-   ========================================================================== */
-#shopping_cart{
-	position: absolute;
-	right: 0; 
-	width: 155px;
-	border: solid 1px #999;
-}
-#shopping_cart #open_close{
-	color: #fff;
-	text-decoration: none;
-	font-size: 18px;
-	
-}
-#shopping_cart #open_close:after{
-	content: url('../img/icons/sprite-sheet.png');
-	float:right;
-	width: 8px;
-	height: 9px;
-	padding-top: 10px;
-	padding-right: 27px;
-}
-
 
 /* =============================================================================
    @Forms

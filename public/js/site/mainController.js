@@ -2,7 +2,11 @@
 var mainController 				= {};//object to hold all deeplink data
 mainController.which_content 	= "";//overlay to show
 mainController.dlArr			= [];//array of deeplinks
-
+mainController.cart				= {};//cart object contains all stuff related to the cart :)
+mainController.cart.isCartOpen	= false;
+mainController.cart.defaultCSS	= {	width: "155px", 
+									height:"23px"
+								};
 var shopController				= {};
 var campaign					= {};
 
@@ -40,13 +44,11 @@ mainController.exChange 	= function ($e){
 
 mainController.change 	= function ($e){
 	log("change proper");
-	//only do stuff when json is done parsing
-	
 	
 	    //determine main nav
 		mainController.dlArr 		= $.address.pathNames()[0] ? $.address.pathNames() : ["/"];//set deeplink if you can
 		$('nav ul li a').removeClass('current-section');
-		$('#s_loader').show();
+		
    			
     		/*****************************************************
 			* oc: EXPECTED PATHS FOR MAIN NAV:
@@ -54,10 +56,11 @@ mainController.change 	= function ($e){
 			*
 			*	"/" OR "" 	= mainController.homeHandler()
 			* 	"learn"		= mainController.defaultHandler()
-			*	"campaign"	= newsManager.change()
-			*	"contact"	= mainController.defaultHanlder()	
-			*	"shipping"	= mainController.mapHandler()
-			*	"returns"	= mainController.videoHandler()
+			*	"campaign"	= campaign.change()
+			*	"contact"	= mainController.contactHandler()	
+			*	"shipping"	= mainController.defaultHandler()
+			*	"returns"	= mainController.defaultHandler()
+			*	"returns"	= mainController.defaultHandler()
 			*
 			//*****************************************************/           
             
@@ -75,7 +78,8 @@ mainController.change 	= function ($e){
             	default : log("deeplink unexpected path...");//add greater than 1 level depth handling here...;
 
             }//end switch
-    		$('nav ul li a:not(.current-section)').unbind().hover(function(){$(this).addClass('current-section');},function(){$(this).removeClass('current-section');});
+    		
+            //$('nav ul li a:not(.current-section)').unbind().hover(function(){$(this).addClass('current-section');},function(){$(this).removeClass('current-section');});
 
 	
 }//end address change function
@@ -135,9 +139,28 @@ mainController.defaultHandler 	= function ($whichSection){
 }//end function
 
 //*****************************************************
+//oc: Shopping Cart JS
+//*****************************************************
+mainController.cart.open 		= function ($e){
+	log("open");
+	var newHeight = parseInt($('.cart-contents').css('height').replace("px","")) + 50;
+	var aniObj = {	height:newHeight+"px",
+					width:"226px"
+				};
+	$('#cart_pulldown').animate(aniObj);
+	$('#open_close').css('background-position','-10px 0');
+	mainController.cart.isOpen = true;
+}
+mainController.cart.close 		= function ($e){
+	log("close");
+	$('#cart_pulldown').animate(mainController.cart.defaultCSS);
+	$('#open_close').css('background-position','0 0');
+	mainController.cart.isOpen = false;
+}
+
+//*****************************************************
 //oc: Utility
 //*****************************************************
-
 mainController.handleResize 	= function ($e){
 	var w		= window.innerWidth;
 	log('resize. window width: '+w);

@@ -16,7 +16,7 @@ class Application_Model_Product
 	protected $_gender;
 	protected $_weight;
 	protected $_price;
-	protected $_quantity;
+	protected $_sku;
 	
 	
         
@@ -108,7 +108,7 @@ class Application_Model_Product
 	}
 	public function getDescription2(){ return $this->_description2; }
 	
-	//variation
+	//campaign
 	public function setCampaign($c){
 		$this->_campaign		= (string) $c;
 		return $this;
@@ -164,12 +164,12 @@ class Application_Model_Product
 	}
 	public function getPrice(){ return $this->_price; }
 	
-	//quantity
-	public function setQuantity($q){
-		$this->_quantity		= (int) $q;
+	//stock keeping unit
+	public function setSku($q){
+		$this->_sku		= (int) $q;
 		return $this;
 	}
-	public function getQuantity(){ return $this->_quantity; }
+	public function getSku(){ return $this->_sku; }
 // =================================================
 // ================ Constructor
 // =================================================

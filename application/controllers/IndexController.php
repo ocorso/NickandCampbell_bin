@@ -17,7 +17,7 @@ class IndexController extends Zend_Controller_Action
         
         //lookbook stuff
 		$this->view->lookbookPgs 	= 10;
-		$this->view->campaignWidth	= $this->view->totalLookbookPages*1024;
+		$this->view->campaignWidth	= $this->view->lookbookPgs*1024;
 
 		//contact stuff
         $contactForm				= new Application_Form_Contact();

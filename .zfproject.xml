@@ -33,6 +33,9 @@
         <controllerFile controllerName="Product">
           <actionMethod actionName="index"/>
         </controllerFile>
+        <controllerFile controllerName="Campaign">
+          <actionMethod actionName="index"/>
+        </controllerFile>
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Checkout"/>
@@ -118,6 +121,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Shop">
             <viewScriptFile forActionName="womens"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Campaign">
+            <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
