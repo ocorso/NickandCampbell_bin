@@ -75,29 +75,6 @@ class Application_Model_ProductMapper
 				->setSku($row->sku);
 				
 	}//endfunction
-	public function find($id, Application_Model_Product $product){
-		$result 	= $this->getDbTable()->find($id);
-		if (0 == count($result)){
-			return;
-		}//endif
-		$row 	= $result->current();
-		$product->setId($row->id)
-				->setSid($row->sid)
-				->setName($row->name)
-				->setPretty($row->pretty)
-				->setDescription1($row->description1)
-				->setDescription2($row->description2)
-				->setCampaign($row->campaign)
-				->setLabel($row->label)
-				->setSize($row->size)
-				->setColor($row->color)
-				->setCategory($row->category)
-				->setGender($row->gender)
-				->setWeight($row->weight)
-				->setPrice($row->price)
-				->setSku($row->sku);
-				
-	}//endfunction
 	
 	public function fetchAll(){
 
