@@ -17,9 +17,9 @@ class ProductController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    	    		//disable layout
-    		$layout = $this->_helper->layout();
-    		$layout->disableLayout();
+   		//disable layout
+    	$layout = $this->_helper->layout();
+    	$layout->disableLayout();
         $products = new Application_Model_ProductMapper();
         $sizes = new Application_Model_SizingChartMapper();
         $this->view->sizeArr	= $sizes->fetchAll();

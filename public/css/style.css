@@ -503,7 +503,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	color: #fff;
 	text-decoration: none;
 	font-size: 18px;
-	
+	display: block;
+	width: 100%;
 }
 #cart_pulldown #open_close:hover{
 	color: #f00;
