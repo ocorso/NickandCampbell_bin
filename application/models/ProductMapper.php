@@ -106,13 +106,14 @@ class Application_Model_ProductMapper
 	public function fetchAllWithOptions($opts){
 		
 		$table 		= $this->getDbTable();
-		$resultSet	= $table->fetchAll(
-			$table->select()
-				->where('gender = ?', $opts['gender'])
-				->where('category = ?', $opts['category'])
-				->order('sid ASC')
-		);
-		
+		$select		= $table->select();
+		foreach(array_keys($opts) as $column){
+			$n = $column.' = ?';
+			$select->where($n, $opts[$column]);
+		}
+		//oc: to view the query string
+		//echo $select->__toString();
+		$resultSet	= $table->fetchAll($select);
 		
 		//$resultSet 	= $this->getDbTable()->fetchAll();
 		$entries	= array();

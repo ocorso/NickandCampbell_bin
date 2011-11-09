@@ -45,8 +45,8 @@
 
 						foreach($this->products as $p): ?>
 						<div class="product">
-							<a href="shop/mens/underwear/sexy-campbell-brief" rel="address:/shop/mens/underwear/sexy-campbell-brief" title="Click to View"><img src="img/shop/mens/underwear/thumbs/product-1.png" /></a>
-							<a href="#" title="Click to View">Classic Boxer Brief</a>
+							<a href="shop/mens/underwear/<?= $p->pretty; ?>" rel="address:/shop/mens/underwear/<?= $p->pretty; ?>" title="Click to View"><img src="img/shop/mens/underwear/thumbs/product-1.png" /></a>
+							<a href="#" title="Click to View"><?= $p->name; ?></a>
 							<a href="#" title="Click to View">$19.95</a>
 						</div>
 						<?php endforeach; ?>

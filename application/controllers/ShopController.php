@@ -28,11 +28,16 @@ class ShopController extends Zend_Controller_Action
     		$layout = $this->_helper->layout();
     		$layout->disableLayout();
     		
-    		//get product info since we're ajaxing it in
-    		$products = new Application_Model_ProductMapper();
-    		$this->view->products = $products->find();
-    		
-    		echo "this is xml request";
+    		//create opts
+    		$opts		= array('gender'=>'mens');
+			$opts  		= $req->getParam('category') ? 	array_merge($opts, array('category'=>$req->getParam('category'))) : $opts;
+			$opts  		= $req->getParam('product') ? 	array_merge($opts, array('pretty'=>$req->getParam('product'))) : $opts;
+			
+			//get product info since we're ajaxing it in
+    		$pModel	 	= new Application_Model_ProductMapper();
+    		$products	= $pModel->fetchAllWithOptions($opts);
+    		$this->view->product = $products[0];
+
     	} else {
 			$deeplink 	= $this->_deeplinkBase;
 			$deeplink  .= $req->getParam('category') ? $req->getParam('category')."/" : "";
