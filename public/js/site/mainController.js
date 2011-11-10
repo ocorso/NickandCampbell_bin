@@ -148,13 +148,13 @@ mainController.cart.open 		= function ($e){
 					width:"226px"
 				};
 	$('#cart_pulldown').animate(aniObj);
-	$('#open_close').css('background-position','-10px 0');
+	$('#open_close').css('background-position','-10px 0').attr('title', 'Close Cart');
 	mainController.cart.isOpen = true;
 }
 mainController.cart.close 		= function ($e){
 	log("close");
 	$('#cart_pulldown').animate(mainController.cart.defaultCSS);
-	$('#open_close').css('background-position','0 0');
+	$('#open_close').css('background-position','0 0').attr('title', 'Open Cart');
 	mainController.cart.isOpen = false;
 }
 

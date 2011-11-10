@@ -5,4 +5,8 @@
 	<h1><?= $this->product->name; ?></h1>
 	<img src="img/shop/mens/underwear/large/product-1.jpg" alt=""/>
 	<?= $this->form; ?>
+	<div id="add_to_cart_form_extended">
+		<label>Price:</label><p>$<?= $this->product->price; ?></p>
+		<div class="checkout-btn btn">Checkout</div>
+	</div>
 </div>

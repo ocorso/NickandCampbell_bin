@@ -35,12 +35,25 @@ class ShopController extends Zend_Controller_Action
 			
 			//get product info since we're ajaxing it in
     		$pModel	 	= new Application_Model_ProductMapper();
-    		$products	= $pModel->fetchAllWithOptions($opts);
-    		$this->view->product = $products[0];
+    		$allSizesOfProduct		= $pModel->fetchAllWithOptions($opts);
     		
+	    	//first get sizing chart
+		    $sizes 		= new Application_Model_SizingChartMapper();
+		    $sizeArr	= $sizes->fetchAll();
+	        $sOpts	= array();
+	       	//loop through what's already in the array of sizes
+	        foreach ($allSizesOfProduct as $p){
+	        	if (!array_key_exists($sizeArr[$p->getSize()]['name'], $sOpts)) {
+	        		//if its not there add it
+	        		$sOpts[] = $sizeArr[$p->getSize()]['name'];
+	        	} 
+	        }
     		//add to cart form
-    		$form		= new Application_Form_AddToCart(array('sizes'=>array('small','medium')));
-    		$this->view->form = $form;
+    		$form		= new Application_Form_AddToCart(array('sizes'=>$sOpts));
+
+    		//load up view
+    		$this->view->form 		= $form;
+    		$this->view->product 	= $allSizesOfProduct[0];
 
     	} else {
     		//figure out where to redirect to

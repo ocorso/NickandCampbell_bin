@@ -11,24 +11,26 @@ class Application_Form_AddToCart extends Zend_Form
    
     public function init()
     {
+    	
     	$this->setMethod("post")
     		->setAttrib('id', 'add_to_cart_form');
 
     	//size select
     	$size		= new Zend_Form_Element_Select('size');
-       	$size->setLabel("Size")
+       	$size->setLabel("Size:")
        		->setRequired(true)
-    		->setMultiOptions(array($this->_sizes));
-    		
+    		->setMultiOptions($this->_sizes);
+    	
     	//quantity text input
        $quantity 	= new Zend_Form_Element_Text("quantity");
-       $quantity->setLabel('Quantity')
+       $quantity->setLabel('Quantity:')
        		->addFilter('Digits')
        		->addValidator('Digits')
        		->setRequired(true);
 
        	$submit 	= new Zend_Form_Element_Submit('add_to_cart_btn');
-       	$submit->setLabel('Add to Cart');
+       	$submit->setLabel('Add to Cart')
+       		->setAttrib('class', 'btn');
        	
        	$this->addElements(array($size, $quantity, $submit));
     }

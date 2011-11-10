@@ -103,7 +103,7 @@ class Application_Model_ProductMapper
 		return $entries;
 		
 	}//end function
-	public function fetchAllWithOptions($opts){
+	public function fetchAllWithOptions($opts, $inStock = true){
 		
 		$table 		= $this->getDbTable();
 		$select		= $table->select();
@@ -111,7 +111,9 @@ class Application_Model_ProductMapper
 			$n = $column.' = ?';
 			$select->where($n, $opts[$column]);
 		}
-		$select->where('sku > ?', 0);
+		//only return products we have in stock.
+		if($inStock)	$select->where('sku > ?', 0);
+		
 		//oc: to view the query string
 		//echo $select->__toString();
 		
