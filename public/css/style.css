@@ -464,6 +464,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	line-height: 19px;
 }
 
+/* =============================================================================
+   @ProductDetail
+   ========================================================================== */
 #product_detail{
 	background-color: #ccc;
 	height: 560px;
@@ -578,6 +581,71 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	margin-top: 50px;
 	margin-left: 100px;
 }
+
+/* =============================================================================
+   @Forms
+   ========================================================================== */
+form{
+	color: #aaa;
+}
+input{
+	border-color: #333;
+	border-style: solid;
+	border-width: 1px;
+	background-color: #000;
+	color: #aaa;
+	margin: 3px;
+	height: 26px;
+}
+textarea{
+	background: none repeat scroll 0 0 black;
+	border: 1px solid #333;
+	overflow: auto;
+	vertical-align: top;
+	height: 128px;
+	margin-top: 10px;
+	color: #aaa;
+	padding: 4px;
+}
+input, textarea{
+	width: 250px;
+	padding-left: 4px;
+}
+.form-label{
+	float:left;
+	width: 180px;
+	color: #666666;
+	font-size: 34px;
+	line-height: 30px;
+	text-align: right;
+	margin-right: 30px;
+}
+dd{
+	margin-left: 150px;
+	line-height: 45px;
+}
+#submit-element{
+	margin-left: 207px;
+}
+#s_contact form button, input[type="button"], input[type="reset"], input[type="submit"] {
+	width: 257px;
+}
+#add_to_cart_form{
+	
+}
+#add_to_cart_form input{
+	background-color: #fff;
+}
+/* =============================================================================
+   @Home
+   ========================================================================== */
+h4{
+	color: #fff ;
+	font-size: 46px;
+	font-weight: normal;
+	text-align: center;
+	margin: 0;
+}
 /* =============================================================================
    @Footer
    ========================================================================== */
@@ -629,65 +697,6 @@ footer aside ul li a, footer aside ul li a:visited{
 }
 footer aside ul li a:hover{
 	color: #f00; 
-}
-
-/* =============================================================================
-   @Forms
-   ========================================================================== */
-form{
-	color: #aaa;
-}
-input{
-	border-color: #333;
-	border-style: solid;
-	border-width: 1px;
-	background-color: #000;
-	color: #aaa;
-	margin: 3px;
-	height: 26px;
-}
-textarea{
-	background: none repeat scroll 0 0 black;
-	border: 1px solid #333;
-	overflow: auto;
-	vertical-align: top;
-	height: 128px;
-	margin-top: 10px;
-	color: #aaa;
-	padding: 4px;
-}
-input, textarea{
-	width: 250px;
-	padding-left: 4px;
-}
-.form-label{
-	float:left;
-	width: 180px;
-	color: #666666;
-	font-size: 34px;
-	line-height: 30px;
-	text-align: right;
-	margin-right: 30px;
-}
-dd{
-	margin-left: 150px;
-	line-height: 45px;
-}
-#submit-element{
-	margin-left: 207px;
-}
-#s_contact form button, input[type="button"], input[type="reset"], input[type="submit"] {
-	width: 257px;
-}
-/* =============================================================================
-   @Home
-   ========================================================================== */
-h4{
-	color: #fff ;
-	font-size: 46px;
-	font-weight: normal;
-	text-align: center;
-	margin: 0;
 }
 /* =============================================================================
    Non-semantic helper classes

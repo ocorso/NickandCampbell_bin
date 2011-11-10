@@ -124,7 +124,7 @@ class Application_Model_Product
 	
 	//size
 	public function setSize($s){
-		$this->_size			= (string) $s;
+		$this->_size			= (int) $s;
 		return $this;
 	}
 	public function getSize(){ return $this->_size; }

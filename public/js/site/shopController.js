@@ -32,7 +32,7 @@ shopController.change 	= function (){
 		}else{
 			$('.section-content-wrapper').css('left',"-786px");
 			$('#s_shop .section-content').css('height', "580px");
-			$('#s_shop, #s_shop .section-content').fadeIn();
+			//$('#s_shop, #s_shop .section-content').fadeIn();
 		
 		}
 		
@@ -56,7 +56,21 @@ shopController.change 	= function (){
 shopController.onProductAJAXComplete	= function ($data) {
 	
 	//todo: convert to xml and just populate markup with data values of the product
-	$('#s_loader').fadeOut();
+	$('#s_loader').fadeOut('fast', function($e){$('#s_shop, #s_shop .section-content').fadeIn(); });
 	$('#product_detail').html($data);
+	$('#add_to_cart_btn').click(function($e){
+		alert($.address.baseURL() + "/shopping-cart/add");
+		//todo ajax an addToCart call
+		//get product info
+		var ajaxObj = {
+				url: 		$.address.baseURL() + "shopping-cart/add",
+				success: 	mainController.onAddToCartAJAXComplete,
+				datatype:	"xml"
+			
+			};
+		$.ajax(ajaxObj);
+		return false;
+		
+	});
 
 };

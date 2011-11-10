@@ -37,8 +37,13 @@ class ShopController extends Zend_Controller_Action
     		$pModel	 	= new Application_Model_ProductMapper();
     		$products	= $pModel->fetchAllWithOptions($opts);
     		$this->view->product = $products[0];
+    		
+    		//add to cart form
+    		$form		= new Application_Form_AddToCart(array('sizes'=>array('small','medium')));
+    		$this->view->form = $form;
 
     	} else {
+    		//figure out where to redirect to
 			$deeplink 	= $this->_deeplinkBase;
 			$deeplink  .= $req->getParam('category') ? $req->getParam('category')."/" : "";
 			$deeplink  .= $req->getParam('product') ? $req->getParam('product')."/" : "";

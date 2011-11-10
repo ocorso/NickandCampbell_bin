@@ -1,11 +1,15 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Product</b> and script/action name <b>index</b></p>
+<ul class="shop-subnav subnav-grad">
+	<li><a href="shop" rel="address:/shop" title="Back">« Back</a></li>
+</ul>
+<div class="product-content" style="background-color: #ccc;">
+	<h1><?= $this->products[0]->name; ?></h1>
+	<img src="img/shop/mens/underwear/large/product-1.jpg" alt=""/>
+	<?= $this->form; ?>
 </div>
-<dl>
-	<?php foreach ($this->products as $p):  ?>
-	
-	
+
+<?php //print_r($this->products); ?>
+<?php //print_r($this->sizeArr); ?>
+<?php foreach ($this->products as $p):  ?>
 		<dt><?= $this->escape($p->name); ?></dt>
 		<dd><?= $this->sizeArr[$p->size]['name']; ?></dd>
 	<?php endforeach; ?>

@@ -21,6 +21,8 @@
 			<div class="clearfix"></div>
 		</div>
 	</section>
+	
+	
 	<section id="s_shop">
 		<div class="sidebar">
 			<h1>Shop</h1>
@@ -42,7 +44,6 @@
 						<li><a href="#" title="View All Items">ALL</a></li>
 						</ul>
 						<?php 
-
 						foreach($this->products as $p): ?>
 						<div class="product">
 							<a href="shop/mens/underwear/<?= $p->pretty; ?>" rel="address:/shop/mens/underwear/<?= $p->pretty; ?>" title="Click to View"><img src="img/shop/mens/underwear/thumbs/product-1.png" /></a>
@@ -52,11 +53,13 @@
 						<?php endforeach; ?>
 						<img class="right-img" src="img/shop/shop-side.jpg" alt="Nick and Campbell Mens Underwear">
 					</div>
-					<div id="product_detail">this will be ajaxed in :)</div>
+					
+					<div id="product_detail">Dynamic AJAX Product Content loaded on demand, like a boss.</div>
 				</div>	
 			</div>
 		
 	</section>
+	
 	
 	<section id="s_campaign">
 	<div id="lookbook_wrapper">
@@ -86,6 +89,8 @@
 			<div class="clearfix"></div>
 		</div>
 	</section>
+	
+	
 <!-- footer sections	-->
 	<section id="s_shipping">
 		<div class="sidebar">

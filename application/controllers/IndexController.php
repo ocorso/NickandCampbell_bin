@@ -11,9 +11,21 @@ class IndexController extends Zend_Controller_Action
     public function indexAction()
     {
 		//shop
+        //todo: figure out how to handle different gender/category combinations
+        //initially, we're just hard coding 'Mens Underwear'
         $products 					= new Application_Model_ProductMapper();	
         $options					= array('gender'=>'mens', 'category'=>'underwear');
-        $this->view->products		= $products->fetchAllWithOptions($options);
+        $productsAllSizes			= $products->fetchAllWithOptions($options);
+        $this->view->products		= array();
+        
+		//filter out various sizes of same product
+        foreach ($productsAllSizes as $p){
+        	//todo loop through what's already in the products
+        	if (!array_key_exists($p->getPretty(), $this->view->products)) {
+        		//add it
+        		$this->view->products[$p->getPretty()] = $p;
+        	} 
+        }
         
         //lookbook stuff
 		$this->view->lookbookPgs 	= 10;

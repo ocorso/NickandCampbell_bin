@@ -24,7 +24,7 @@ class ProductController extends Zend_Controller_Action
      		//set req
      		$req		= $this->getRequest();
     		//create opts
-    		$opts		= array('gender'=>'mens');
+    		$opts		= array('gender'=>'mens', 'pretty'=>'original-boxer-brief');
 			$opts  		= $req->getParam('category') ? 	array_merge($opts, array('category'=>$req->getParam('category'))) : $opts;
 			$opts  		= $req->getParam('product') ? 	array_merge($opts, array('pretty'=>$req->getParam('product'))) : $opts;
 			
@@ -35,12 +35,18 @@ class ProductController extends Zend_Controller_Action
     		
    		//disable layout
     	$layout = $this->_helper->layout();
-    	$layout->disableLayout();
-        $products = new Application_Model_ProductMapper();
-        $sizes = new Application_Model_SizingChartMapper();
+    	//$layout->disableLayout();
+
+    	//sizing chart test
+        $sizes 				= new Application_Model_SizingChartMapper();
         $this->view->sizeArr	= $sizes->fetchAll();
-    	//$this->view->products 	= $products->fetchAllWithOptions($opts);
     	
+        //add to cart test
+        $sOpts				= array('small','extra');
+        $form				= new Application_Form_AddToCart(array('sizes'=>$sOpts));
+        
+
+        $this->view->form 	= $form;
     }
 	
 

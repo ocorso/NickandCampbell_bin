@@ -111,11 +111,12 @@ class Application_Model_ProductMapper
 			$n = $column.' = ?';
 			$select->where($n, $opts[$column]);
 		}
+		$select->where('sku > ?', 0);
 		//oc: to view the query string
 		//echo $select->__toString();
+		
 		$resultSet	= $table->fetchAll($select);
 		
-		//$resultSet 	= $this->getDbTable()->fetchAll();
 		$entries	= array();
 		foreach($resultSet as $row){
 			$entry 	= new Application_Model_Product();

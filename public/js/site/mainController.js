@@ -158,6 +158,11 @@ mainController.cart.close 		= function ($e){
 	mainController.cart.isOpen = false;
 }
 
+mainController.onAddToCartAJAXComplete	= function ($data){
+	
+	//todo: update cart with current stuff and then open it.
+	
+}
 //*****************************************************
 //oc: Utility
 //*****************************************************

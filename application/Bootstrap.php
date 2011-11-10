@@ -43,6 +43,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         // Returns the router resource to bootstrap resource registry
         return $router;
     }
+    protected function _initSession(){
+    	Zend_Session::start();
+    }
     
 }//end bootstrap
 
