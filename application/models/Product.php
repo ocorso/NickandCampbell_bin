@@ -66,6 +66,9 @@ class Application_Model_Product
 // =================================================
 // ================ Getters / Setters
 // =================================================
+	//href
+	public function getHref(){ return 'shop/'.$this->_gender.'/'.$this->_category.'/'.$this->_pretty;	}
+	
 	//id
 	public function setId($id){
 		$this->_id = (int) $id;

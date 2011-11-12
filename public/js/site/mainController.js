@@ -3,7 +3,7 @@ var mainController 				= {};//object to hold all deeplink data
 mainController.which_content 	= "";//overlay to show
 mainController.dlArr			= [];//array of deeplinks
 mainController.cart				= {};//cart object contains all stuff related to the cart :)
-mainController.cart.isCartOpen	= false;
+mainController.cart.isOpen		= false;
 mainController.cart.defaultCSS	= {	width: "155px", 
 									height:"23px"
 								};
@@ -143,25 +143,49 @@ mainController.defaultHandler 	= function ($whichSection){
 //*****************************************************
 mainController.cart.open 		= function ($e){
 	log("open");
-	var newHeight = parseInt($('.cart-contents').css('height').replace("px","")) + 50;
-	var aniObj = {	height:newHeight+"px",
-					width:"226px"
-				};
-	$('#cart_pulldown').animate(aniObj);
-	$('#open_close').css('background-position','-10px 0').attr('title', 'Close Cart');
-	mainController.cart.isOpen = true;
-}
+	if (!mainController.cart.isOpen){
+		
+		var newHeight = parseInt($('.cart-contents').css('height').replace("px","")) + 50;
+		var aniObj = {	height:newHeight+"px",
+				width:"226px"
+		};
+		$('#cart_pulldown').animate(aniObj);
+		$('#open_close').css('background-position','-10px 0').attr('title', 'Close Cart');
+		mainController.cart.isOpen = true;
+	}//endif
+}//end function
 mainController.cart.close 		= function ($e){
 	log("close");
-	$('#cart_pulldown').animate(mainController.cart.defaultCSS);
-	$('#open_close').css('background-position','0 0').attr('title', 'Open Cart');
-	mainController.cart.isOpen = false;
-}
+	if (mainController.cart.isOpen){
+		
+		$('#cart_pulldown').animate(mainController.cart.defaultCSS);
+		$('#open_close').css('background-position','0 0').attr('title', 'Open Cart');
+		mainController.cart.isOpen = false;
+	}//endif
+}//end function
 
-mainController.onAddToCartAJAXComplete	= function ($data){
+mainController.cart.onAddItemAJAXComplete	= function ($cart){
 	
+	var subTotal 	= $cart.subTotal;
+	var items		= $cart.items;
+	log(items);
+	var cartContent = "<ul>";
+	for(var i=0; i< items.length; i++){
+		cartContent += mainController.cart.itemFactory(items[i]);
+	}
+	cartContent 	+= "<li>subtotal: <span class='right'>"+subTotal+"</li>";
+	cartContent		+= "</ul>";
 	//todo: update cart with current stuff and then open it.
-	
+	log(cartContent);
+	$('.cart-contents').html(cartContent);
+	mainController.cart.open();
+}
+mainController.cart.itemFactory				= function ($i){
+	log($i);	
+	var item 	= "<li class='item' data-Id='"+$i.id+"'>";
+	item	   += "<p>"+$i.name+"</p><p>"+$i.size+"<span class='remove-item'>Remove</span></p>";
+	item	   += "</li>";
+	return item
 }
 //*****************************************************
 //oc: Utility

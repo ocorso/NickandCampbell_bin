@@ -23,6 +23,7 @@
           <actionMethod actionName="index"/>
           <actionMethod actionName="add"/>
           <actionMethod actionName="remove"/>
+          <actionMethod actionName="empty"/>
         </controllerFile>
         <controllerFile controllerName="Shop">
           <actionMethod actionName="index"/>
@@ -136,6 +137,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="ShoppingCart">
             <viewScriptFile forActionName="remove"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShoppingCart">
+            <viewScriptFile forActionName="empty"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

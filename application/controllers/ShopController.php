@@ -34,8 +34,9 @@ class ShopController extends Zend_Controller_Action
 			$opts  		= $req->getParam('product') ? 	array_merge($opts, array('pretty'=>$req->getParam('product'))) : $opts;
 			
 			//get product info since we're ajaxing it in
-    		$pModel	 	= new Application_Model_ProductMapper();
+    		$pModel	 				= new Application_Model_ProductMapper();
     		$allSizesOfProduct		= $pModel->fetchAllWithOptions($opts);
+    		$productIdBySize		= array();
     		
 	    	//first get sizing chart
 		    $sizes 		= new Application_Model_SizingChartMapper();
@@ -46,14 +47,18 @@ class ShopController extends Zend_Controller_Action
 	        	if (!array_key_exists($sizeArr[$p->getSize()]['name'], $sOpts)) {
 	        		//if its not there add it
 	        		$sOpts[] = $sizeArr[$p->getSize()]['name'];
+	        		$productIdBySize[$sizeArr[$p->getSize()]['name']] = $p->getId();
 	        	} 
 	        }
     		//add to cart form
     		$form		= new Application_Form_AddToCart(array('sizes'=>$sOpts));
 
     		//load up view
-    		$this->view->form 		= $form;
-    		$this->view->product 	= $allSizesOfProduct[0];
+    		$this->view->form 				= $form;
+    		$this->view->product 			= $allSizesOfProduct[0];
+    		$this->view->productIdBySize	= $productIdBySize;
+    		$this->view->href				= 'shop/'.$allSizesOfProduct[0]->gender.'/'.$allSizesOfProduct[0]->category.'/'.$allSizesOfProduct[0]->pretty;
+    		$this->view->lrgImgSrc			= 'img/shop/'.$allSizesOfProduct[0]->gender.'/'.$allSizesOfProduct[0]->category.'/large/style-'.$allSizesOfProduct[0]->sid.'.jpg';
 
     	} else {
     		//figure out where to redirect to

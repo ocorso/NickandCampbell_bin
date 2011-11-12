@@ -24,6 +24,7 @@ class Application_Form_AddToCart extends Zend_Form
     	//quantity text input
        $quantity 	= new Zend_Form_Element_Text("quantity");
        $quantity->setLabel('Quantity:')
+       		->setValue(1)
        		->addFilter('Digits')
        		->addValidator('Digits')
        		->setRequired(true);

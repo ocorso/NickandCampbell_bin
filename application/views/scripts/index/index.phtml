@@ -29,8 +29,9 @@
 			<div id="shop_sidenav">
 				<h2><a href="#" title="Mens Underwear">Mens Underwear</a></h2>
 				<ul>
-					<li><a href="#" title="Original Boxer Brief">Original Boxer Brief</a></li>
-					<li><a href="#" title="Sexy Campbell Brief">Sexy Campbell Brief</a></li>
+					<?php foreach($this->products as $p): ?>
+					<li><a id="sidenav_<?= $p->pretty; ?>" href="<?= $p->href; ?>" rel="address:/<?= $p->href; ?>" title="<?= $p->name; ?>"><?= $p->name; ?></a></li>
+					<?php endforeach;?>
 				</ul>
 			</div>
 			<h3>Womens Collection <br/> Coming Soon</h3>
@@ -43,12 +44,11 @@
 						<li>View</li>
 						<li><a href="#" title="View All Items">ALL</a></li>
 						</ul>
-						<?php 
-						foreach($this->products as $p): ?>
+						<?php foreach($this->products as $p): ?>
 						<div class="product">
-							<a href="shop/mens/underwear/<?= $p->pretty; ?>" rel="address:/shop/mens/underwear/<?= $p->pretty; ?>" title="Click to View"><img src="img/shop/mens/underwear/thumbs/product-1.png" /></a>
-							<a href="#" title="Click to View"><?= $p->name; ?></a>
-							<a href="#" title="Click to View">$19.95</a>
+							<a href="<?= $p->href; ?>" rel="address:/<?= $p->href; ?>" title="Click to View"><img src="img/shop/<?= $p->gender; ?>/<?= $p->category; ?>/thumbs/style-<?= $p->sid; ?>.png" /></a>
+							<a href="<?= $p->href; ?>" rel="address:/<?= $p->href; ?>" title="Click to View"><?= $p->name; ?></a>
+							<a href="<?= $p->href; ?>" rel="address:/<?= $p->href; ?>" title="Click to View">$<?= $p->price; ?></a>
 						</div>
 						<?php endforeach; ?>
 						<img class="right-img" src="img/shop/shop-side.jpg" alt="Nick and Campbell Mens Underwear">

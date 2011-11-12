@@ -58,19 +58,42 @@ shopController.onProductAJAXComplete	= function ($data) {
 	//todo: convert to xml and just populate markup with data values of the product
 	$('#s_loader').fadeOut('fast', function($e){$('#s_shop, #s_shop .section-content').fadeIn(); });
 	$('#product_detail').html($data);
+	
+	//set initial values in data
+	shopController.setId();
+	shopController.setQuantity();
+	$("#sidenav_"+mainController.dlArr[3]).addClass('active');
+	
+	//addHandlers
+	$('#size').change(shopController.setId);
+	$('#quantity').change(shopController.setQuantity);
+	
 	$('#add_to_cart_btn').click(function($e){
-		alert($.address.baseURL() + "/shopping-cart/add");
-		//todo ajax an addToCart call
-		//get product info
-		var ajaxObj = {
-				url: 		$.address.baseURL() + "shopping-cart/add",
-				success: 	mainController.onAddToCartAJAXComplete,
-				datatype:	"xml"
+		
+		$('#product_data').data('size', $('#size option').eq($('#size').val()).attr('label'));
+		var url			= "shopping-cart/add";
+		var data		= {itemToAdd: $('#product_data').data()};
+		var success 	= function ($d){ mainController.cart.onAddItemAJAXComplete($d);};
+		var datatype	= "json";
 			
-			};
-		$.ajax(ajaxObj);
+		$.post(url, data, success, datatype);
+		
 		return false;
 		
 	});
 
+};
+
+shopController.setId			= function($e){
+	
+	var data 	= $('#product_data').data();
+	var pid		= data[$('#size option').eq($('#size').val()).attr('label')];
+	log("product id: "+pid);
+	$('#product_data').data('id', pid);
+	
+};
+shopController.setQuantity			= function($e){
+	
+	$('#product_data').data('quantity', parseInt($('#quantity').val()));
+	
 };

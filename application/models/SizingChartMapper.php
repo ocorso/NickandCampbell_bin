@@ -34,6 +34,17 @@ class Application_Model_SizingChartMapper
 		}// endforeach
 		
 		return $entries;
+	}//end function
+
+	public function fetchAllIndexByName(){
+
+		$resultSet 	= $this->getDbTable()->fetchAll();
+		$entries	= array();
+		foreach($resultSet as $row){
+			$entries[$row->name]	= array('id'=> $row->size_id, 'description'=>$row->description);
+		}// endforeach
+		
+		return $entries;
 		
 	}//end function
 }

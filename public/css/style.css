@@ -228,6 +228,7 @@ h1, h2,h3,h4,h5,p, a, form{
    ========================================================================== */
 .left{float:left;}
 .right{float:right;}
+.active{ color: red;}
 
 .shadow {
   -moz-box-shadow: 5px 5px 5px #000;
@@ -394,6 +395,10 @@ section{
 	padding-bottom: 13px;
 	border-right: solid 1px black;
 }
+#shop_sidenav li{
+	
+	list-style-type: none;
+}
 #shop_sidenav ul, #shop_sidenav h2{
 	padding-left: 0;
 	margin: 0;
@@ -406,9 +411,10 @@ section{
 }
 #shop_sidenav li a, #shop_sidenav li a:visited {
 	color: #333;
-	font-size: 26px;
+	font-size: 24px;
 	text-decoration: none;
 }
+#shop_sidenav li a:active{ color: red;}
 #shop_sidenav li a:hover{
 	color: red;
 }
@@ -488,6 +494,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	margin-bottom: 10px;
 	
 }
+.remove-item{
+	color: red;
+}
 /* =============================================================================
    @ShoppingCart
    ========================================================================== */
@@ -511,6 +520,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	font-size: 18px;
 	display: block;
 	width: 100%;
+	margin-left: 8px;
 }
 #cart_pulldown #open_close:hover{
 	color: #f00;
@@ -520,13 +530,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	width: 8px;
 	height: 8px;
 	float: right;
-	margin-top: 8px;
-	margin-right: 11px;
+	margin-top: 9px;
+	margin-right: 13px;
 }
 #cart_pulldown h2{
 	font-weight: normal;
 }
-
+.cart-contents ul{
+	list-style-image:url('../img/icons/list-style-img.png');
+}
 
 /* =============================================================================
    @Campaign
