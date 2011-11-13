@@ -47,7 +47,7 @@ shopController.change 	= function (){
 			$('#s_shop .section-content').animate({height: "580px"});
 		}else{
 			$('.section-content-wrapper').css('left',"0");
-			$('section, #s_loader, #s_shop .section-content, #s_shop .right-img').hide();
+			$('section, #s_loader, #s_shop .section-content, #s_shop .right-img, .section').hide();
 			$('#s_shop').show('slow', function(){$('#s_shop .section-content:not(#product_detail)').show('fast', function(){$('#s_shop .right-img').show();});});
 		}
 	}//endif
@@ -73,7 +73,7 @@ shopController.onProductAJAXComplete	= function ($data) {
 		$('#product_data').data('size', $('#size option').eq($('#size').val()).attr('label'));
 		var url			= "shopping-cart/add";
 		var data		= {itemToAdd: $('#product_data').data()};
-		var success 	= function ($d){ mainController.cart.onAddItemAJAXComplete($d);};
+		var success 	= function ($d){ mainController.cart.onAJAXComplete($d);};
 		var datatype	= "json";
 			
 		$.post(url, data, success, datatype);

@@ -24,6 +24,7 @@
           <actionMethod actionName="add"/>
           <actionMethod actionName="remove"/>
           <actionMethod actionName="empty"/>
+          <actionMethod actionName="dump"/>
         </controllerFile>
         <controllerFile controllerName="Shop">
           <actionMethod actionName="index"/>
@@ -141,6 +142,9 @@
           <viewControllerScriptsDirectory forControllerName="ShoppingCart">
             <viewScriptFile forActionName="empty"/>
           </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShoppingCart">
+            <viewScriptFile forActionName="dump"/>
+          </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
         <viewFiltersDirectory enabled="false"/>
@@ -175,7 +179,7 @@
       <testApplicationDirectory>
         <testApplicationBootstrapFile filesystemName="bootstrap.php"/>
         <testApplicationControllerDirectory>
-          <testApplicationControllerFile filesystemName="ControllerTest.php"/>
+          <testApplicationControllerFile/>
         </testApplicationControllerDirectory>
       </testApplicationDirectory>
       <testLibraryDirectory>

@@ -10,6 +10,7 @@ jQuery(function($) {
 	var addSiteHandlers = function(){
 		log("addHandlers");
 		
+		//main logo fade to red.
 		$("#logo").hover(
 				function () {
 					    $("#logo_on").fadeIn('fast');
@@ -18,6 +19,8 @@ jQuery(function($) {
 					    $("#logo_on").fadeOut('fast');
 					  }
 		);//end hover
+		
+		//flip toggle cart handle
 		$("#open_close").hover(
 				function () {
 					var attr = mainController.cart.isOpen ? "-10px -9px": "0 -9px";
@@ -34,6 +37,9 @@ jQuery(function($) {
 			$e.preventDefault();
 //			return false;
 		});
+		
+		//cart handlers
+		mainController.cart.addHandlers();
 		
 	};//end function addSitehandlers
 	

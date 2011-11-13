@@ -4,9 +4,15 @@ mainController.which_content 	= "";//overlay to show
 mainController.dlArr			= [];//array of deeplinks
 mainController.cart				= {};//cart object contains all stuff related to the cart :)
 mainController.cart.isOpen		= false;
+mainController.cart.isEmpty		= true;
 mainController.cart.defaultCSS	= {	width: "155px", 
 									height:"23px"
 								};
+mainController.cart.emptytCSS	= {	width: "226px", 
+									height:"131px"
+								};
+mainController.cart.emptyText	= "<h2>Your shopping cart is empty.</h2>";
+
 var shopController				= {};
 var campaign					= {};
 
@@ -30,6 +36,8 @@ mainController.init 	= function (){
 	//browser resize
 	$(window).resize(mainController.handleResize);
 	
+	//determine if cart is empty
+	mainController.cart.isEmpty = $('.cart-contents ul li').length == 0 ? true : false;
 }//end init
 
 mainController.inChange 	= function ($e){
@@ -45,6 +53,8 @@ mainController.exChange 	= function ($e){
 mainController.change 	= function ($e){
 	log("change proper");
 	
+		mainController.cart.close();
+		
 	    //determine main nav
 		mainController.dlArr 		= $.address.pathNames()[0] ? $.address.pathNames() : ["/"];//set deeplink if you can
 		$('nav ul li a').removeClass('current-section');
@@ -92,9 +102,17 @@ mainController.change 	= function ($e){
 mainController.homeHandler = function(){
 	log("we're home");
 	
+	//todo: put flash on page if possible.
 	$('#s_loader, section').hide();
-	//hide main overlay
-	$('#overlay').hide();
+	var flashvars = {baseUrl:$.address.baseURL()};
+	var params = {};
+	params.menu = "false";
+	params.quality = "low";
+	var attributes = {class:"section"};
+	swfobject.embedSWF("swf/ncLoader.swf",
+	"s_home", "1024", "619",
+	"9.0.0", false, flashvars, params, attributes);
+	
 
 	//oc: resume previous state of the homepage
 	$('#s_home').fadeIn("slow");//show home overlay
@@ -108,7 +126,7 @@ mainController.homeHandler = function(){
 mainController.learnHandler = function(){
 
 	//hide stuff
-	$('#s_loader, #s_learn .section-content, section').hide();
+	$('#s_loader, #s_learn .section-content, section, .section').hide();
 	//show learn elements the way i want.
 	$('#s_learn').show('slow', function(){$('#s_learn .section-content').fadeIn('fast');});
 	
@@ -120,7 +138,7 @@ mainController.learnHandler = function(){
 mainController.contactHandler = function(){
 	log("contact bang");
 	
-	$('#s_loader, #s_contact .section-content, section').hide();
+	$('#s_loader, #s_contact .section-content, section, .section').hide();
 	$('#s_contact').show('slow', function(){$('#s_contact .section-content').fadeIn('fast');});
 	
 }//end function contactHandler
@@ -133,7 +151,7 @@ mainController.defaultHandler 	= function ($whichSection){
 	var section = "#s_" + $whichSection;
 	log("defaultHandler: "+section);
 	
-	$('#s_loader, section, '+ section+' .section-content').hide();
+	$('#s_loader, section, '+ section+' .section-content, .section').hide();
 	$(section).show('slow', function(){$("#s_"+mainController.dlArr[0] +' .section-content').fadeIn('fast');});
 	
 }//end function
@@ -142,53 +160,78 @@ mainController.defaultHandler 	= function ($whichSection){
 //oc: Shopping Cart JS
 //*****************************************************
 mainController.cart.open 		= function ($e){
-	log("open");
-	if (!mainController.cart.isOpen){
+	log("open, cart-contents height: "+$('.cart-contents').height());
+	//if (!mainController.cart.isOpen){
 		
-		var newHeight = parseInt($('.cart-contents').css('height').replace("px","")) + 50;
-		var aniObj = {	height:newHeight+"px",
-				width:"226px"
-		};
-		$('#cart_pulldown').animate(aniObj);
+		var newHeight = $('.cart-contents').height() + 50;
+		var aniObj	= 	mainController.cart.isEmpty ? mainController.cart.emptytCSS : {height:newHeight+"px",width:"226px"};
+		
+		$('#cart_pulldown').animate(aniObj, function(){ $('.cart-contents').fadeIn('fast');});
 		$('#open_close').css('background-position','-10px 0').attr('title', 'Close Cart');
 		mainController.cart.isOpen = true;
-	}//endif
+	//}else{
+		
+		
 }//end function
 mainController.cart.close 		= function ($e){
 	log("close");
 	if (mainController.cart.isOpen){
-		
+		$('.cart-contents').fadeOut('fast');
 		$('#cart_pulldown').animate(mainController.cart.defaultCSS);
 		$('#open_close').css('background-position','0 0').attr('title', 'Open Cart');
 		mainController.cart.isOpen = false;
 	}//endif
 }//end function
 
-mainController.cart.onAddItemAJAXComplete	= function ($cart){
+mainController.cart.onAJAXComplete	= function ($cart){
 	
 	var subTotal 	= $cart.subTotal;
 	var items		= $cart.items;
 	log(items);
-	var cartContent = "<ul>";
-	for(var i=0; i< items.length; i++){
-		cartContent += mainController.cart.itemFactory(items[i]);
-	}
-	cartContent 	+= "<li>subtotal: <span class='right'>"+subTotal+"</li>";
-	cartContent		+= "</ul>";
-	//todo: update cart with current stuff and then open it.
-	log(cartContent);
-	$('.cart-contents').html(cartContent);
+	//put items in the cart if they exist, otherwise handle an empty cart
+	if (items.length > 0){
+		mainController.cart.isEmpty = false;
+		var cartContent = "<ul>";
+		for(var i=0; i< items.length; i++){	cartContent += mainController.cart.itemFactory(items[i]);}
+		cartContent 	+= "<li class='subtotal'>subtotal: <span class='right'>$"+subTotal+"</li>";
+		cartContent		+= "</ul>";
+		$('.cart-contents').html(cartContent);
+	}else{
+		mainController.cart.isEmpty = true;
+		$('.cart-contents').html(mainController.cart.emptyText);
+	}	
+	
+	//handlers on new cart
+	mainController.cart.addHandlers();
+	
 	mainController.cart.open();
 }
 mainController.cart.itemFactory				= function ($i){
-	log($i);	
+	//log($i);	
 	var item 	= "<li class='item' data-Id='"+$i.id+"'>";
-	item	   += "<p>"+$i.name+"</p><p>"+$i.size+"<span class='remove-item'>Remove</span></p>";
-	item	   += "</li>";
+	item	   += "<p>"+$i.name+"</p><p>"+$i.size+" x"+$i.quantity+" <span class='remove-item'>Remove</span>";
+	item	   += "<span class='right'>$"+$i.price+"</span>";
+	item	   += "</p></li>";
 	return item
 }
+mainController.cart.removeItem				= function ($e){
+	var item = $(this).parents('li').data();
+	log("remove: "+ item['id']);
+	
+	var url			= "shopping-cart/remove";
+	var data		= {itemToRemove: item['id']};
+	var success 	= function ($d){ mainController.cart.onAJAXComplete($d);};
+	var datatype	= "json";
+		
+	$.post(url, data, success, datatype);
+}
+mainController.cart.addHandlers				= function(){
+	
+	$('.remove-item').bind('click', mainController.cart.removeItem);
+
+}
 //*****************************************************
-//oc: Utility
+//oc: Resize
 //*****************************************************
 mainController.handleResize 	= function ($e){
 	var w		= window.innerWidth;

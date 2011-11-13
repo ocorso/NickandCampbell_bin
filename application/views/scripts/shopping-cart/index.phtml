@@ -1,1 +1,16 @@
+<?php if (count($this->cartObj->items) == 0): ?>
 <h2>Your shopping cart is empty.</h2>
+<?php else : ?>
+<ul>
+<?php foreach($this->cartObj->items as $item): ?>
+	<li class='item' data-Id="<?= $item['id']; ?>">
+		<p><?= $item['name']; ?></p>
+		<p><?= $item['size']; ?> x<?= $item['quantity']; ?>
+			<span class='remove-item'>Remove</span>
+			<span class='right'><?= $item['price']; ?></span>
+		</p>
+	</li>
+<?php endforeach; ?>
+	<li class='subtotal'>subtotal: <span class='right'>$<?= $this->cartObj->subTotal; ?></span></li>
+</ul>
+<?php endif; ?>

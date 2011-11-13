@@ -494,9 +494,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	margin-bottom: 10px;
 	
 }
-.remove-item{
-	color: red;
-}
 /* =============================================================================
    @ShoppingCart
    ========================================================================== */
@@ -535,11 +532,36 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 #cart_pulldown h2{
 	font-weight: normal;
+	font-size: 33px;
+	margin-top: 10px;
+	margin-left: 20px;
 }
 .cart-contents ul{
 	list-style-image:url('../img/icons/list-style-img.png');
+	padding-left: 19px;
 }
-
+.cart-contents ul li{
+	font-size: 20px;	
+	margin-bottom: 10px;
+}
+.cart-contents p{
+	margin: 1px;
+}
+.subtotal{
+	color: #00fcff;	
+	font-family: 'VIPRegular';
+	text-transform: lowercase;	
+	font-size: 20px;
+}
+.remove-item{
+	font-size: 18px;
+	color: red;
+	cursor: pointer;
+	margin-left: 5px;
+}
+.remove-item:hover{
+	color: #d60000;	
+}
 /* =============================================================================
    @Campaign
    ========================================================================== */
@@ -721,7 +743,7 @@ dd{
 	width: 14px;
 	height: 15px;
 	float: right;
-	margin-top: 20px;
+	margin-top: 16px;
 	margin-right: 15px;
 }
 #add_to_cart_form_extended { margin-top: -15px;}

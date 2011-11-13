@@ -24,9 +24,10 @@
 	<header>
 		<div id="cart_pulldown" class="shadow">
 			<a id="open_close" href="#" title="Open Cart">Shopping Cart<span class="cart-arrow"></span></a>
-			<div class="cart-contents">
+			<div class="cart-contents" style="display:none;">
 				<?php echo $this->action('index', 'shopping-cart'); ?>
 			</div>
+			
 		</div>
 		<aside id="logo">
 			<a id="logo_off" href="/" title="Nick + Campbell"><img src="img/logo/nc-logo-off.png"/></a>
@@ -59,7 +60,7 @@
 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>-->
 <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
 	<script src="js/libs/jquery.address-1.4.min.js"></script>
-	<script src="js/libs/jquery.isotope.min.js"></script>
+	<script src="js/libs/swfobject.js"></script>
 	<script src="js/site/mainController.js"></script>
 	<script src="js/site/shopController.js"></script>
 	<script src="js/site/campaignController.js"></script>
