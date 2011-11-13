@@ -9,6 +9,6 @@ RewriteRule ^.*$ index.php [NC,L]
 RewriteRule ^shop(.*) /hash/shop$1 [R=301,L]
 
 # SetEnvIf HTTP_HOST nickandcampbell.com APPLICATION_ENV=production
-# SetEnvIf HTTP_HOST staging.nickandcampbell.com APPLICATION_ENV=staging 
+# SetEnv APPLICATION_ENV=staging 
  SetEnvIf HTTP_HOST nc.dev APPLICATION_ENV=development
 # SetEnv APPLICATION_ENV mamp
