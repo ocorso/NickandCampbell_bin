@@ -5,11 +5,13 @@ class CheckoutController extends Zend_Controller_Action
 
     public function init()
     {
-        /* Initialize action controller here */
+        $this->_redirector = $this->_helper->getHelper('Redirector');
     }
 
     public function indexAction()
     {
+    	//todo redirect to https if we're on production
+    	$this->_redirector->gotoUrl("https://nc.dev"."/checkout/");
     	
         $request	= $this->getRequest();
         $form		= new Application_Form_Checkout();

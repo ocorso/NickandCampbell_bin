@@ -5,11 +5,12 @@ class IndexController extends Zend_Controller_Action
 
     public function init()
     {
-        /* Initialize action controller here */
+        $this->_redirector = $this->_helper->getHelper('Redirector');
     }
 
     public function indexAction()
     {
+    	
 		//shop
         //todo: figure out how to handle different gender/category combinations
         //initially, we're just hard coding 'Mens Underwear'

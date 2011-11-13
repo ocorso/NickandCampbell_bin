@@ -21,11 +21,9 @@ var campaign					= {};
 //*****************************************************
 mainController.init 	= function (){
 	
-	log("init site");
+	log("init site: "+ $.address.value());
 	
-	//enable deeplinking
-	$.address.init(function(){})
-	.change(mainController.change);//end address change function
+	$.address.init(function(){}).change(mainController.change);//end address change function
 	//.internalChange(mainController.inChange)
 	//.externalChange(mainController.exChange);
 	
@@ -38,6 +36,7 @@ mainController.init 	= function (){
 	
 	//determine if cart is empty
 	mainController.cart.isEmpty = $('.cart-contents ul li').length == 0 ? true : false;
+	
 }//end init
 
 mainController.inChange 	= function ($e){
@@ -51,6 +50,22 @@ mainController.exChange 	= function ($e){
 }//end function external change
 
 mainController.change 	= function ($e){
+
+	//enable deeplinking if we're not at checkout
+	if ($.address.baseURL().contains("checkout")){
+		log('checkout')
+		switch ($.address.value()){
+			case "/" : log("we're at checkout base");
+				mainController.cart.open();
+				break;
+			case "/complete" : log("checkout complete");
+				break;
+			default: 
+				var url = $.address.baseURL().replace('/checkout', "") +$.address.value();
+				window.location = url;
+		}//endswitch
+	}else{
+		
 	log("change proper");
 	
 		mainController.cart.close();
@@ -90,6 +105,7 @@ mainController.change 	= function ($e){
             }//end switch
     		
             //$('nav ul li a:not(.current-section)').unbind().hover(function(){$(this).addClass('current-section');},function(){$(this).removeClass('current-section');});
+	}//end if
 
 	
 }//end address change function
@@ -164,10 +180,13 @@ mainController.cart.open 		= function ($e){
 	log("open, cart-contents height: "+$('.cart-contents').height());
 	//if (!mainController.cart.isOpen){
 		
-		var newHeight = $('.cart-contents').height() + 50;
+		var newHeight = $('.cart-contents').height() + 95;//checkout button height plus whatever's in the cart.
 		var aniObj	= 	mainController.cart.isEmpty ? mainController.cart.emptytCSS : {height:newHeight+"px",width:"226px"};
 		
-		$('#cart_pulldown').animate(aniObj, function(){ $('.cart-contents, #cart_pulldown .checkout-btn').fadeIn('fast');});
+		$('#cart_pulldown').animate(aniObj, function(){ 
+			$('.cart-contents, #cart_pulldown').fadeIn('fast'); 
+			if(mainController.cart.isEmpty == false)	$('.checkout-btn').fadeIn('fast'); 
+		});
 		$('#open_close').css('background-position','-10px 0').attr('title', 'Close Cart');
 		mainController.cart.isOpen = true;
 	//}else{
@@ -201,6 +220,7 @@ mainController.cart.onAJAXComplete	= function ($cart){
 		$('.cart-contents').html(cartContent);
 	}else{
 		mainController.cart.isEmpty = true;
+		$('.checkout-btn').fadeOut('fast');
 		$('.cart-contents').html(mainController.cart.emptyText);
 	}	
 	
@@ -231,6 +251,7 @@ mainController.cart.removeItem				= function ($e){
 mainController.cart.addHandlers				= function(){
 	
 	$('.remove-item').bind('click', mainController.cart.removeItem);
+//	$('.checkout-btn').bind('click', function($e){	});
 
 }
 //*****************************************************
