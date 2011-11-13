@@ -104,11 +104,12 @@ mainController.homeHandler = function(){
 	
 	//todo: put flash on page if possible.
 	$('#s_loader, section').hide();
-	var flashvars = {baseUrl:$.address.baseURL()};
-	var params = {};
-	params.menu = "false";
-	params.quality = "low";
-	var attributes = {class:"section"};
+	var flashvars 	= {baseUrl:$.address.baseURL()};
+	var params 		= {};
+	params.menu 	= "false";
+	params.quality 	= "low";
+	params.wmode	= "transparent";
+	var attributes 	= {class:"section"};
 	swfobject.embedSWF("swf/ncLoader.swf",
 	"s_home", "1024", "619",
 	"9.0.0", false, flashvars, params, attributes);
@@ -166,7 +167,7 @@ mainController.cart.open 		= function ($e){
 		var newHeight = $('.cart-contents').height() + 50;
 		var aniObj	= 	mainController.cart.isEmpty ? mainController.cart.emptytCSS : {height:newHeight+"px",width:"226px"};
 		
-		$('#cart_pulldown').animate(aniObj, function(){ $('.cart-contents').fadeIn('fast');});
+		$('#cart_pulldown').animate(aniObj, function(){ $('.cart-contents, #cart_pulldown .checkout-btn').fadeIn('fast');});
 		$('#open_close').css('background-position','-10px 0').attr('title', 'Close Cart');
 		mainController.cart.isOpen = true;
 	//}else{
@@ -176,11 +177,13 @@ mainController.cart.open 		= function ($e){
 mainController.cart.close 		= function ($e){
 	log("close");
 	if (mainController.cart.isOpen){
-		$('.cart-contents').fadeOut('fast');
+		$('.cart-contents, #cart_pulldown .checkout-btn').fadeOut('fast');
 		$('#cart_pulldown').animate(mainController.cart.defaultCSS);
 		$('#open_close').css('background-position','0 0').attr('title', 'Open Cart');
+		
 		mainController.cart.isOpen = false;
 	}//endif
+	
 }//end function
 
 mainController.cart.onAJAXComplete	= function ($cart){

@@ -562,6 +562,29 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .remove-item:hover{
 	color: #d60000;	
 }
+#cart_pulldown .checkout-btn{
+	color: #00ff00;
+	position: absolute;
+	bottom: 0;	
+	cursor: pointer;
+	font-size: 30px;
+	font-family: 'VIPRegular';
+	text-transform: lowercase;
+	border-top: solid 1px #666;
+	width: 226px;
+	text-align: center;
+	display: none;
+}
+#cart_pulldown .checkout-btn:after{
+	content: "";
+	background-image: url('../img/icons/sprite-sheet.png');
+	background-position: -34px 0;
+	width: 14px;
+	height: 15px;
+	float: right;
+	margin-top: 16px;
+	margin-right: 15px;
+}
 /* =============================================================================
    @Campaign
    ========================================================================== */
@@ -728,6 +751,7 @@ dd{
 	padding-left: 8px;
 	padding-right: 8px;
 }
+
 .product-content .checkout-btn{
 	top: 5px;
 	color: green;
