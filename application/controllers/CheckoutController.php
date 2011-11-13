@@ -11,7 +11,7 @@ class CheckoutController extends Zend_Controller_Action
     public function indexAction()
     {
     	//todo redirect to https if we're on production
-    	$this->_redirector->gotoUrl("https://".$_SERVER["SERVER_NAME"]."/checkout/");
+    	if (!isset ($_ENV["HTTPS"]))    	$this->_redirector->gotoUrl("https://".$_SERVER["SERVER_NAME"]."/checkout/");
     	
         $request	= $this->getRequest();
         $form		= new Application_Form_Checkout();
