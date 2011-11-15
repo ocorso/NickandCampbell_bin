@@ -20,11 +20,17 @@ class Application_Form_Checkout extends Zend_Form
     {
 		$this->setMethod("post");
 		
+		$shipping1 	= new Zend_Form_SubForm();
+		$shipping2 	= new Zend_Form_SubForm();
+		$billing1	= new Zend_Form_SubForm();
+		$billing2	= new Zend_Form_SubForm();
+		$confirm	= new Zend_Form_SubForm();
+		
 		//first name
-		$this->addElement('text','fname',array(
+		$shipping1->addElement('text','fname',array(
 			'label'		=> 	'First Name:',
 			'required'	=>	true,
-			'filters'	=>	array('StringTrim'),
+			'filters'	=>	array('StringTrim', 'StringToLower'),
 			'validators'=> 	array(
 									array('validator'=>'StringLength', 'options'=>array(0,20))
 									)
@@ -32,7 +38,7 @@ class Application_Form_Checkout extends Zend_Form
 		));
 		
 		//last name
-		$this->addElement('text','lname',array(
+		$shipping1->addElement('text','lname',array(
 			'label'		=> 	'Last Name:',
 			'required'	=>	true,
 			'filters'	=>	array('StringTrim'),
@@ -42,7 +48,7 @@ class Application_Form_Checkout extends Zend_Form
 		
 		));
 		//address 1
-		$this->addElement('text','addr1',array(
+		$shipping1->addElement('text','addr1',array(
 			'label'		=> 	'Address 1:',
 			'required'	=>	true,
 			'filters'	=>	array('StringTrim'),
@@ -53,7 +59,7 @@ class Application_Form_Checkout extends Zend_Form
 		));
 		
 		//address 2
-		$this->addElement('text','addr2',array(
+		$shipping1->addElement('text','addr2',array(
 			'label'		=> 	'Address 2:',
 			'required'	=>	false,
 			'filters'	=>	array('StringTrim'),
@@ -64,7 +70,7 @@ class Application_Form_Checkout extends Zend_Form
 		));
 		
 		//city
-		$this->addElement('text','city',array(
+		$shipping1->addElement('text','city',array(
 			'label'		=> 	'City:',
 			'required'	=>	false,
 			'filters'	=>	array('StringTrim'),
@@ -80,10 +86,10 @@ class Application_Form_Checkout extends Zend_Form
 		$state->setLabel('State')
 		->setMultiOptions($statesArr)
 		->setRegisterInArrayValidator(false);
-		$this->addElement($state);
+		$shipping1->addElement($state);
 		
 		//zip
-		$this->addElement('text','zip',array(
+		$shipping1->addElement('text','zip',array(
 			'label'		=> 	'Zip Code:',
 			'required'	=>	true,
 			'validators'=> 	array(
@@ -92,7 +98,7 @@ class Application_Form_Checkout extends Zend_Form
 		));
 		
 		//card number
-		$this->addElement('text','card_num',array(
+		$billing2->addElement('text','card_num',array(
 			'label'		=> 	'Credit Card Number:',
 			'required'	=>	true,
 			'validators'=> 	array(
@@ -101,7 +107,7 @@ class Application_Form_Checkout extends Zend_Form
 		));
 
 		//exp_date 
-		$this->addElement('text','exp_date',array(
+		$billing2->addElement('text','exp_date',array(
 			'label'		=> 	'Expiration Date:',
 			'required'	=>	true,
 			'validators'=> 	array(
@@ -109,7 +115,7 @@ class Application_Form_Checkout extends Zend_Form
 						)
 		));	
 		//amount
-		$this->addElement('text','amount',array(
+		$confirm->addElement('text','amount',array(
 			'label'		=> 	'Amount:',
 			'required'	=>	true,
 			'validators'=> 	array(
@@ -118,11 +124,17 @@ class Application_Form_Checkout extends Zend_Form
 		));	
 			
 		//submit button
-		$this->addElement('submit', 'submit', array(
+		$confirm->addElement('submit', 'submit', array(
 													'ignore'=>true, 
 													'label'	=>'Checkout'
 		));
+		$subForms 		= array(	'shipping1'=> $shipping1,
+									'shipping2'=> $shipping2,
+									'billing1'=> $billing1,
+									'billing2'=> $billing2,
+									'confirm'=>	$confirm);
 		
+		$this->addSubForms($subForms);
 		
 	}
 

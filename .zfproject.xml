@@ -51,11 +51,13 @@
         <dbTableDirectory>
           <dbTableFile dbTableName="Product"/>
           <dbTableFile dbTableName="SizingChart"/>
+          <dbTableFile dbTableName="Order"/>
         </dbTableDirectory>
         <modelFile modelName="ProductMapper"/>
         <modelFile modelName="Product"/>
         <modelFile modelName="SizingChart"/>
         <modelFile modelName="SizingChartMapper"/>
+        <modelFile modelName="Order"/>
       </modelsDirectory>
       <modulesDirectory>
         <moduleDirectory moduleName="Shop">
@@ -179,7 +181,7 @@
       <testApplicationDirectory>
         <testApplicationBootstrapFile filesystemName="bootstrap.php"/>
         <testApplicationControllerDirectory>
-          <testApplicationControllerFile/>
+          <testApplicationControllerFile filesystemName="ControllerTest.php"/>
         </testApplicationControllerDirectory>
       </testApplicationDirectory>
       <testLibraryDirectory>

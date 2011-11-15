@@ -648,6 +648,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 form{
 	color: #aaa;
 }
+fieldset{ float: left;}
 input{
 	border-color: #333;
 	border-style: solid;
