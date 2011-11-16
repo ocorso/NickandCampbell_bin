@@ -52,12 +52,17 @@
           <dbTableFile dbTableName="Product"/>
           <dbTableFile dbTableName="SizingChart"/>
           <dbTableFile dbTableName="Order"/>
+          <dbTableFile dbTableName="ShippingAddresses"/>
+          <dbTableFile dbTableName="BillingAddresses"/>
         </dbTableDirectory>
         <modelFile modelName="ProductMapper"/>
         <modelFile modelName="Product"/>
         <modelFile modelName="SizingChart"/>
         <modelFile modelName="SizingChartMapper"/>
         <modelFile modelName="Order"/>
+        <modelFile modelName="BillingAddress"/>
+        <modelFile modelName="ShippingAddress"/>
+        <modelFile modelName="ShippingAddressMapper"/>
       </modelsDirectory>
       <modulesDirectory>
         <moduleDirectory moduleName="Shop">

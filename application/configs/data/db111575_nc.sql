@@ -6,9 +6,40 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 -- --------------------------------------------------------
 
---
+---------------------------------------------
+-- Table structure for table `shipping_addresses`
+---------------------------------------------
+CREATE TABLE `shipping_addresses` (
+	`shid` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'shipping address id',
+	`ref_cid` BIGINT UNSIGNED NOT NULL COMMENT 'ref to customer id',
+	`address1` VARCHAR( 255 ) NOT NULL ,
+	`address2` VARCHAR( 255 ) NOT NULL ,
+	`city` VARCHAR( 255 ) NOT NULL ,
+	`state` VARCHAR( 30 ) NOT NULL ,
+	`country` VARCHAR( 255 ) NOT NULL ,
+	`zip` VARCHAR( 10 ) NOT NULL ,
+	`created_at` DATETIME NOT NULL
+) ENGINE = MYISAM ;
+
+---------------------------------------------
+-- Table structure for table `billing_addresses`
+---------------------------------------------
+CREATE TABLE `billing_addresses` (
+	`shid` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'billing address id',
+	`ref_cid` BIGINT UNSIGNED NOT NULL COMMENT 'ref to customer id',
+	`address1` VARCHAR( 255 ) NOT NULL ,
+	`address2` VARCHAR( 255 ) NOT NULL ,
+	`city` VARCHAR( 255 ) NOT NULL ,
+	`state` VARCHAR( 30 ) NOT NULL ,
+	`country` VARCHAR( 255 ) NOT NULL ,
+	`zip` VARCHAR( 10 ) NOT NULL ,
+	`created_at` DATETIME NOT NULL
+) ENGINE = MYISAM ;
+
+
+---------------------------------------------
 -- Table structure for table `products`
---
+---------------------------------------------
 
 CREATE TABLE `products` (
   `id` tinyint(100) unsigned NOT NULL AUTO_INCREMENT,
@@ -46,9 +77,9 @@ INSERT INTO `products` (`id`, `sid`, `name`, `pretty`, `description1`, `descript
 (9, 2, 'The Original Boxer Brief', 'original-boxer-brief', 'This pair is sick', 'You want these', 'FW11', 'select', 4, 'black', 'underwear', 'mens', 2, 19.95, 0),
 (10, 2, 'The Original Boxer Brief', 'original-boxer-brief', 'This pair is sick', 'You want these', 'FW11', 'select', 5, 'black', 'underwear', 'mens', 2, 19.95, 0);
 
---
+----------------------------------------------
 -- Table structure for table `ref_sizing_chart`
---
+----------------------------------------------
 CREATE TABLE `ref_sizing_chart` (
   `size_id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
