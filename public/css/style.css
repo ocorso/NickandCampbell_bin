@@ -516,8 +516,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	text-decoration: none;
 	font-size: 18px;
 	display: block;
-	width: 100%;
-	margin-left: 8px;
+
+	padding-left: 8px;
+	padding-bottom: 8px;
+	border-bottom: solid 1px #666;
 }
 #cart_pulldown #open_close:hover{
 	color: #f00;
@@ -656,7 +658,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 form{
 	color: #aaa;
 }
-fieldset{ float: left;}
+
 input{
 	border-color: #333;
 	border-style: solid;
@@ -699,6 +701,14 @@ dd{
 #s_contact form button, input[type="button"], input[type="reset"], input[type="submit"] {
 	width: 257px;
 }
+/* =============================================================================
+   @Checkout Form
+   ========================================================================== */
+fieldset{ float: left;}
+
+/* =============================================================================
+   @AddToCart Form
+   ========================================================================== */
 #add_to_cart_form, #add_to_cart_form_extended{
 	width: 464px;
 	position: relative;
@@ -772,9 +782,9 @@ dd{
 .product-content .checkout-btn:after{
 	content: "";
 	background-image: url('../img/icons/sprite-sheet.png');
-	background-position: -34px 0;
+	background-position: -34px -12px;
 	width: 14px;
-	height: 15px;
+	height: 12px;
 	float: right;
 	margin-top: 16px;
 	margin-right: 15px;

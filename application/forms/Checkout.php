@@ -20,33 +20,31 @@ class Application_Form_Checkout extends Zend_Form
     {
 		$this->setMethod("post");
 		
+		$filters 	= array('Alpha', 'StringTrim', 'StringToLower');
+		
 		$shipping1 	= new Zend_Form_SubForm();
+		$shipping1->removeDecorator('label');
+		
 		$shipping2 	= new Zend_Form_SubForm();
 		$billing1	= new Zend_Form_SubForm();
 		$billing2	= new Zend_Form_SubForm();
 		$confirm	= new Zend_Form_SubForm();
 		
 		//first name
-		$shipping1->addElement('text','fname',array(
-			'label'		=> 	'First Name:',
-			'required'	=>	true,
-			'filters'	=>	array('StringTrim', 'StringToLower'),
-			'validators'=> 	array(
-									array('validator'=>'StringLength', 'options'=>array(0,20))
-									)
-		
-		));
-		
+		$firstName		= new Zend_Form_Element_Text("first_name");
+		$firstName->setLabel('First Name')
+			->setRequired(true)
+			->setFilters($filters);
+
+
 		//last name
-		$shipping1->addElement('text','lname',array(
-			'label'		=> 	'Last Name:',
-			'required'	=>	true,
-			'filters'	=>	array('StringTrim'),
-			'validators'=> 	array(
-									array('validator'=>'StringLength', 'options'=>array(0,20))
-									)
+		$lastName		= new Zend_Form_Element_Text("last_name");
+		$lastName->setLabel('Last Name')
+			->setRequired(true)
+			->setFilters($filters);
 		
-		));
+		$shipping1->addElements(array($firstName, $lastName));
+			
 		//address 1
 		$shipping1->addElement('text','addr1',array(
 			'label'		=> 	'Address 1:',
