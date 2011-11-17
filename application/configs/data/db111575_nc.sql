@@ -19,13 +19,13 @@ CREATE TABLE `shipping_addresses` (
 	`country` VARCHAR( 255 ) NOT NULL ,
 	`zip` VARCHAR( 10 ) NOT NULL ,
 	`created_at` DATETIME NOT NULL
-) ENGINE = MYISAM ;
+);
 
 ---------------------------------------------
 -- Table structure for table `billing_addresses`
 ---------------------------------------------
 CREATE TABLE `billing_addresses` (
-	`shid` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'billing address id',
+	`bid` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'billing address id',
 	`ref_cid` BIGINT UNSIGNED NOT NULL COMMENT 'ref to customer id',
 	`address1` VARCHAR( 255 ) NOT NULL ,
 	`address2` VARCHAR( 255 ) NOT NULL ,
@@ -34,7 +34,7 @@ CREATE TABLE `billing_addresses` (
 	`country` VARCHAR( 255 ) NOT NULL ,
 	`zip` VARCHAR( 10 ) NOT NULL ,
 	`created_at` DATETIME NOT NULL
-) ENGINE = MYISAM ;
+);
 
 
 ---------------------------------------------

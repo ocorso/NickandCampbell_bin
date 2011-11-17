@@ -1,7 +1,11 @@
-<div id="main" role="main">
-
+<div id="s_checkout" class="section" role="main">
 	<h1>Checkout</h1>
-	 
+	 <ul>
+<div id="co_indicator"></div>
+		<li><h2>1.</h2><h3>Shipping</h3></li>
+		<li><h2>2.</h2><h3>Billing</h3></li>
+		<li><h2>3.</h2><h3>Confirm</h3></li>
+	</ul>
 	<?php
 		$this->form->setAction($this->url());
 		echo $this->form;

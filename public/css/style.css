@@ -653,6 +653,45 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 
 /* =============================================================================
+   @Checkout
+   ========================================================================== */
+#s_checkout{
+	overflow: hidden;
+	position: relative;
+	}
+#s_checkout h1{
+	margin-top: 0;
+	padding-top: 0;
+	position: absolute;
+}
+#s_checkout ul{
+	width: 600px;
+	margin: 0 auto;
+	padding: 0;
+}
+#s_checkout ul li{
+	display: inline-block;
+	text-align: center;
+	line-height: 0;
+	width: 170px;
+	
+}
+#co_indicator{
+	background-image: url('../img/icons/co-indicator.png');
+	width: 160px;
+	height: 160px;
+	position: absolute;
+	top: 80px;
+	left: 21%;
+	z-index: -1;
+}
+#s_checkout h2{
+	font-size: 102px;	
+}
+#s_checkout h3{
+	font-size: 34px;	
+}
+/* =============================================================================
    @Forms
    ========================================================================== */
 form{
@@ -705,6 +744,15 @@ dd{
    @Checkout Form
    ========================================================================== */
 fieldset{ float: left;}
+#billing2-card_type-label label:after{ 
+	background-image: url('../img/icons/sprite-sheet.png');
+	background-position: 0 -26px;
+	content: "";
+	width: 127px;
+	height: 24px;
+	display: block;
+	
+}
 
 /* =============================================================================
    @AddToCart Form

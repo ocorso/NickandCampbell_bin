@@ -94,7 +94,11 @@ class Application_Form_Checkout extends Zend_Form
 							array('validator'=>'StringLength', 'options'=>array(0,20))
 							)
 		));
-		
+		$cartTypeSelect = new Zend_Form_Element_Select('card_type');
+		$cartTypeSelect->setRequired(true)
+			->setLabel("Card Type")
+			->setMultiOptions(array('Visa', 'Mastercard','Discover'));
+			
 		//card number
 		$billing2->addElement('text','card_num',array(
 			'label'		=> 	'Credit Card Number:',
@@ -112,6 +116,10 @@ class Application_Form_Checkout extends Zend_Form
 						array('validator'=>'StringLength', 'options'=>array(0,20))
 						)
 		));	
+		
+		$billing2->addElements(array($cartTypeSelect));
+		
+		
 		//amount
 		$confirm->addElement('text','amount',array(
 			'label'		=> 	'Amount:',
@@ -120,12 +128,14 @@ class Application_Form_Checkout extends Zend_Form
 						array('validator'=>'StringLength', 'options'=>array(0,20))
 						)
 		));	
-			
+
+		
 		//submit button
 		$confirm->addElement('submit', 'submit', array(
 													'ignore'=>true, 
 													'label'	=>'Checkout'
 		));
+		
 		$subForms 		= array(	'shipping1'=> $shipping1,
 									'shipping2'=> $shipping2,
 									'billing1'=> $billing1,

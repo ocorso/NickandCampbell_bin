@@ -10,7 +10,7 @@ class Application_Model_BillingAddress
 	protected $_state;
 	protected $_zip;
 	protected $_country;
-	protected $_timestamp;
+	protected $_created_at;
 
 	        
 // =================================================
@@ -116,6 +116,13 @@ class Application_Model_BillingAddress
 	}
 	public function getZip(){ return $this->_zip; }
 	
+	
+	//created at
+	public function setCreated_at($d){
+		$this->_created_at	= $d;
+		return $this;
+	}
+	public function getCreated_at(){ return $this->_created_at; }
 	
 
 }

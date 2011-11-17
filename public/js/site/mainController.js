@@ -23,7 +23,7 @@ mainController.init 	= function (){
 	
 	log("init site: "+ $.address.value());
 	
-	$.address.init(function(){}).change(mainController.change);//end address change function
+	$.address.init(function(){}).change(mainController.change).tracker(mainController.track);//end address change function
 	//.internalChange(mainController.inChange)
 	//.externalChange(mainController.exChange);
 	
@@ -267,3 +267,10 @@ mainController.handleResize 	= function ($e){
 
 }	
 
+//*****************************************************
+//oc: Tracker
+//*****************************************************
+mainController.track(){
+	
+	_gaq.push(['_trackPageview', $.address.value()]);
+}
