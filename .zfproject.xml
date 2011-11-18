@@ -63,6 +63,7 @@
         <modelFile modelName="BillingAddress"/>
         <modelFile modelName="ShippingAddress"/>
         <modelFile modelName="ShippingAddressMapper"/>
+        <modelFile modelName="BillingAddressMapper"/>
       </modelsDirectory>
       <modulesDirectory>
         <moduleDirectory moduleName="Shop">
