@@ -31,41 +31,40 @@ class Application_Form_Checkout extends Zend_Form
 		$confirm	= new Zend_Form_SubForm();
 		
 		//first name
-		$firstName		= new Zend_Form_Element_Text("first_name");
+		$firstName		= new Zend_Form_Element_Text("co_first_name");
 		$firstName->setLabel('First Name')
 			->setRequired(true)
 			->setFilters($filters);
 
-
 		//last name
-		$lastName		= new Zend_Form_Element_Text("last_name");
+		$lastName		= new Zend_Form_Element_Text("co_last_name");
 		$lastName->setLabel('Last Name')
 			->setRequired(true)
 			->setFilters($filters);
 		
-		$shipping1->addElements(array($firstName, $lastName));
+		//phone
+		$phone			= new Zend_Form_Element_Text('co_phone');
+		$phone->setLabel('Phone')
+			->setRequired(true)
+			->setFilters(array("Digits"));
+		
+		//email	
+		$email			= new Zend_Form_Element_Text('co_email');
+		$email->setLabel('Email')
+			->setRequired(true)
+			->setFilters($filters);//todo: validate for email
 			
 		//address 1
-		$shipping1->addElement('text','addr1',array(
-			'label'		=> 	'Address 1:',
-			'required'	=>	true,
-			'filters'	=>	array('StringTrim'),
-			'validators'=> 	array(
-									array('validator'=>'StringLength', 'options'=>array(0,20))
-									)
-		
-		));
+		$addr1			= new Zend_Form_Element_Text("co_addr1");
+		$addr1->setLabel('Address 1')
+			->setRequired(true)
+			->setFilters($filters);
 		
 		//address 2
-		$shipping1->addElement('text','addr2',array(
-			'label'		=> 	'Address 2:',
-			'required'	=>	false,
-			'filters'	=>	array('StringTrim'),
-			'validators'=> 	array(
-									array('validator'=>'StringLength', 'options'=>array(0,20))
-									)
-		
-		));
+		$addr2			= new Zend_Form_Element_Text("co_addr2");
+		$addr2->setLabel('Address 2')
+			->setRequired(true)
+			->setFilters($filters);
 		
 		//city
 		$shipping1->addElement('text','city',array(
@@ -77,6 +76,12 @@ class Application_Form_Checkout extends Zend_Form
 									)
 		
 		));
+		$shipping1->addElements(array(	$firstName, 
+										$lastName, 
+										$phone,
+										$email,
+										$addr1, 
+										$addr2));
 		
 		//states
 		$statesArr = array('AL'=>'Alabama','AK'=>'Alaska','AZ'=>'Arizona','AR'=>'Arkansas','CA'=>'California','CO'=>'Colorado','CT'=>'Connecticut','DE'=>'Delaware','DC'=>'District Of Columbia','FL'=>'Florida','GA'=>'Georgia','HI'=>'Hawaii','ID'=>'Idaho','IL'=>'Illinois', 'IN'=>'Indiana', 'IA'=>'Iowa',  'KS'=>'Kansas','KY'=>'Kentucky','LA'=>'Louisiana','ME'=>'Maine','MD'=>'Maryland', 'MA'=>'Massachusetts','MI'=>'Michigan','MN'=>'Minnesota','MS'=>'Mississippi','MO'=>'Missouri','MT'=>'Montana','NE'=>'Nebraska','NV'=>'Nevada','NH'=>'New Hampshire','NJ'=>'New Jersey','NM'=>'New Mexico','NY'=>'New York','NC'=>'North Carolina','ND'=>'North Dakota','OH'=>'Ohio','OK'=>'Oklahoma', 'OR'=>'Oregon','PA'=>'Pennsylvania','RI'=>'Rhode Island','SC'=>'South Carolina','SD'=>'South Dakota','TN'=>'Tennessee','TX'=>'Texas','UT'=>'Utah','VT'=>'Vermont','VA'=>'Virginia','WA'=>'Washington','WV'=>'West Virginia','WI'=>'Wisconsin','WY'=>'Wyoming'); 

@@ -25,7 +25,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }//end function
 	protected function _initRouter()
     {
+    	
         $front = Zend_Controller_Front::getInstance();
+		
+        $baseUrl 	= isset ($_ENV["HTTPS"]) ? 'https://'.$_SERVER["HTTP_HOST"] : 'http://'.$_SERVER["HTTP_HOST"];
+        $front->setBaseUrl('https://'.$_SERVER["HTTP_HOST"]);
+    	
         $router = $front->getRouter();
 
         // Add some routes
