@@ -270,7 +270,7 @@ mainController.handleResize 	= function ($e){
 //*****************************************************
 //oc: Tracker
 //*****************************************************
-mainController.track(){
-	
-	_gaq.push(['_trackPageview', $.address.value()]);
+mainController.track = function (){
+	log("track: "+$.address.value());
+//	_gaq.push(['_trackPageview', $.address.value()]);
 }
