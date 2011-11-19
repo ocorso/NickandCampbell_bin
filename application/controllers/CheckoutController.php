@@ -15,7 +15,7 @@ class CheckoutController extends Zend_Controller_Action
     	
     	//todo fix assets baseurl ->setBaseUrl('/');
     	$front = Zend_Controller_Front::getInstance();
-    	$front->setBaseUrl('/');
+    	$front->setBaseUrl('https://'.$_SERVER["HTTP_HOST"]);
     	
         $request	= $this->getRequest();
         $form		= new Application_Form_Checkout();

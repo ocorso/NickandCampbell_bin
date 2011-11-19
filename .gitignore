@@ -14,4 +14,6 @@ profile
 application/configs/application.ini
 library/Zend
 library/Zend/*
+library/ZendX
+library/ZendX/*
 html
