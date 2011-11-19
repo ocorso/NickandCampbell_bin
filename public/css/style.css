@@ -565,7 +565,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	color: #d60000;	
 }
 #cart_pulldown .checkout-btn{
-	color: #00ff00;
+	color: #00c800;
 	position: absolute;
 	bottom: 8px;	
 	cursor: pointer;
@@ -580,7 +580,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 #cart_pulldown .checkout-btn:hover{
 	color: #0b850e;	
-	background-position: -34px -15px;
+	background-position: -34px -14px;
 }
 #cart_pulldown .checkout-btn:after{
 	content: "";
