@@ -295,14 +295,15 @@ header{
 #logo_on, #logo_off{
 	position: absolute;
 }
-nav{
-	background: url('/../img/nav/nav.png') no-repeat;
+nav .nav-edge{
+	background: url('/../img/icons/sprite-sheet.png') no-repeat;
+	background-position: -18px 0;
+	width: 13px;	
 	height: 25px;
-	float: right;
-	margin-top: 45px;
-	z-index: 1;
+	display: block;
+	float: left;
 }
-nav img, nav ul {float:left;}
+nav ul {float:left;}
 nav ul{
 	background-color:#333;
 	height: 25px;
