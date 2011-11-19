@@ -219,7 +219,7 @@ table { border-collapse: collapse; border-spacing: 0; }
     font-style: normal;
 
 }
-h1, h2,h3,h4,h5,p, a, form{ 
+h1, h2,h3,h4,h5,p, a, form, li{ 
 	font-family: 'VIPRegular';
 	text-transform: lowercase;
 }
@@ -871,7 +871,9 @@ footer{
 .social-media, .social-media:visited{
 	positioning: absolute;
 	bottom: 20px;
-	width: 232px;
+	overflow: hidden;
+	
+	width: 34px;/*width: 232px;	*/
 	height: 23px;
 	background-color: #333;
 	-moz-border-radius: 5px;
@@ -882,12 +884,39 @@ footer{
 	font-size: 18px;
 	padding: 5px;
 }
-
-.social-media img{
+#sm-1:before{
+	content:"";
+	background-image: url('/../img/icons/sprite-sheet.png');
+	background-position: -113px -1px;	
+	width: 30px;
+	height: 29px;	
+	display:block;
 	float: left;
 	margin-left: 5px;
 	margin-right: 20px;
-}
+}	
+#sm-2:before{
+	content:"";
+	background-position: -82px -1px;	
+	background-image: url('/../img/icons/sprite-sheet.png');
+	width: 30px;
+	height: 29px;	
+	display:block;
+	float: left;
+	margin-left: 5px;
+	margin-right: 20px;
+}	
+#sm-3:before{
+	content:"";
+	background-position: -49px -1px;	
+	background-image: url('/../img/icons/sprite-sheet.png');
+	width: 30px;
+	height: 29px;	
+	display:block;
+	float: left;
+	margin-left: 5px;
+	margin-right: 20px;
+}	
 footer, footer a, footer a:visited{
 	color: #fff;
 }
@@ -896,7 +925,12 @@ footer aside{
 }
 footer aside ul li{
 	display: inline;
+	font-size: 18px;
 }
+footer aside ul li{
+	margin-left: 4px;	
+	margin-right: 4px;	
+}	
 footer aside ul li a, footer aside ul li a:visited{
 	text-decoration: none;
 	display: inline-block;
