@@ -126,7 +126,7 @@ mainController.homeHandler = function(){
 	params.quality 	= "low";
 	params.wmode	= "transparent";
 	var attributes 	= {class:"section"};
-	swfobject.embedSWF("swf/ncLoader.swf",
+	swfobject.embedSWF("/swf/ncLoader.swf",
 	"s_home", "1024", "619",
 	"9.0.0", false, flashvars, params, attributes);
 	

@@ -2,6 +2,7 @@
 
 class Application_Form_Checkout extends Zend_Form
 {
+	protected $_statesArr = array('AL'=>'Alabama','AK'=>'Alaska','AZ'=>'Arizona','AR'=>'Arkansas','CA'=>'California','CO'=>'Colorado','CT'=>'Connecticut','DE'=>'Delaware','DC'=>'District Of Columbia','FL'=>'Florida','GA'=>'Georgia','HI'=>'Hawaii','ID'=>'Idaho','IL'=>'Illinois', 'IN'=>'Indiana', 'IA'=>'Iowa',  'KS'=>'Kansas','KY'=>'Kentucky','LA'=>'Louisiana','ME'=>'Maine','MD'=>'Maryland', 'MA'=>'Massachusetts','MI'=>'Michigan','MN'=>'Minnesota','MS'=>'Mississippi','MO'=>'Missouri','MT'=>'Montana','NE'=>'Nebraska','NV'=>'Nevada','NH'=>'New Hampshire','NJ'=>'New Jersey','NM'=>'New Mexico','NY'=>'New York','NC'=>'North Carolina','ND'=>'North Dakota','OH'=>'Ohio','OK'=>'Oklahoma', 'OR'=>'Oregon','PA'=>'Pennsylvania','RI'=>'Rhode Island','SC'=>'South Carolina','SD'=>'South Dakota','TN'=>'Tennessee','TX'=>'Texas','UT'=>'Utah','VT'=>'Vermont','VA'=>'Virginia','WA'=>'Washington','WV'=>'West Virginia','WI'=>'Wisconsin','WY'=>'Wyoming');
 	//http://www.zend.com//code/codex.php?ozid=1320&single=1
 // From a previous HTML Form, pass the following fields: 
 // $FirstName = Customer's First Name 
@@ -31,74 +32,70 @@ class Application_Form_Checkout extends Zend_Form
 		$confirm	= new Zend_Form_SubForm();
 		
 		//first name
-		$firstName		= new Zend_Form_Element_Text("co_first_name");
+		$firstName		= new Zend_Form_Element_Text("cust_first_name");
 		$firstName->setLabel('First Name')
 			->setRequired(true)
 			->setFilters($filters);
 
 		//last name
-		$lastName		= new Zend_Form_Element_Text("co_last_name");
+		$lastName		= new Zend_Form_Element_Text("cust_last_name");
 		$lastName->setLabel('Last Name')
 			->setRequired(true)
 			->setFilters($filters);
 		
 		//phone
-		$phone			= new Zend_Form_Element_Text('co_phone');
+		$phone			= new Zend_Form_Element_Text('cust_phone');
 		$phone->setLabel('Phone')
 			->setRequired(true)
-			->setFilters(array("Digits"));
+			->addFilter("Digits");
 		
 		//email	
-		$email			= new Zend_Form_Element_Text('co_email');
+		$email			= new Zend_Form_Element_Text('cust_email');
 		$email->setLabel('Email')
 			->setRequired(true)
 			->setFilters($filters);//todo: validate for email
 			
 		//address 1
-		$addr1			= new Zend_Form_Element_Text("co_addr1");
-		$addr1->setLabel('Address 1')
+		$shAddr1			= new Zend_Form_Element_Text("sh_addr1");
+		$shAddr1->setLabel('Address 1')
 			->setRequired(true)
 			->setFilters($filters);
 		
 		//address 2
-		$addr2			= new Zend_Form_Element_Text("co_addr2");
-		$addr2->setLabel('Address 2')
+		$shAddr2			= new Zend_Form_Element_Text("sh_addr2");
+		$shAddr2->setLabel('Address 2')
 			->setRequired(true)
 			->setFilters($filters);
 		
 		//city
-		$shipping1->addElement('text','city',array(
-			'label'		=> 	'City:',
-			'required'	=>	false,
-			'filters'	=>	array('StringTrim'),
-			'validators'=> 	array(
-									array('validator'=>'StringLength', 'options'=>array(0,20))
-									)
+		$shCity				= new Zend_Form_Element_Text("sh_city");
+		$shCity->setLabel("City")
+			->setRequired(true)
+			->setFilters($filters);
+
+		//state
+		$shState			= new Zend_Form_Element_Select("sh_state");
+		$shState->setLabel("State")
+			->setRequired(true)
+			->setMultiOptions($this->_statesArr);
 		
-		));
+		//zip
+		$shZip				= new Zend_Form_Element_Text("sh_zip");
+		$shZip->setLabel("Zip Code")
+			->setRequired(true)
+			->addFilter("Digits");
+			
 		$shipping1->addElements(array(	$firstName, 
 										$lastName, 
 										$phone,
 										$email,
-										$addr1, 
-										$addr2));
+										$shAddr1, 
+										$shAddr2,
+										$shCity,
+										$shState,
+										$shZip));
 		
-		//states
-		$statesArr = array('AL'=>'Alabama','AK'=>'Alaska','AZ'=>'Arizona','AR'=>'Arkansas','CA'=>'California','CO'=>'Colorado','CT'=>'Connecticut','DE'=>'Delaware','DC'=>'District Of Columbia','FL'=>'Florida','GA'=>'Georgia','HI'=>'Hawaii','ID'=>'Idaho','IL'=>'Illinois', 'IN'=>'Indiana', 'IA'=>'Iowa',  'KS'=>'Kansas','KY'=>'Kentucky','LA'=>'Louisiana','ME'=>'Maine','MD'=>'Maryland', 'MA'=>'Massachusetts','MI'=>'Michigan','MN'=>'Minnesota','MS'=>'Mississippi','MO'=>'Missouri','MT'=>'Montana','NE'=>'Nebraska','NV'=>'Nevada','NH'=>'New Hampshire','NJ'=>'New Jersey','NM'=>'New Mexico','NY'=>'New York','NC'=>'North Carolina','ND'=>'North Dakota','OH'=>'Ohio','OK'=>'Oklahoma', 'OR'=>'Oregon','PA'=>'Pennsylvania','RI'=>'Rhode Island','SC'=>'South Carolina','SD'=>'South Dakota','TN'=>'Tennessee','TX'=>'Texas','UT'=>'Utah','VT'=>'Vermont','VA'=>'Virginia','WA'=>'Washington','WV'=>'West Virginia','WI'=>'Wisconsin','WY'=>'Wyoming'); 
-		$state = new Zend_Form_Element_Select('state');
-		$state->setLabel('State')
-		->setMultiOptions($statesArr)
-		->setRegisterInArrayValidator(false);
-		$shipping1->addElement($state);
-		
-		//zip
-		$shipping1->addElement('text','zip',array(
-			'label'		=> 	'Zip Code:',
-			'required'	=>	true,
-			'validators'=> 	array(
-							array('validator'=>'StringLength', 'options'=>array(0,20))
-							)
-		));
+	
 		$cartTypeSelect = new Zend_Form_Element_Select('card_type');
 		$cartTypeSelect->setRequired(true)
 			->setLabel("Card Type")
@@ -142,9 +139,9 @@ class Application_Form_Checkout extends Zend_Form
 		));
 		
 		$subForms 		= array(	'shipping1'=> $shipping1,
-									'shipping2'=> $shipping2,
-									'billing1'=> $billing1,
-									'billing2'=> $billing2,
+									//'shipping2'=> $shipping2,
+									//'billing1'=> $billing1,
+									//'billing2'=> $billing2,
 									'confirm'=>	$confirm);
 		
 		$this->addSubForms($subForms);

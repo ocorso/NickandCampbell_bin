@@ -295,6 +295,11 @@ header{
 #logo_on, #logo_off{
 	position: absolute;
 }
+nav{ 
+	float: right;
+	margin-top: 45px;
+	overflow: hidden;
+}
 nav .nav-edge{
 	background: url('/../img/icons/sprite-sheet.png') no-repeat;
 	background-position: -18px 0;
@@ -617,19 +622,28 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 #s_campaign img{
 	float:left;
 }
-.arrow{
-	position: absolute;	
+.campaign-arrow{
 	top: 280px;
-	width: 96px;
-	height: 96px;
-	cursor: pointer;
+	/*position: absolute;*/	
+
 }
-#prev_arrow{
-	background: url('/../img/icons/prev.png');
-}
+
 #next_arrow{
-	background: url('/../img/icons/next.png');
 	left: 928px;
+	
+}
+#campaign_controls{ 
+	position: relative;
+	margin: 20px 0;
+	padding-top: 9px;
+	border-top: solid 1px #333;
+}
+#s_campaign h2{
+	font-size: 40px;
+	font-weight: normal;
+	float: left;
+	margin-left: 227px;
+	margin-top: 5px;
 }
 /* =============================================================================
    @Contact
@@ -657,7 +671,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
    @Checkout
    ========================================================================== */
 #s_checkout{
-	overflow: hidden;
+
 	position: relative;
 	}
 #s_checkout h1{
@@ -682,16 +696,35 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	width: 160px;
 	height: 160px;
 	position: absolute;
-	top: 80px;
+	top: 123px;
 	left: 21%;
 	z-index: -1;
 }
 #s_checkout h2{
 	font-size: 102px;	
 }
+
 #s_checkout h3{
+	font-weight: normal;
+	font-size: 34px;	
+	margin: auto;
+	width: 300px;
+}
+#s_checkout h4{
 	font-size: 34px;	
 }
+.co-arrow{
+	background-image: url('/../img/icons/co-arrows.png');
+	width: 98px;
+	height: 98px;
+	display: block;
+	cursor: pointer;
+	text-indent: -9999px;
+}
+#co_prev, #prev_arrow{background-position: 	-98px 0; }
+#co_prev:hover, #prev_arrow:hover{background-position: -98px -98px; }
+#co_next, #next_arrow{background-position: 	0 0; }
+#co_next:hover, #next_arrow:hover{background-position: 0 -98px; }
 /* =============================================================================
    @Forms
    ========================================================================== */
@@ -722,7 +755,7 @@ input, textarea{
 	width: 250px;
 	padding-left: 4px;
 }
-.form-label{
+.form-label, fieldset label{
 	float:left;
 	width: 180px;
 	color: #666666;
@@ -734,6 +767,9 @@ input, textarea{
 dd{
 	margin-left: 150px;
 	line-height: 45px;
+}
+fieldset dd{
+	margin-left: 210px;
 }
 #submit-element{
 	margin-left: 207px;
@@ -866,6 +902,8 @@ footer{
 	positioning: relative;
 	margin-top: -88px; /* negative value of footer height */
 	margin-bottom: 20px;
+	padding-top: 15px;
+	border-top: solid 1px #333;
 	height: 68px;
 	clear:both;	
 }

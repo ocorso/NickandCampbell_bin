@@ -1,13 +1,19 @@
 <div id="s_checkout" class="section" role="main">
 	<h1>Checkout</h1>
+	<h3>Your Almost Done!</h3>
 	 <ul>
-<div id="co_indicator"></div>
-		<li><h2>1.</h2><h3>Shipping</h3></li>
-		<li><h2>2.</h2><h3>Billing</h3></li>
-		<li><h2>3.</h2><h3>Confirm</h3></li>
+		<div id="co_indicator"></div>
+		<li><h2>1.</h2><h4>Shipping</h4></li>
+		<li><h2>2.</h2><h4>Billing</h4></li>
+		<li><h2>3.</h2><h4>Confirm</h4></li>
 	</ul>
+	<div id="checkout_carousel">
+		<div id="co_prev" class="co-arrow" title="Previous">Previous</div>
 	<?php
 		$this->form->setAction($this->url());
 		echo $this->form;
 	?>
+		<div id="co_next" class="co-arrow" title="Next">Next</div>
+	
+	</div>
 </div>
