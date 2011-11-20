@@ -48,7 +48,7 @@ class Application_Model_ShippingAddressMapper
 		if(0 == count($result)){
 			return;
 		}
-		$row - $result->current();
+		$row = $result->current();
 		$shippingAddress->setShid($row->shid)
 			->setRefcid($row->ref_cid)
 			->setAddress1($row->address1)

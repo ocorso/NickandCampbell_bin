@@ -54,6 +54,7 @@
           <dbTableFile dbTableName="Order"/>
           <dbTableFile dbTableName="ShippingAddresses"/>
           <dbTableFile dbTableName="BillingAddresses"/>
+          <dbTableFile dbTableName="Customer"/>
         </dbTableDirectory>
         <modelFile modelName="ProductMapper"/>
         <modelFile modelName="Product"/>
@@ -64,6 +65,8 @@
         <modelFile modelName="ShippingAddress"/>
         <modelFile modelName="ShippingAddressMapper"/>
         <modelFile modelName="BillingAddressMapper"/>
+        <modelFile modelName="Customer"/>
+        <modelFile modelName="CustomerMapper"/>
       </modelsDirectory>
       <modulesDirectory>
         <moduleDirectory moduleName="Shop">
@@ -187,7 +190,7 @@
       <testApplicationDirectory>
         <testApplicationBootstrapFile filesystemName="bootstrap.php"/>
         <testApplicationControllerDirectory>
-          <testApplicationControllerFile filesystemName="ControllerTest.php"/>
+          <testApplicationControllerFile/>
         </testApplicationControllerDirectory>
       </testApplicationDirectory>
       <testLibraryDirectory>
