@@ -96,7 +96,7 @@ sub { bottom: -0.25em; }
    Lists
    ========================================================================== */
 
-ul, ol { margin: 1em 0; padding: 0 0 0 40px; }
+ul, ol { margin: 1em 0; padding: 0 0 0 40px; list-style-image: url('../img/icons/list-style-img.png'); }
 dd { margin: 0 0 0 40px; }
 nav ul, nav ol { list-style: none; margin: 0; padding: 0; }
 
@@ -725,6 +725,29 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 #co_prev:hover, #prev_arrow:hover{background-position: -98px -98px; }
 #co_next, #next_arrow{background-position: 	0 0; }
 #co_next:hover, #next_arrow:hover{background-position: 0 -98px; }
+/* =============================================================================
+ @Admin
+========================================================================== */
+#auth{
+	position: absolute;
+	right: 0;	
+}
+#auth ul li{
+	display: inline;
+}
+#s_login{
+	height: 400px;
+}
+#form_login label{
+	float: left;
+	font-size: 34px;
+	line-height: 33px;
+	
+}
+#orders_grid{ width: 100%;}
+#orders_grid_wrapper{margin-bottom: 112px; width: 1024px;}
+#orders_grid_length{float: left; }
+#orders_grid_filter{float: right; }
 /* =============================================================================
    @Forms
    ========================================================================== */

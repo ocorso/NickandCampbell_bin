@@ -46,6 +46,7 @@ jQuery(function($) {
 	log("doc is ready yo");
 	mainController.init();
 	addSiteHandlers();
+	if (adminController) adminController.init();
 });//end doc ready
 
 
