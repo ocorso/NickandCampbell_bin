@@ -10,6 +10,10 @@
       <controllersDirectory>
         <controllerFile controllerName="Index">
           <actionMethod actionName="index"/>
+          <actionMethod actionName="sitemap"/>
+          <actionMethod actionName="privacy"/>
+          <actionMethod actionName="shipping"/>
+          <actionMethod actionName="returns"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Checkout">
@@ -57,6 +61,7 @@
         <formFile formName="Contact"/>
         <formFile formName="AddToCart"/>
         <formFile formName="Login"/>
+        <formFile formName="Register"/>
       </formsDirectory>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>
@@ -185,6 +190,18 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Order">
             <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="sitemap"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="privacy"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="shipping"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="returns"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

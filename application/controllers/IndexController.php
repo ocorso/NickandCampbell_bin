@@ -38,7 +38,37 @@ class IndexController extends Zend_Controller_Action
         $this->view->contactForm	= $contactForm;
 
     }
+
+    public function sitemapAction()
+    {
+          $this->_redirector->gotoUrl("/#/sitemap/");	
+    }
+
+    public function privacyAction()
+    {
+          $this->_redirector->gotoUrl("/#/privacy/");	
+    }
+
+    public function shippingAction()
+    {
+          $this->_redirector->gotoUrl("/#/shipping/");	
+    }
+
+    public function returnsAction()
+    {
+          $this->_redirector->gotoUrl("/#/returns/");	
+    }
+
+
 }
+
+
+
+
+
+
+
+
 
 
 

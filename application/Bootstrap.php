@@ -7,11 +7,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		Zend_Registry::set('config', new Zend_Config($this->getOptions()));
 	}
 	
-	protected function _initDocType(){
-		$this->bootstrap('View');
-		$view = $this->getResource('View');
-		$view->doctype('HTML5');
-	}
 	protected function _initDatabase()
     {
 		$config	= $this->getOptions();
@@ -34,6 +29,23 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $router = $front->getRouter();
 
         // Add some routes
+        $sitemapRoute	= new Zend_Controller_Router_Route(	'sitemap',
+        														array(	'controller'	=> 'index',
+        																'action'		=> 'sitemap')
+        					);
+   		//oc: um i guess we don't have this yet.
+        $privacyRoute	= new Zend_Controller_Router_Route(	'privacy',
+        														array(	'controller'	=> 'index',
+        																'action'		=> 'privacy')
+        					);
+        $returnsRoute	= new Zend_Controller_Router_Route(	'returns',
+        														array(	'controller'	=> 'index',
+        																'action'		=> 'returns')
+        					);
+        $shippingRoute	= new Zend_Controller_Router_Route(	'shipping',
+        														array(	'controller'	=> 'index',
+        																'action'		=> 'shipping')
+        					);
         $mensRoute	= new Zend_Controller_Router_Route(	'shop/mens/:category/:product',
         														array(	'controller'	=> 'shop',
         																'action'		=> 'mens')
@@ -42,9 +54,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         														array(	'controller'	=> 'shop',
         																'action'		=> 'womens')
         					);
+        					
+        
+        $router->addRoute(	'returnsroute', $returnsRoute);
+        $router->addRoute(	'privacyroute', $privacyRoute);
+        $router->addRoute(	'sitemaproute', $sitemapRoute);
+        $router->addRoute(	'shippingroute', $shippingRoute);
         $router->addRoute(	'mensroute', $mensRoute);
         $router->addRoute(	'womensroute', $womensRoute);
-
+		
         // Returns the router resource to bootstrap resource registry
         return $router;
     }
@@ -52,6 +70,28 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	Zend_Session::start();
     }
     
+    protected function _initPlaceholders()
+    {
+        $this->bootstrap('View');
+        $view = $this->getResource('View');
+        $view->doctype('HTML5');
+ 
+        // Set the initial title and separator:
+        $view->headTitle('Nick + Campbell | Mens Underwear | NYC')
+             ->setSeparator(' :: ')
+             ->append(APPLICATION_ENV);
+ 
+        // Set the initial stylesheet:
+        $view->headLink()->prependStylesheet('/css/style.css');
+
+    	// Set the initial JS to load:
+    	$view->headScript()->appendFile("/js/libs/swfobject.js");
+		$view->headScript()->appendFile("/js/libs/plugins.js");
+		$view->headScript()->appendFile("/js/site/mainController.js");
+		$view->headScript()->appendFile("/js/site/shopController.js");
+		$view->headScript()->appendFile("/js/site/campaignController.js");
+		
+    }
 }//end bootstrap
 
 	

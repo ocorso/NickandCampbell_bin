@@ -64,6 +64,18 @@ mainController.change 	= function ($e){
 				var url = $.address.baseURL().replace('/checkout', "") +$.address.value();
 				window.location = url;
 		}//endswitch
+	}else if ($.address.baseURL().contains("admin")){
+		switch ($.address.value()){
+			case "/" : log("we're at admin base");
+				adminController.init();
+				//mainController.cart.open();
+				break;
+			case "/edit-product" : log("checkout complete");
+				break;
+			default: 
+				var url = $.address.baseURL().replace('/admin', "") +$.address.value();
+				window.location = url;
+		}//endswitch
 	}else{
 		
 	log("change proper");
@@ -123,7 +135,7 @@ mainController.homeHandler = function(){
 	var flashvars 	= {baseUrl:$.address.baseURL()};
 	var params 		= {};
 	params.menu 	= "false";
-	params.quality 	= "low";
+	params.quality 	= "high";
 	params.wmode	= "transparent";
 	var attributes 	= {class:"section"};
 	swfobject.embedSWF("/swf/ncLoader.swf",
