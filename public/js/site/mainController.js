@@ -131,7 +131,7 @@ mainController.homeHandler = function(){
 	log("we're home");
 	
 	//todo: put flash on page if possible.
-	$('#s_loader, section').hide();
+	$('#s_loader, section, .section').hide();
 	var flashvars 	= {baseUrl:$.address.baseURL()};
 	var params 		= {};
 	params.menu 	= "false";
