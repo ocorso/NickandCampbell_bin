@@ -3,7 +3,8 @@
 class Application_Form_Checkout extends Zend_Form
 {
 	protected $_statesArr = array('AL'=>'Alabama','AK'=>'Alaska','AZ'=>'Arizona','AR'=>'Arkansas','CA'=>'California','CO'=>'Colorado','CT'=>'Connecticut','DE'=>'Delaware','DC'=>'District Of Columbia','FL'=>'Florida','GA'=>'Georgia','HI'=>'Hawaii','ID'=>'Idaho','IL'=>'Illinois', 'IN'=>'Indiana', 'IA'=>'Iowa',  'KS'=>'Kansas','KY'=>'Kentucky','LA'=>'Louisiana','ME'=>'Maine','MD'=>'Maryland', 'MA'=>'Massachusetts','MI'=>'Michigan','MN'=>'Minnesota','MS'=>'Mississippi','MO'=>'Missouri','MT'=>'Montana','NE'=>'Nebraska','NV'=>'Nevada','NH'=>'New Hampshire','NJ'=>'New Jersey','NM'=>'New Mexico','NY'=>'New York','NC'=>'North Carolina','ND'=>'North Dakota','OH'=>'Ohio','OK'=>'Oklahoma', 'OR'=>'Oregon','PA'=>'Pennsylvania','RI'=>'Rhode Island','SC'=>'South Carolina','SD'=>'South Dakota','TN'=>'Tennessee','TX'=>'Texas','UT'=>'Utah','VT'=>'Vermont','VA'=>'Virginia','WA'=>'Washington','WV'=>'West Virginia','WI'=>'Wisconsin','WY'=>'Wyoming');
-	//http://www.zend.com//code/codex.php?ozid=1320&single=1
+	
+//http://www.zend.com//code/codex.php?ozid=1320&single=1
 // From a previous HTML Form, pass the following fields: 
 // $FirstName = Customer's First Name 
 // $LastName = Customer's Last Name 
@@ -20,16 +21,22 @@ class Application_Form_Checkout extends Zend_Form
     public function init()
     {
 		$this->setMethod("post");
-		
+		$this->setAttrib('id', 'checkout_form');
+		 
 		$filters 	= array('Alpha', 'StringTrim', 'StringToLower');
 		
-		$shipping1 	= new Zend_Form_SubForm();
-		$shipping1->removeDecorator('label');
 		
 		$shipping2 	= new Zend_Form_SubForm();
 		$billing1	= new Zend_Form_SubForm();
 		$billing2	= new Zend_Form_SubForm();
 		$confirm	= new Zend_Form_SubForm();
+		
+// =================================================
+// ============= Customer Info and Shipping Address
+// =================================================		
+		$shipping1 	= new Zend_Form_SubForm();
+		$shipping1->removeDecorator('label');
+
 		
 		//first name
 		$firstName		= new Zend_Form_Element_Text("cust_first_name");
@@ -64,7 +71,6 @@ class Application_Form_Checkout extends Zend_Form
 		//address 2
 		$shAddr2			= new Zend_Form_Element_Text("sh_addr2");
 		$shAddr2->setLabel('Address 2')
-			->setRequired(true)
 			->setFilters($filters);
 		
 		//city
