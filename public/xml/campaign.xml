@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+	
+<pageFlipper>
+
+	<settings 	startPage="1" 
+				followSpeed="7" 
+				flipSpeed="5" 
+				pageFolder="../img/lookbook/" 
+				overCornerSize="50" 
+				clickCornerSize="50" 
+				flipSound="mysound" 
+				scaleToFit="true" 
+				loadOnDemand="false" 
+				shadowDepth="50" 
+				backColor="0x000000" 
+				displayOnLoad="false" 
+				numbering="none" 
+				pageOrder="first to last"/>
+
+	<page>1.jpg</page>
+	<page>2.jpg</page>
+	<page>3.jpg</page>
+	<page>4.jpg</page>
+	<page>5.jpg</page>
+	<page>6.jpg</page>
+	<page>7.jpg</page>
+	<page>8.jpg</page>
+	<page>9.jpg</page>
+	<page>10.jpg</page>
+
+</pageFlipper>

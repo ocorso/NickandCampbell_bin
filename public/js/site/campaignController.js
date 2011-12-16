@@ -1,6 +1,19 @@
 campaign.change = function (){
 	log("campaign change");
-	$('section, #s_loader').hide();
+	$('#s_loader, #s_campaign .section-content, section, .section').hide();
+	
+	//embed flash 
+	var flashvars 	= {baseUrl:$.address.baseURL()};
+	var params 		= {};
+	params.menu 	= "false";
+	params.quality 	= "high";
+	params.wmode	= "transparent";
+	var attributes 	= {class:"section"};
+	swfobject.embedSWF("/swf/ncCampaign.swf",
+	"s_campaign", "1024", "619",
+	"9.0.0", false, flashvars, params, attributes);
+	
+	//show div
 	$('#s_campaign').show('slow', campaign.addListeners);
 }
 

@@ -229,7 +229,8 @@ h1, h2,h3,h4,h5,p, a, form, li{
 .left{float:left;}
 .right{float:right;}
 .active{ color: red;}
-
+ span[frown] { transform: rotate(90deg); display:inline-block; color: #bbb; }
+ 	  article {display:block; text-align: left; width: 500px; margin: 0 auto; }
 .shadow {
   -moz-box-shadow: 5px 5px 5px #000;
   -webkit-box-shadow: 5px 5px 5px #000;
@@ -263,7 +264,7 @@ h1{
 	margin: 0 auto;
 }
 #main{
-	padding-bottom: 88px;
+	padding-bottom: 20px;
 }
 
 a, a:visited{ color: #676767;}
@@ -276,8 +277,19 @@ section, #s_loader{
 	width: 1024px;
 	height: 619px;
 }
-.sidebar img{
-	margin-top: 20px;
+.sidebar{
+	background-image: url('/../img/logo/nc-sidebar.png');
+	background-repeat: no-repeat;
+	background-position: 0 -120px;
+	height: 660px;
+	float:left;
+	width: 243px;
+	margin-bottom: 20px;
+}
+.sidebar h1{
+	margin-top: -25px;
+	margin-bottom: 20px;
+	text-align: center;
 }
 /* =============================================================================
    @Header
@@ -349,37 +361,45 @@ section{
 	position: relative;
 	
 }
-.sidebar{
-	float:left;
-	width: 243px;
 
-}
-.sidebar h1{
-	margin-top: -25px;
-	margin-bottom: 20px;
-}
 .section-content{
 	postion: relative;
 	float:left;
 	width: 781px;
 	
 }
+#s_learn h2{
+	font-size: 40px;
+	font-weight: normal;
+	margin-left: 26px;	
+	margin-bottom: 0;
+}
 #s_learn p{
 	width: 500px;
 	float: left;
+	margin-left: 26px;
 	font-size: 20px;
+	line-height: 30px;
 }
-#s_shipping h2{
+.policies{
+	margin-left: 26px;
+	width: 550px;
+}
+.policies h2{
 	font-size: 30px;
+	font-weight: normal;
 	
 }
-#s_shipping p{
+.policies p{
 	
 	font-size: 20px;
 }
 /* =============================================================================
    @Shop
    ========================================================================== */
+#s_shop .sidebar{
+	background-image: none;	
+}
 #s_shop .section-content{
 	overflow: hidden;
 	position: relative;
@@ -605,7 +625,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
    @Campaign
    ========================================================================== */
 #s_campaign{
-	height: 683px;
+	outline: none;
+	height: 410px;
 	position: relative;
 }
 #lookbook_wrapper{
@@ -744,10 +765,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	line-height: 33px;
 	
 }
+.DataTables_sort_wrapper{cursor: pointer;}
+.DataTables_sort_wrapper span{float: right;}
 #orders_grid{ width: 100%;}
-#orders_grid_wrapper{margin-bottom: 112px; width: 1024px;}
+#orders_grid_wrapper{margin-bottom: 112px; /*width: 950px;*/}
 #orders_grid_length{float: left; }
 #orders_grid_filter{float: right; }
+.expand-btn{ cursor: pointer; }
+table.display{ color: #666;}
 /* =============================================================================
    @Forms
    ========================================================================== */
@@ -927,7 +952,6 @@ ie6#container, ie8#container{
 }
 footer{
 	positioning: relative;
-	margin-top: -88px; /* negative value of footer height */
 	margin-bottom: 20px;
 	padding-top: 15px;
 	border-top: solid 1px #333;
