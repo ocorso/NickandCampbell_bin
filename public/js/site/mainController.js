@@ -37,17 +37,17 @@ mainController.init 	= function (){
 	//determine if cart is empty
 	mainController.cart.isEmpty = $('.cart-contents ul li').length == 0 ? true : false;
 	
-}//end init
+};//end init
 
 mainController.inChange 	= function ($e){
 	log("internal change");
 	
-}//end function internal change
+};//end function internal change
 
 mainController.exChange 	= function ($e){
 	log("external change");
 	
-}//end function external change
+};//end function external change
 
 mainController.change 	= function ($e){
 
