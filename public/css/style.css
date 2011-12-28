@@ -270,7 +270,7 @@ h1{
 a, a:visited{ color: #676767;}
 a:hover, a:active, a:focus, .current-section {
    outline: 0;
-	color: #f00;
+	color: #fff;
 }
 
 section, #s_loader{
@@ -1008,7 +1008,7 @@ footer{
 	margin-right: 20px;
 }	
 footer, footer a, footer a:visited{
-	color: #fff;
+	color: #676767;
 }
 footer aside{
 	float: right;
@@ -1028,7 +1028,7 @@ footer aside ul li a, footer aside ul li a:visited{
 	font-size: 18px;
 }
 footer aside ul li a:hover{
-	color: #f00; 
+	color: #fff; 
 }
 /* =============================================================================
    Non-semantic helper classes
