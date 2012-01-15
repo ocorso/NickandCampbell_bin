@@ -5,6 +5,8 @@ class CheckoutController extends Zend_Controller_Action
 
     public function init()
     {
+    	$view = $this->view;
+    	$view->headScript()->appendFile("/js/site/checkout.js");
         $this->_redirector = $this->_helper->getHelper('Redirector');
     }
 
@@ -12,7 +14,7 @@ class CheckoutController extends Zend_Controller_Action
     {
     	   		//disable layout
     		$layout = $this->_helper->layout();
-    		$layout->disableLayout();
+    		//$layout->disableLayout();
     		
     		
     	//todo redirect to https if we're on production
@@ -54,8 +56,15 @@ class CheckoutController extends Zend_Controller_Action
 	    else echo "fail";
     }
 
+    public function transactionResultsAction()
+    {
+        // action body
+    }
+
 
 }
+
+
 
 
 

@@ -19,6 +19,7 @@
         <controllerFile controllerName="Checkout">
           <actionMethod actionName="index"/>
           <actionMethod actionName="test"/>
+          <actionMethod actionName="transactionResults"/>
         </controllerFile>
         <controllerFile controllerName="Contact">
           <actionMethod actionName="index"/>
@@ -202,6 +203,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="returns"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Checkout">
+            <viewScriptFile forActionName="transactionResults"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

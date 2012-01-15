@@ -705,7 +705,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	margin: 0 auto;
 	padding: 0;
 }
-#s_checkout ul li{
+#indicator_list li{
 	display: inline-block;
 	text-align: center;
 	line-height: 0;
@@ -746,6 +746,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 #co_prev:hover, #prev_arrow:hover{background-position: -98px -98px; }
 #co_next, #next_arrow{background-position: 	0 0; }
 #co_next:hover, #next_arrow:hover{background-position: 0 -98px; }
+
+#shipping2-sh_type1-label label, #shipping2-sh_type2-label label, #shipping2-sh_type3-label label, #billing1-bill_as_ship-label label {
+	width: 468px;
+}
 /* =============================================================================
  @Admin
 ========================================================================== */
@@ -826,8 +830,8 @@ fieldset dd{
 	width: 257px;
 }
 .errors li{
-	width: 200px;
 	color: red;	
+	font-size: 19px;
 }	
 /* =============================================================================
    @Checkout Form
@@ -838,7 +842,7 @@ fieldset{ float: left;}
 	background-position: 0 -26px;
 	content: "";
 	width: 127px;
-	height: 24px;
+	height: 29px;
 	display: block;
 	
 }

@@ -22,19 +22,46 @@ class Application_Form_Checkout extends Zend_Form
     {
 		$this->setMethod("post");
 		$this->setAttrib('id', 'checkout_form');
+		$this->setAction("/transaction-results");
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
+//++++++++++++++++++++++ ZEND FILTERS ++++++++++++++++++++++++++++++++++++++		
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
+		// Concrete filter instance:
+		//$element->addFilter(new Zend_Filter_Alnum());
+		$filterAlpha 		= new Zend_Filter_Alpha();
+		$FilterStrTrim		= new Zend_Filter_StringTrim();
+		$FilterStrToLower	= new Zend_Filter_StringToLower();
+		$filterDigits		= new Zend_Filter_Digits();
 		 
-		$filters 	= array('Alpha', 'StringTrim', 'StringToLower');
+		// Short filter name:
+		//$element->addFilter('Alnum');
 		
+		//3 in 1 package
+		$filters 	= array('StringTrim', 'StringToLower');
+		
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
+//++++++++++++++++++++++++ZEND VALIDATORS +++++++++++++++++++++++++++++++++++++++		
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	$validatorEmail	= new Zend_Validate_EmailAddress();
+	$validatorCC	= new Zend_Validate_CreditCard();
+	
+	$validatorAlNum	= new Zend_Validate_Alnum();
+	$validatorAlpha	= new Zend_Validate_Alpha();
+	$validators		= array($validatorAlpha);
+	
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
+//++++++++++++++++++++++++ZEND SUB FORMS +++++++++++++++++++++++++++++++++++++++		
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
+		$shipping1 	= new Zend_Form_SubForm();
 		
 		$shipping2 	= new Zend_Form_SubForm();
 		$billing1	= new Zend_Form_SubForm();
 		$billing2	= new Zend_Form_SubForm();
 		$confirm	= new Zend_Form_SubForm();
 		
-// =================================================
-// ============= Customer Info and Shipping Address
-// =================================================		
-		$shipping1 	= new Zend_Form_SubForm();
+// ===================================================================
+// ============= Shipping1 : Customer Info and Shipping Address
+// =====================================================================	
 		$shipping1->removeDecorator('label');
 
 		
@@ -83,6 +110,7 @@ class Application_Form_Checkout extends Zend_Form
 		$shState			= new Zend_Form_Element_Select("sh_state");
 		$shState->setLabel("State")
 			->setRequired(true)
+		//	->addFilter($filters)
 			->setMultiOptions($this->_statesArr);
 		
 		//zip
@@ -101,31 +129,107 @@ class Application_Form_Checkout extends Zend_Form
 										$shState,
 										$shZip));
 		
-	
+// =================================================
+// ============= Shipping2 : Shipping Type
+// =================================================		
+		$shType1 = new Zend_Form_Element_Checkbox("sh_type1");
+		$shType1->setLabel("Express Mail 5-7 Business Days $4.95")
+			->setAttrib("class", "co-shipping-type");
+			
+		$shType2 = new Zend_Form_Element_Checkbox("sh_type2");
+		$shType2->setLabel("Priority Mail 3-4 Business Days $6.95");
+			
+		$shType3 = new Zend_Form_Element_Checkbox("sh_type3");
+		$shType3->setLabel("First Class 1-2 Business Days $10.95");
+			
+		$shipping2->addElements(array($shType1, $shType2, $shType3));
+		
+// =================================================
+// ============= Billing1 : Billing Address
+// =================================================	
+		$billSameAsShipping = new Zend_Form_Element_Checkbox("bill_as_ship");
+		$billSameAsShipping->setLabel("Same as shipping");
+
+		//address 1
+		$billAddr1			= new Zend_Form_Element_Text("bill_addr1");
+		$billAddr1->setLabel('Address 1')
+			->setRequired(true)
+			->setFilters($filters);
+		
+		//address 2
+		$billAddr2			= new Zend_Form_Element_Text("bill_addr2");
+		$billAddr2->setLabel('Address 2')
+			->setFilters($filters);
+		
+		//city
+		$billCity				= new Zend_Form_Element_Text("bill_city");
+		$billCity->setLabel("City")
+			->setRequired(true)
+			->setFilters($filters);
+
+		//state
+		$billState			= new Zend_Form_Element_Select("bill_state");
+		$billState->setLabel("State")
+			->setRequired(true)
+		//	->addFilter($filters)
+			->setMultiOptions($this->_statesArr);
+		
+		//zip
+		$billZip				= new Zend_Form_Element_Text("bill_zip");
+		$billZip->setLabel("Zip Code")
+			->setRequired(true)
+			->addFilter("Digits");
+			
+		
+		$billing1->addElements(array(	$billSameAsShipping,
+										$billAddr1, 
+										$billAddr2,
+										$billCity,
+										$billState,
+										$billZip
+		));
+		
+// =================================================
+// ============= Billing2 : Card info
+// =================================================		
+		$nameOnCard		= new Zend_Form_Element_Text('name_on_card');
+		$nameOnCard->setLabel('Name On Card')
+			->setRequired(true)
+			->addFilters($filters);
+//			->addValidators($validators);
+		
 		$cartTypeSelect = new Zend_Form_Element_Select('card_type');
 		$cartTypeSelect->setRequired(true)
 			->setLabel("Card Type")
 			->setMultiOptions(array('Visa', 'Mastercard','Discover'));
 			
 		//card number
-		$billing2->addElement('text','card_num',array(
-			'label'		=> 	'Credit Card Number:',
-			'required'	=>	true,
-			'validators'=> 	array(
-							array('validator'=>'StringLength', 'options'=>array(0,20))
-							)
-		));
+		$cardNum		= new Zend_Form_Element_Text('card_num');
+		$cardNum->setRequired(true)
+			->setLabel('Card Number:')
+		//	->addFilter($filterDigit)
+			->addValidator($validatorCC);
+			
 
 		//exp_date 
-		$billing2->addElement('text','exp_date',array(
-			'label'		=> 	'Expiration Date:',
-			'required'	=>	true,
-			'validators'=> 	array(
-						array('validator'=>'StringLength', 'options'=>array(0,20))
-						)
-		));	
+		$expDate		= new Zend_Form_Element("exp_date");
+		$expDate->setLabel("Expiration")
+			->setRequired(true)
+			//->addValidator()
+			->addFilters(array($filterDigits));
+		$ccv			= new Zend_Form_Element_Text("cvv");
+		$ccv->setLabel("CCV")
+			->setAttrib("class", "ccv")
+			->setRequired(true)
+			->addFilter("Digits")
+			->addValidator('digits');
 		
-		$billing2->addElements(array($cartTypeSelect));
+		$billing2->addElements(array(	$nameOnCard, 
+										$cartTypeSelect, 
+										$cardNum, 
+										$ccv,	
+										$expDate
+		));
 		
 		
 		//amount
@@ -145,9 +249,9 @@ class Application_Form_Checkout extends Zend_Form
 		));
 		
 		$subForms 		= array(	'shipping1'=> $shipping1,
-									//'shipping2'=> $shipping2,
-									//'billing1'=> $billing1,
-									//'billing2'=> $billing2,
+									'shipping2'=> $shipping2,
+									'billing1'=> $billing1,
+									'billing2'=> $billing2,
 									'confirm'=>	$confirm);
 		
 		$this->addSubForms($subForms);
