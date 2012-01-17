@@ -859,14 +859,14 @@ fieldset dd{
    @Checkout Form
    ========================================================================== */
 fieldset{ float: left;}
-#billing2-card_type-label label:after{ 
+#billing2-card_type-element:after{ 
 	background-image: url('/../img/icons/sprite-sheet.png');
 	background-position: 0 -26px;
 	content: "";
 	width: 127px;
 	height: 29px;
 	display: block;
-	
+	float: right;
 }
 
 /* =============================================================================
