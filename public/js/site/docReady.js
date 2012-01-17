@@ -8,8 +8,8 @@
 jQuery(function($) {
     
 	var addSiteHandlers = function(){
-		log("addHandlers");
-	//	if (coController) coController.addHandlers();
+		log("add site Handlers");
+
 		
 		//main logo fade to red.
 		$("#logo").hover(

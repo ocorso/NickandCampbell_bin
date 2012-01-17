@@ -20,9 +20,10 @@ class Application_Form_Checkout extends Zend_Form
 	
     public function init()
     {
-		$this->setMethod("post");
-		$this->setAttrib('id', 'checkout_form');
-		$this->setAction("/transaction-results");
+    	$this->setAction("/checkout/transaction-results")
+			->setMethod("post")
+			->setAttrib('id', 'checkout_form');
+		
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
 //++++++++++++++++++++++ ZEND FILTERS ++++++++++++++++++++++++++++++++++++++		
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
@@ -62,8 +63,14 @@ class Application_Form_Checkout extends Zend_Form
 // ===================================================================
 // ============= Shipping1 : Customer Info and Shipping Address
 // =====================================================================	
-		$shipping1->removeDecorator('label');
+		//print_r($shipping1->getDecorators());
 
+		$shipping1->removeDecorator('DtDdWrapper');
+		$shipping2->removeDecorator('DtDdWrapper');
+		$billing1->removeDecorator('DtDdWrapper');
+		$billing2->removeDecorator('DtDdWrapper');
+		$confirm->removeDecorator('DtDdWrapper');
+		
 		
 		//first name
 		$firstName		= new Zend_Form_Element_Text("cust_first_name");
@@ -87,6 +94,7 @@ class Application_Form_Checkout extends Zend_Form
 		$email			= new Zend_Form_Element_Text('cust_email');
 		$email->setLabel('Email')
 			->setRequired(true)
+			->addValidator($validatorEmail)
 			->setFilters($filters);//todo: validate for email
 			
 		//address 1
@@ -206,9 +214,9 @@ class Application_Form_Checkout extends Zend_Form
 		//card number
 		$cardNum		= new Zend_Form_Element_Text('card_num');
 		$cardNum->setRequired(true)
-			->setLabel('Card Number:')
-		//	->addFilter($filterDigit)
-			->addValidator($validatorCC);
+		//	->addValidator($validatorCC)
+			->addFilter($filterDigits)
+			->setLabel('Card Number:');
 			
 
 		//exp_date 
@@ -217,6 +225,7 @@ class Application_Form_Checkout extends Zend_Form
 			->setRequired(true)
 			//->addValidator()
 			->addFilters(array($filterDigits));
+		
 		$ccv			= new Zend_Form_Element_Text("cvv");
 		$ccv->setLabel("CCV")
 			->setAttrib("class", "ccv")

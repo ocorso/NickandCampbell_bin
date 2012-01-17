@@ -626,8 +626,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
    ========================================================================== */
 #s_campaign{
 	outline: none;
-	height: 410px;
+	height: 312px;
 	position: relative;
+	border: 1px solid #777;
+	margin-top: 28px;
 }
 #lookbook_wrapper{
 	display: block;
@@ -666,6 +668,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	margin-left: 227px;
 	margin-top: 5px;
 }
+
 /* =============================================================================
    @Contact
    ========================================================================== */
@@ -705,6 +708,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	margin: 0 auto;
 	padding: 0;
 }
+#indicator_list{display:none;}
 #indicator_list li{
 	display: inline-block;
 	text-align: center;
@@ -738,7 +742,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	background-image: url('/../img/icons/co-arrows.png');
 	width: 98px;
 	height: 98px;
-	display: block;
+	display: none;
 	cursor: pointer;
 	text-indent: -9999px;
 }
@@ -747,8 +751,26 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 #co_next, #next_arrow{background-position: 	0 0; }
 #co_next:hover, #next_arrow:hover{background-position: 0 -98px; }
 
+
 #shipping2-sh_type1-label label, #shipping2-sh_type2-label label, #shipping2-sh_type3-label label, #billing1-bill_as_ship-label label {
 	width: 468px;
+}
+
+#co_prev, #co_next, #checkout_form{
+	float: left;
+	
+}
+#checkout_form  {
+
+	border: solid red;
+}
+#checkout_form .zend_form{
+
+	
+}
+#checkout_form fieldset{
+	float: left;
+	margin: 0 50px;
 }
 /* =============================================================================
  @Admin

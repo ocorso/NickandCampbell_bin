@@ -2,13 +2,54 @@
 
 class CheckoutController extends Zend_Controller_Action
 {
-
+	protected $_form;
+	
+	// =================================================
+	// ================ Callable
+	// =================================================
+	
+	// =================================================
+	// ================ Workers
+	// =================================================
+	
     public function init()
     {
     	$view = $this->view;
+    	$this->_form = new Application_Form_Checkout();
     	$view->headScript()->appendFile("/js/site/checkout.js");
         $this->_redirector = $this->_helper->getHelper('Redirector');
     }
+	
+	// =================================================
+	// ================ Handlers
+	// =================================================
+	
+	// =================================================
+	// ================ Animation
+	// =================================================
+	
+	// =================================================
+	// ================ Getters / Setters
+	// =================================================
+	private function _getForm(){
+		
+		return $this->_form;
+	}
+	// =================================================
+	// ================ Interfaced
+	// =================================================
+	
+	// =================================================
+	// ================ Core Handler
+	// =================================================
+	
+	// =================================================
+	// ================ Overrides
+	// =================================================
+	
+	// =================================================
+	// ================ Constructor
+	// =================================================
 
     public function indexAction()
     {
@@ -22,13 +63,14 @@ class CheckoutController extends Zend_Controller_Action
     	
 
         $request	= $this->getRequest();
-        $form		= new Application_Form_Checkout();
+        $form		= $this->_getForm();
+      
         
         if($this->getRequest()->isPost()){
         	
         	if($form->isValid($request->getPost())){
         		//todo: make authorize.net call
-        		
+        		$form->populate($form->getUnfilteredValues());
         		print_r($form->getValues());
         	}//end if form is valid
         }//end if there's post data present
@@ -58,7 +100,25 @@ class CheckoutController extends Zend_Controller_Action
 
     public function transactionResultsAction()
     {
-        // action body
+    	// we don't have results go to checkout page
+    	if (!$this->getRequest()->isPost()) {
+    		
+            return $this->_forward('index');
+        }//endif
+        
+        $form = $this->_getForm();
+        if(!$form->isValid($_POST)){
+        	
+        	//failed validation; redisplay form
+        	$this->view->form	= $form;
+        	echo  $form;
+        	return;
+        }//endif
+		        
+        $this->view->isValid = true;
+        $values = $form->getValues();
+        print_r($values);
+        
     }
 
 
