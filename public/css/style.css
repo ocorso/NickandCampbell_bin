@@ -762,7 +762,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 #checkout_form  {
 
-	border: solid red;
+	/* border: solid red; */
 }
 #checkout_form .zend_form{
 

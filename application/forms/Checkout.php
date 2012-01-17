@@ -241,6 +241,9 @@ class Application_Form_Checkout extends Zend_Form
 		));
 		
 		
+// =================================================
+// ============= Confirm : Submit
+// =================================================		
 		//amount
 		$confirm->addElement('text','amount',array(
 			'label'		=> 	'Amount:',
@@ -257,6 +260,10 @@ class Application_Form_Checkout extends Zend_Form
 													'label'	=>'Checkout'
 		));
 		
+		
+// =================================================
+// ============= Add Subforms to form
+// =================================================		
 		$subForms 		= array(	'shipping1'=> $shipping1,
 									'shipping2'=> $shipping2,
 									'billing1'=> $billing1,

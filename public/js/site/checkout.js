@@ -1,16 +1,37 @@
 coController = {};
 coController.isBillSame	= false;
-coController.stateArr = ['shipping1', 'shipping2','billing1, billing2'];
+coController.stateArr 	= ['shipping1', 'shipping2','billing1, billing2',"confirm"];
+coController.stateIndex	= 0;
+coController.curState	= coController.stateArr[0];
 
-
-
+coController.disabledArrowCSS= {'opacity': .2, 	'cursor': 'default'};
+coController.enabledArrowCSS= {	'opacity': 1, 	'cursor': 'pointer'};
 //=================================================
 //================ Callable
 //=================================================
 coController.addHandlers = function(){
 	
-	$('#co_next').bind("click", coController.onNextClick);
-	$('#co_prev').bind("click", coController.onPrevClick);
+	switch (coController.curState){
+	 
+		case coController.stateArr[0]:
+
+			log("next is good to go, prev isn't");
+			$('#co_next').bind("click", coController.onNextClick).css(coController.enabledArrowCSS);
+			coController.disableArrow("#co_prev");
+			break;
+		case coController.stateArr[4]:
+			
+			log("prev is good to go, next isn't");
+			coController.disableArrow("#co_next");
+			$('#co_prev').bind("click", coController.onPrevClick).css(coController.enabledArrowCSS);
+			break;
+		default:
+
+			$('#co_prev').bind("click", coController.onPrevClick).css(coController.enabledArrowCSS);
+			$('#co_next').bind("click", coController.onNextClick).css(coController.enabledArrowCSS);
+	
+	}//endswitch
+	
 	
 };
 
@@ -45,24 +66,18 @@ coController.copyAddress = function(){
 };    
 coController.disableArrow 	= function ($arrow){
 	log("disable: "+$arrow);
-	$($arrow).unbind('click').css({'opacity': .2, 'cursor': 'mouse'});
+	$($arrow).unbind('click').css(coController.disabledArrowCSS);
 }; 
-coController.enableArrow 	= function ($arrow){
-	log("enable: "+$arrow);
-	var a = $($arrow);
-	switch($arrow){
-		case "#co_prev": a.bind("click", coController.onPrevClick); break;
-		case "#co_next": a.bind("click", coController.onNextClick); break;
-		default : log("ERROR unknown arrow to enable");
-	}
-	a.css({'opacity': 1, 'cursor': 'pointer'});
-}; 
+
 //=================================================
 //================ Handlers
 //=================================================
 coController.onPrevClick = function($e){
 	log('Prev Click, left off: '+$('#checkout_form .zend_form').css("left"));
 	
+	//update current postiion
+	if(coController.stateIndex >0 ) coController.stateIndex -=1;
+	coController.curState	= coController.stateArr[coController.stateIndex];
 	//don't double click. 
 	coController.removeHandlers();
 	
@@ -73,6 +88,8 @@ coController.onPrevClick = function($e){
 coController.onNextClick = function($e){
 	log('Next Click  left off: '+$('#checkout_form .zend_form').css("left"))
 	
+	if(coController.stateIndex < 4 ) coController.stateIndex +=1;
+	coController.curState	= coController.stateArr[coController.stateIndex];
 	//don't double click. 
 	coController.removeHandlers();
 	
@@ -135,17 +152,6 @@ coController.onNextClick = function($e){
 //================ Doc Ready
 //=================================================
 
-
-//*****************************************************
-//oc: checkout functions
-//*****************************************************
-
-
-
-
-//*****************************************************
-//oc: checkout ready
-//*****************************************************
 jQuery(function($) {
 	log("checkout doc ready");
 	coController.init();
