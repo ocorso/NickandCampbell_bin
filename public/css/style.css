@@ -219,7 +219,7 @@ table { border-collapse: collapse; border-spacing: 0; }
     font-style: normal;
 
 }
-h1, h2,h3,h4,h5,p, a, form, li{ 
+h1, h2,h3,h4,h5,p, a, form, li, .vip{ 
 	font-family: 'VIPRegular';
 	text-transform: lowercase;
 }
@@ -738,6 +738,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 #s_checkout h4{
 	font-size: 34px;	
 }
+#co_carousel{
+	margin-top: 40px;
+}
 .co-arrow{
 	background-image: url('/../img/icons/co-arrows.png');
 	width: 98px;
@@ -770,35 +773,49 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 #checkout_form fieldset{
 	float: left;
-	margin: 0 50px;
+	margin: 0 63px;
+}
+#fieldset-confirm{
+	border: solid 1px #333;
+}
+#fieldset-shipping2 dl{overflow: hidden;}
+#fieldset-shipping2 dt{ float:left;}
+#fieldset-shipping2 dd, #billing1-bill_as_ship-element{ 
+	margin-left: 500px;
+	line-height: 12px;
+	margin-top: 5px;
+}
+#fieldset-shipping2 dd input, #billing1-bill_as_ship-element input{ width: 20px;}
+
+#billing1-bill_as_ship-label label{
+	width: 418px;
+	margin: 0;
+}
+#billing1-bill_as_ship-element{
+	
+	margin-left: 418px;
+	padding-top: 5px;
 }
 /* =============================================================================
- @Admin
-========================================================================== */
-#auth{
-	position: absolute;
-	right: 0;	
+   @Checkout Form
+   ========================================================================== */
+fieldset{ float: left;}
+#billing2-card_type-element:after{ 
+	background-image: url('/../img/icons/sprite-sheet.png');
+	background-position: 0 -26px;
+	content: "";
+	width: 127px;
+	height: 29px;
+	display: block;
+	float: right;
 }
-#auth ul li{
-	display: inline;
+#confirm-submit{
+	color: #33ff00;
+	font-size: 60px;
+	height: 43px;
+	width: 100px;
+	background-color: #333;
 }
-#s_login{
-	height: 400px;
-}
-#form_login label{
-	float: left;
-	font-size: 34px;
-	line-height: 33px;
-	
-}
-.DataTables_sort_wrapper{cursor: pointer;}
-.DataTables_sort_wrapper span{float: right;}
-#orders_grid{ width: 100%;}
-#orders_grid_wrapper{margin-bottom: 112px; /*width: 950px;*/}
-#orders_grid_length{float: left; }
-#orders_grid_filter{float: right; }
-.expand-btn{ cursor: pointer; }
-table.display{ color: #666;}
 /* =============================================================================
    @Forms
    ========================================================================== */
@@ -856,20 +873,6 @@ fieldset dd{
 	font-size: 19px;
 }	
 /* =============================================================================
-   @Checkout Form
-   ========================================================================== */
-fieldset{ float: left;}
-#billing2-card_type-element:after{ 
-	background-image: url('/../img/icons/sprite-sheet.png');
-	background-position: 0 -26px;
-	content: "";
-	width: 127px;
-	height: 29px;
-	display: block;
-	float: right;
-}
-
-/* =============================================================================
    @AddToCart Form
    ========================================================================== */
 #add_to_cart_form, #add_to_cart_form_extended{
@@ -877,6 +880,7 @@ fieldset{ float: left;}
 	position: relative;
 }
 #add_to_cart_form input{
+
 	background-color: #fff;
 	width: 50px;
 	height: 20px;
@@ -1056,6 +1060,36 @@ footer aside ul li a, footer aside ul li a:visited{
 footer aside ul li a:hover{
 	color: #fff; 
 }
+
+@CHARSET "UTF-8";
+
+/* =============================================================================
+ @Admin
+========================================================================== */
+#auth{
+	position: absolute;
+	right: 0;	
+}
+#auth ul li{
+	display: inline;
+}
+#s_login{
+	height: 400px;
+}
+#form_login label{
+	float: left;
+	font-size: 34px;
+	line-height: 33px;
+	
+}
+.DataTables_sort_wrapper{cursor: pointer;}
+.DataTables_sort_wrapper span{float: right;}
+#orders_grid{ width: 100%;}
+#orders_grid_wrapper{margin-bottom: 112px; /*width: 950px;*/}
+#orders_grid_length{float: left; }
+#orders_grid_filter{float: right; }
+.expand-btn{ cursor: pointer; }
+table.display{ color: #666;}
 /* =============================================================================
    Non-semantic helper classes
    Please define your styles before this section.

@@ -1,6 +1,8 @@
 coController = {};
 coController.isBillSame	= false;
 coController.stateArr 	= ['shipping1', 'shipping2','billing1, billing2',"confirm"];
+coController.fieldsetIds= ['#fieldset-shipping1', '#fieldset-shipping2', '#fieldset-billing1','#fieldset-billing2', 'fieldset-confirm'];
+coController.fieldsets= $('checkout_form fieldset'); 
 coController.stateIndex	= 0;
 coController.curState	= coController.stateArr[0];
 
@@ -82,7 +84,7 @@ coController.onPrevClick = function($e){
 	coController.removeHandlers();
 	
 	//todo: validate current state and then move on.
-	$('#checkout_form .zend_form').animate({"left": "+=600"}, coController.addHandlers);
+	$('#checkout_form .zend_form').animate({"left": "+=620"}, coController.addHandlers);
 	
 };
 coController.onNextClick = function($e){
@@ -94,38 +96,44 @@ coController.onNextClick = function($e){
 	coController.removeHandlers();
 	
 	//todo: validate current state and then move on.
-	$('#checkout_form .zend_form').animate({"left": "-=600"}, coController.addHandlers);
+	//todo: resize element containers on cart construction and state change
+	$('#checkout_form .zend_form').animate({"left": "-=620"}, coController.addHandlers);
 };     
+coController.onShippingTypeClick = function ($e){
+	log("shipping type: "+$(this).attr('id'));
+	
+}
 //=================================================
 //================ Animation
 //=================================================
 
 
 //=================================================
-//================ Getters / Setters
+//================ Utility
 //=================================================
-     
-//=================================================
-//================ Initialize
-//=================================================
-     coController.init = function (){
-    	 
-    	log('init');
+coController.populateFakeData = function () {
+	$('#shipping1-cust_first_name').val("Owen");
+	$('#shipping1-cust_last_name').val("Corso");
+	$('#shipping1-cust_email').val("owen@ored.net");
+	$('#shipping1-cust_phone').val("2016020069");
+	$('#shipping1-sh_addr1').val("281 Stewart Lane");
+	$('#shipping1-sh_city').val("Franklin Lakes");
+	$('#shipping1-sh_zip').val("07417");
+	$('#shipping1-sh_state').val("NJ");
+	
+	$('#billing1-bill_addr1').val("281 Stewart Lane");
+	$('#billing1-bill_addr2').val("");
+	$('#billing1-bill_city').val("Franklin Lakes");
+	$('#billing1-bill_state').val("NJ");
+	$('#billing1-bill_zip').val("07417");
+	
+	$('#billing2-name_on_card').val("Owen M Corso");
+	$('#billing2-card_type').val(1);
+	$('#billing2-card_num').val(6011000000000012);
+	$('#billing2-ccv').val(123);
+	$('#billing2-exp_date').val("04/2015");
+}    
 
-    	//copy shipping address into billing.
-    	$('#billing1-bill_as_ship').click(coController.copyAddress);
-    	
-    	//make checkout button in shopping cart disabled:
-    	$('.checkout-btn').click(function($e){
-    		$e.preventDefault();
-    		$('#s_checkout h3').css({'color': "red"});
-    		return false;
-    	});
-    	$('#checkout_form .zend_form').fadeOut('fast');
-    	
-    	$('#checkout_form').fadeOut("fast",  coController.createForm);
-     };
-//=================================================
 //================ Core Handler
 //=================================================
      coController.createForm = function (){
@@ -139,15 +147,40 @@ coController.onNextClick = function($e){
     			 'width': 3000
     	 };
     	 $('.co-arrow, #indicator_list').fadeIn('slow');
-    	 $('#checkout_form').css(coFormCSS).fadeIn();
+    	 $('#checkout_form').css(coFormCSS);
     	 $('#checkout_form .zend_form').css(coSlidingDivCSS).fadeIn();
     	 
     	 //todo: add next trigger on appropriate focus change.
+    	 $('#co_carousel').fadeIn();
+     };
+     
+//=================================================
+//================ Initialize
+//=================================================
+     coController.init = function (){
+    	 
+    	 log('init');
+    	 
+    	 //speed things up for debugging.
+    	 $('.debug-radio').click(coController.populateFakeData);
+    	 
+    	 //shipping types?
+    	 $(".co-shipping-type").click(coController.onShippingTypeClick);
+    	 
+    	 //copy shipping address into billing.
+    	 $('#billing1-bill_as_ship').click(coController.copyAddress);
+    	 
+    	 //make checkout button in shopping cart disabled:
+    	 $('.checkout-btn').click(function($e){
+    		 $e.preventDefault();
+    		 $('#s_checkout h3').css({'color': "red"});
+    		 return false;
+    	 });
+    	 $('#checkout_form .zend_form').fadeOut('fast');
+    	 
+    	 $('#checkout_form').fadeOut("fast",  coController.createForm);
      };
 //=================================================
-//================ Overrides
-//=================================================
-     
 //=================================================
 //================ Doc Ready
 //=================================================

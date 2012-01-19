@@ -2,7 +2,23 @@
 
 class Application_Form_Checkout extends Zend_Form
 {
+	protected $_cart; //this is the session var that we'll hopefully populate in init
 	protected $_statesArr = array('AL'=>'Alabama','AK'=>'Alaska','AZ'=>'Arizona','AR'=>'Arkansas','CA'=>'California','CO'=>'Colorado','CT'=>'Connecticut','DE'=>'Delaware','DC'=>'District Of Columbia','FL'=>'Florida','GA'=>'Georgia','HI'=>'Hawaii','ID'=>'Idaho','IL'=>'Illinois', 'IN'=>'Indiana', 'IA'=>'Iowa',  'KS'=>'Kansas','KY'=>'Kentucky','LA'=>'Louisiana','ME'=>'Maine','MD'=>'Maryland', 'MA'=>'Massachusetts','MI'=>'Michigan','MN'=>'Minnesota','MS'=>'Mississippi','MO'=>'Missouri','MT'=>'Montana','NE'=>'Nebraska','NV'=>'Nevada','NH'=>'New Hampshire','NJ'=>'New Jersey','NM'=>'New Mexico','NY'=>'New York','NC'=>'North Carolina','ND'=>'North Dakota','OH'=>'Ohio','OK'=>'Oklahoma', 'OR'=>'Oregon','PA'=>'Pennsylvania','RI'=>'Rhode Island','SC'=>'South Carolina','SD'=>'South Dakota','TN'=>'Tennessee','TX'=>'Texas','UT'=>'Utah','VT'=>'Vermont','VA'=>'Virginia','WA'=>'Washington','WV'=>'West Virginia','WI'=>'Wisconsin','WY'=>'Wyoming');
+	protected function _formatCartContents($cart)
+	{
+	
+		//calc cost of all items in the cart
+		$subTotal 	= 0;
+		foreach ($cart->items as $item){
+			$subTotal += (int) $item['quantity']* (float)$item['price'];
+		}
+		 
+		//3. return json so JS can populate shopping cart
+		$cartObj 			= new stdClass();
+		$cartObj->subTotal 	= number_format($subTotal, 2);
+		$cartObj->items		= $cart->items;
+		return $cartObj;
+	}
 	
 //http://www.zend.com//code/codex.php?ozid=1320&single=1
 // From a previous HTML Form, pass the following fields: 
@@ -20,9 +36,24 @@ class Application_Form_Checkout extends Zend_Form
 	
     public function init()
     {
+    	
+    	//debug
+    	$debugRadioBtn = new Zend_Form_Element_Checkbox("debug");
+    	$debugRadioBtn->setLabel("Fill out shit")
+    	->setAttrib("class", "debug-radio");
+    	$this->addElement($debugRadioBtn);
+    	//get cart
+    	$this->_cart = new Zend_Session_Namespace('cart');
+    	
+    	//print_r( $this->_formatCartContents($this->_cart));
+    	$cart = $this->_formatCartContents($this->_cart);
+    	
     	$this->setAction("/checkout/transaction-results")
 			->setMethod("post")
 			->setAttrib('id', 'checkout_form');
+		
+    	//oc: add data from session obj
+    	$this->addHid('subtotal', $cart->subTotal);
 		
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
 //++++++++++++++++++++++ ZEND FILTERS ++++++++++++++++++++++++++++++++++++++		
@@ -145,10 +176,12 @@ class Application_Form_Checkout extends Zend_Form
 			->setAttrib("class", "co-shipping-type");
 			
 		$shType2 = new Zend_Form_Element_Checkbox("sh_type2");
-		$shType2->setLabel("Priority Mail 3-4 Business Days $6.95");
+		$shType2->setLabel("Priority Mail 3-4 Business Days $6.95")
+			->setAttrib("class", "co-shipping-type");
 			
 		$shType3 = new Zend_Form_Element_Checkbox("sh_type3");
-		$shType3->setLabel("First Class 1-2 Business Days $10.95");
+		$shType3->setLabel("First Class 1-2 Business Days $10.95")
+			->setAttrib("class", "co-shipping-type");
 			
 		$shipping2->addElements(array($shType1, $shType2, $shType3));
 		
@@ -217,16 +250,61 @@ class Application_Form_Checkout extends Zend_Form
 		//	->addValidator($validatorCC)
 			->addFilter($filterDigits)
 			->setLabel('Card Number:');
-			
+		//omg we have a valid form and it looks like this:
+		// 		[debug] => 1
+		// 		[subtotal] => 19.95
+		// 		[shipping1] => Array
+		// 		(
+		// 		[cust_first_name] => owen
+		// 		[cust_last_name] => corso
+		// 		[cust_phone] => 2016020069
+		// 		[cust_email] => owen@ored.net
+		// 		[sh_addr1] => 281 stewart lane
+		// 		[sh_addr2] =>
+		// 		[sh_city] => franklin lakes
+		// 		[sh_state] => NJ
+		// 		[sh_zip] => 07417
+		// 		)
+		
+		// 		[shipping2] => Array
+		// 		(
+		// 		[sh_type1] => 0
+		// 		[sh_type2] => 0
+		// 		[sh_type3] => 0
+		// 		)
+		
+		// 		[billing1] => Array
+		// 		(
+		// 		[bill_as_ship] => 0
+		// 		[bill_addr1] => 281 stewart lane
+		// 		[bill_addr2] =>
+		// 		[bill_city] => franklin lakes
+		// 		[bill_state] => NJ
+		// 		[bill_zip] => 07417
+		// 		)
+		
+		// 		[billing2] => Array
+		// 		(
+		// 		[name_on_card] => owen m corso
+		// 		[card_type] => 1
+		// 		[card_num] => 1234123412341234
+		// 		[ccv] => 123
+		// 		[exp_date] => 052012
+		// 		)
+		
+		// 		[confirm] => Array
+		// 		(
+		// 		)
 
 		//exp_date 
+		//todo: make decorators explaning some of this stuff.
 		$expDate		= new Zend_Form_Element("exp_date");
 		$expDate->setLabel("Expiration")
 			->setRequired(true)
 			//->addValidator()
 			->addFilters(array($filterDigits));
 		
-		$ccv			= new Zend_Form_Element_Text("cvv");
+		$ccv			= new Zend_Form_Element_Text("ccv");
 		$ccv->setLabel("CCV")
 			->setAttrib("class", "ccv")
 			->setRequired(true)
@@ -245,21 +323,25 @@ class Application_Form_Checkout extends Zend_Form
 // ============= Confirm : Submit
 // =================================================		
 		//amount
-		$confirm->addElement('text','amount',array(
-			'label'		=> 	'Amount:',
-			'required'	=>	true,
-			'validators'=> 	array(
-						array('validator'=>'StringLength', 'options'=>array(0,20))
-						)
-		));	
+// 		$confirm->addElement('text','amount',array(
+// 			'label'		=> 	'Amount:',
+// 			'required'	=>	true,
+// 			'validators'=> 	array(
+// 						array('validator'=>'StringLength', 'options'=>array(0,20))
+// 						)
+// 		));	
 
 		
 		//submit button
-		$confirm->addElement('submit', 'submit', array(
-													'ignore'=>true, 
-													'label'	=>'Checkout'
-		));
 		
+		//todo: make new decorator for submit button.
+		$submitBtn	= new Zend_Form_Element_Submit("submit");
+		$submitBtn->setLabel('Confirm Purchase')
+			->setAttrib("class", "vip")
+			->setIgnore(true);
+		
+		$confirm->addElement($submitBtn);
+	
 		
 // =================================================
 // ============= Add Subforms to form
@@ -272,7 +354,21 @@ class Application_Form_Checkout extends Zend_Form
 		
 		$this->addSubForms($subForms);
 		
-	}
+	}//end init
 
-}
+	/**
+	* Add Hidden Element
+	* @param $field
+	* @param value
+	* @return nothing - adds hidden element
+	* */
+	public function addHid($field, $value){
+		$hiddenIdField = new Zend_Form_Element_Hidden($field);
+		$hiddenIdField->setValue($value)
+		->removeDecorator('label')
+		->removeDecorator('HtmlTag');
+		$this->addElement($hiddenIdField);
+	}
+	
+}//end class
 
