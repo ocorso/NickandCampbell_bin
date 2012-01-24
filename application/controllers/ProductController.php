@@ -2,14 +2,7 @@
 
 class ProductController extends Zend_Controller_Action
 {
-    		/*****************************************************
-			* oc: EXPECTED CATEGORIES FOR PRODUCT QUERIES:
-			*
-			*	MENS
-			*	MENS UNDERWEAR
-			*
-			*
-			//*****************************************************/ 
+
     public function init()
     {
         /* Initialize action controller here */
@@ -60,7 +53,40 @@ class ProductController extends Zend_Controller_Action
         
         $this->view->form 	= $form;
     }
-	
+
+    /*
+     * This method takes post data and inserts a new product to the catalogue.
+     * new record on products table and/or product_styles
+     * choice to use existing category or create new category (one to many)
+     */
+    public function addAction(){
+    	
+    	//todo gather existing products to know what categories to make a select boxes from
+		//sizes select box
+    	//first get sizing chart
+    	$sizes 		= new Application_Model_SizingChartMapper();
+    	$sizeArr	= $sizes->fetchAll();
+		$sOpts		= array();
+		foreach($sizeArr as $size){
+			$sOpts[] = $size['name'];
+		}
+    	$opts 		= array(
+    		'sizes'=>$sOpts,
+    		'categories'=>array('underwear', 'jackets', 'ready to wear'),
+    		'gender'=>array('male','female')
+    	);
+		//gender select box
+		//categories select box
+		//
+	//	print_r($opts);
+		
+        $form				= new Application_Form_AddProduct($opts);
+        $this->view->form 	= $form;
+        //take post 
+    }
+
 
 }
+
+
 

@@ -2,21 +2,11 @@
 
 class Application_Model_Product
 {
-	protected $_id;
-	protected $_sid;		//style id
-	protected $_name;
-	protected $_pretty;		//pretty url	
-	protected $_description1;
-	protected $_description2;
-	protected $_campaign;
-	protected $_label; 		//black, regular
+	protected $_pid; 		//product id
 	protected $_size;		//
 	protected $_color;
-	protected $_category;
-	protected $_gender;
-	protected $_weight;
-	protected $_price;
 	protected $_sku;
+	protected $_weight;
 	
 	
         
@@ -66,64 +56,14 @@ class Application_Model_Product
 // =================================================
 // ================ Getters / Setters
 // =================================================
-	//href
-	public function getHref(){ return 'shop/'.$this->_gender.'/'.$this->_category.'/'.$this->_pretty;	}
-	
-	//id
-	public function setId($id){
-		$this->_id = (int) $id;
+	//product id
+	public function setPid($id){
+		$this->_pid = (int) $id;
 		return $this;
 	}
-	public function getId(){ return $this->_id;	}
-	
-	//style id
-	public function setSid($sid){
-		$this->_sid				= (int) $sid;
-		return $this;
+	public function getPid(){
+		return $this->_pid;
 	}
-	public function getSid(){ return $this->_sid; }
-	
-	//name
-	public function setName($name){
-		$this->_name = (string) $name;
-		return $this;
-	}
-	public function getName(){ return $this->_name; }
-	
-	//pretty name for url
-	public function setPretty($prettyName){
-		$this->_pretty		= (string) $prettyName;
-		return $this;
-	}
-	public function getPretty(){ return $this->_pretty; }
-	
-	//description1
-	public function setDescription1($d){
-		$this->_description1	= (string) $d;
-		return $this;
-	}
-	public function getDescription1(){ return $this->_description1; }
-	
-	//description2
-	public function setDescription2($d){
-		$this->_description2	= (string) $d;
-		return $this;
-	}
-	public function getDescription2(){ return $this->_description2; }
-	
-	//campaign
-	public function setCampaign($c){
-		$this->_campaign		= (string) $c;
-		return $this;
-	}
-	public function getCampaign(){ return $this->_campaign; }
-
-	//label
-	public function setLabel($label){
-		$this->_label			= (string) $label;
-		return $this;
-	}
-	public function getLabel(){ return $this->_label; }
 	
 	//size
 	public function setSize($s){
@@ -139,27 +79,7 @@ class Application_Model_Product
 	}
 	public function getColor(){ return $this->_color; }
 	
-	//category
-	public function setCategory($cat){
-		$this->_category		= (string) $cat;
-		return $this;
-	}
-	public function getCategory(){ return $this->_category; }
-	
-	//gender
-	public function setGender($gender){
-		$this->_gender			= (string) $gender;
-		return $this;
-	}
-	public function getGender(){ return $this->_gender; }
-	
-	//weight
-	public function setWeight($weight){
-		$this->_weight			= (float) $weight;
-		return $this; 
-	}
-	public function getWeight(){ return $this->_weight; }
-	
+
 	//price
 	public function setPrice($price){
 		$this->_price			= (float) $price;
@@ -173,6 +93,17 @@ class Application_Model_Product
 		return $this;
 	}
 	public function getSku(){ return $this->_sku; }
+
+	
+	//weight
+	public function setWeight($weight){
+	$this->_weight			= (float) $weight;
+	return $this;
+	}
+	public function getWeight(){
+	return $this->_weight;
+	}
+	
 // =================================================
 // ================ Constructor
 // =================================================

@@ -3,8 +3,8 @@
 class Application_Model_DbTable_Product extends Zend_Db_Table_Abstract
 {
 
-    protected $_name = 'products';
-
+    protected $_name 	= 'products';
+    protected $_primary = 'pid';
 
 }
 

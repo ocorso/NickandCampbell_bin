@@ -41,6 +41,7 @@
         </controllerFile>
         <controllerFile controllerName="Product">
           <actionMethod actionName="index"/>
+          <actionMethod actionName="add"/>
         </controllerFile>
         <controllerFile controllerName="Campaign">
           <actionMethod actionName="index"/>
@@ -63,6 +64,7 @@
         <formFile formName="AddToCart"/>
         <formFile formName="Login"/>
         <formFile formName="Register"/>
+        <formFile formName="AddProduct"/>
       </formsDirectory>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>
@@ -73,6 +75,7 @@
           <dbTableFile dbTableName="ShippingAddresses"/>
           <dbTableFile dbTableName="BillingAddresses"/>
           <dbTableFile dbTableName="Customer"/>
+          <dbTableFile dbTableName="ProductStyles"/>
         </dbTableDirectory>
         <modelFile modelName="ProductMapper"/>
         <modelFile modelName="Product"/>
@@ -85,6 +88,7 @@
         <modelFile modelName="BillingAddressMapper"/>
         <modelFile modelName="Customer"/>
         <modelFile modelName="CustomerMapper"/>
+        <modelFile modelName="ProductStyle"/>
       </modelsDirectory>
       <modulesDirectory>
         <moduleDirectory moduleName="Shop">
@@ -206,6 +210,12 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Checkout">
             <viewScriptFile forActionName="transactionResults"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Product">
+            <viewScriptFile forActionName="add"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="helper">
+            <viewScriptFile forActionName="?"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

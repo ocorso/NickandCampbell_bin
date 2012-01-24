@@ -1,11 +1,33 @@
 coController = {};
 coController.isBillSame	= false;
-coController.stateArr 	= ['shipping1', 'shipping2','billing1, billing2',"confirm"];
-coController.fieldsetIds= ['#fieldset-shipping1', '#fieldset-shipping2', '#fieldset-billing1','#fieldset-billing2', 'fieldset-confirm'];
-coController.fieldsets= $('checkout_form fieldset'); 
-coController.stateIndex	= 0;
-coController.curState	= coController.stateArr[0];
 
+
+coController.states	 	= [{	'name':'shipping1',
+								'id':'#fieldset-shipping1',
+								'leftOffset':0
+							},
+                   	 	   {	'name':'shipping2',
+								'id':'#fieldset-shipping2',
+								'leftOffset':-620
+                   	 	   	},
+                   	 	   {	'name':'billing1',
+                   	 	   		'id':'#fieldset-billing1',
+               	 	   			'leftOffset':-1240
+                   	 			   
+                   	 	   	},
+                   	 	   {	'name':'billing2',
+                   	 	   		'id':'#fieldset-billing1',
+	       	 			    	'leftOffset':-1860
+                   	 	   	},
+                   	 	   {'name':'confirm',
+               	 	   		'id':'#fieldset-confirm'
+                   	 		
+                   	 	   }
+];
+coController.stateIndex	= 0;
+coController.curState	= coController.states[0].name;
+coController.animation	= {};
+coController.focus		= {};
 coController.disabledArrowCSS= {'opacity': .2, 	'cursor': 'default'};
 coController.enabledArrowCSS= {	'opacity': 1, 	'cursor': 'pointer'};
 //=================================================
@@ -15,13 +37,13 @@ coController.addHandlers = function(){
 	
 	switch (coController.curState){
 	 
-		case coController.stateArr[0]:
+		case coController.states[0].name:
 
 			log("next is good to go, prev isn't");
 			$('#co_next').bind("click", coController.onNextClick).css(coController.enabledArrowCSS);
 			coController.disableArrow("#co_prev");
 			break;
-		case coController.stateArr[4]:
+		case coController.states[4].name:
 			
 			log("prev is good to go, next isn't");
 			coController.disableArrow("#co_next");
@@ -79,34 +101,60 @@ coController.onPrevClick = function($e){
 	
 	//update current postiion
 	if(coController.stateIndex >0 ) coController.stateIndex -=1;
-	coController.curState	= coController.stateArr[coController.stateIndex];
+	coController.curState	= coController.states[coController.stateIndex].name;
 	//don't double click. 
 	coController.removeHandlers();
 	
 	//todo: validate current state and then move on.
-	$('#checkout_form .zend_form').animate({"left": "+=620"}, coController.addHandlers);
-	
+	coController.animation.moveStates("right"); 
+	coController.animation.moveArrows();
 };
 coController.onNextClick = function($e){
 	log('Next Click  left off: '+$('#checkout_form .zend_form').css("left"))
 	
 	if(coController.stateIndex < 4 ) coController.stateIndex +=1;
-	coController.curState	= coController.stateArr[coController.stateIndex];
+	coController.curState	= coController.states[coController.stateIndex].name;
 	//don't double click. 
 	coController.removeHandlers();
 	
 	//todo: validate current state and then move on.
 	//todo: resize element containers on cart construction and state change
-	$('#checkout_form .zend_form').animate({"left": "-=620"}, coController.addHandlers);
-};     
+	coController.animation.moveStates("left"); 
+	coController.animation.moveArrows();
+};
+
 coController.onShippingTypeClick = function ($e){
 	log("shipping type: "+$(this).attr('id'));
 	
-}
+};
+
+coController.focus.onShipping2	= function($e){
+	log("focus");
+	
+};
 //=================================================
 //================ Animation
 //=================================================
+coController.animation.moveStates = function ($direction){
+	var offset = "do something";
+	switch($direction){
+	case "left":
+		$('#checkout_form .zend_form').animate({"left": "-=620"}, coController.addHandlers);
+		break;
+	case "right":
+		$('#checkout_form .zend_form').animate({"left": "+=620"}, coController.addHandlers);
+		break;
+		default : log("XXXERRORXXXXX: unknown direction to move the states carousel");
+	}//endswitch
+};
 
+coController.animation.moveArrows = function (){
+	log('move arrows. curFieldset height of '+coController.states[coController.stateIndex].id+': '+ $(coController.states[coController.stateIndex].id).height());
+	var marginTop 	= $(coController.states[coController.stateIndex].id).height();
+	marginTop		= (marginTop - $('.co-arrow').height())/2 +20;
+	var opts 		= {'margin-top': marginTop};
+	$('.co-arrow').animate(opts);
+};
 
 //=================================================
 //================ Utility
@@ -132,8 +180,9 @@ coController.populateFakeData = function () {
 	$('#billing2-card_num').val(6011000000000012);
 	$('#billing2-ccv').val(123);
 	$('#billing2-exp_date').val("04/2015");
-}    
+}; 
 
+//=================================================
 //================ Core Handler
 //=================================================
      coController.createForm = function (){
@@ -146,7 +195,8 @@ coController.populateFakeData = function () {
     	 var coSlidingDivCSS 	= {	'position':'absolute', 
     			 'width': 3000
     	 };
-    	 $('.co-arrow, #indicator_list').fadeIn('slow');
+    	 
+    	 $('.co-arrow, #indicator_list').fadeIn('slow', coController.animation.moveArrows);
     	 $('#checkout_form').css(coFormCSS);
     	 $('#checkout_form .zend_form').css(coSlidingDivCSS).fadeIn();
     	 
@@ -166,9 +216,11 @@ coController.populateFakeData = function () {
     	 
     	 //shipping types?
     	 $(".co-shipping-type").click(coController.onShippingTypeClick);
+    	 $("#shipping2-sh_type1").focus(function($e){ $('#co_next').trigger('click');});
     	 
     	 //copy shipping address into billing.
     	 $('#billing1-bill_as_ship').click(coController.copyAddress);
+    	 
     	 
     	 //make checkout button in shopping cart disabled:
     	 $('.checkout-btn').click(function($e){
@@ -180,7 +232,6 @@ coController.populateFakeData = function () {
     	 
     	 $('#checkout_form').fadeOut("fast",  coController.createForm);
      };
-//=================================================
 //=================================================
 //================ Doc Ready
 //=================================================

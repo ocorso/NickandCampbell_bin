@@ -20,20 +20,7 @@ class Application_Form_Checkout extends Zend_Form
 		return $cartObj;
 	}
 	
-//http://www.zend.com//code/codex.php?ozid=1320&single=1
-// From a previous HTML Form, pass the following fields: 
-// $FirstName = Customer's First Name 
-// $LastName = Customer's Last Name 
-// $Address = Customer's Address 
-// $City = Customer's City 
-// $State = Customer's State (Should be 2 letter code, CA, AZ, etc.) 
-// $Zip = Customer's Zip Code 
-// $Email = Customer's Email Address 
-// $cost = Total Price of purchase 
-// $CardNum = Customer's Credit Card Number 
-// $Month = Customer's Credit Card Expiration Month (Should be 01, 02, etc.) 
-// $Year = Customer's Credit Card Expiration Year (Should be 2003, 2004, etc.) 
-	
+
     public function init()
     {
     	
@@ -291,10 +278,7 @@ class Application_Form_Checkout extends Zend_Form
 		// 		[ccv] => 123
 		// 		[exp_date] => 052012
 		// 		)
-		
-		// 		[confirm] => Array
-		// 		(
-		// 		)
+
 
 		//exp_date 
 		//todo: make decorators explaning some of this stuff.
@@ -338,6 +322,7 @@ class Application_Form_Checkout extends Zend_Form
 		$submitBtn	= new Zend_Form_Element_Submit("submit");
 		$submitBtn->setLabel('Confirm Purchase')
 			->setAttrib("class", "vip")
+			->removeDecorator('DtDdWrapper')
 			->setIgnore(true);
 		
 		$confirm->addElement($submitBtn);

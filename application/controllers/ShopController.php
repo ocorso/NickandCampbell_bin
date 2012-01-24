@@ -29,9 +29,12 @@ class ShopController extends Zend_Controller_Action
     		$layout->disableLayout();
     		
     		//create opts
-    		$opts		= array('gender'=>'mens');
+    		$opts		= array('gender'=>'mens'); //todo: get gender from post vars so that its dynamic
 			$opts  		= $req->getParam('category') ? 	array_merge($opts, array('category'=>$req->getParam('category'))) : $opts;
 			$opts  		= $req->getParam('product') ? 	array_merge($opts, array('pretty'=>$req->getParam('product'))) : $opts;
+			
+			//todo: grab product info from ProductSyles Table
+			//		grab size and color info from Product Table
 			
 			//get product info since we're ajaxing it in
     		$pModel	 				= new Application_Model_ProductMapper();

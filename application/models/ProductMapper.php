@@ -2,30 +2,44 @@
 
 class Application_Model_ProductMapper
 {
-	protected $_dbTable;
+	protected $_productStylesTable;
+	protected $_productsTable;
+	// Build this query:
+	//   SELECT p."product_id", p."product_name", l.*
+	//   FROM "products" AS p JOIN "line_items" AS l
+	//     ON p.product_id = l.product_id
 	
-	public function setDbTable($dbTable)
+// 	$select = $db->select()
+// 	->from(array('p' => 'products'),
+// 	array('product_id', 'product_name'))
+// 	->join(array('l' => 'line_items'),
+// 	                    'p.product_id = l.product_id');
+
+	public function setProductSylesTable($dbTable)
 	{
 		if (is_string($dbTable)){
-			$dbTable = new $dbTable();
+			
+			//$dbTable = new $dbTable();
+			$dbTable = new Application_Model_DbTable_ProductStyles();
 		}//end if
 		
 		if (!$dbTable instanceof Zend_Db_Table_Abstract){
 			throw new Exception("Invalid table data gateway provided yo.");
 		}
-		$this->_dbTable = $dbTable;
+		$this->_productStylesTable = $dbTable;
 		return $this;
 	
 	}//end function
 
-	public function getDbTable(){
-		if (null === $this->_dbTable){
-			$this->setDbTable('Application_Model_DbTable_Product');
+	public function getProductStylesTable(){
+		if (null === $this->_productStylesTable){
+			$this->setProductSylesTable('Application_Model_DbTable_ProductSyles');
 		}
-		return $this->_dbTable;
+		return $this->_productStylesTable;
 	}//end function
 	
 	public function save(Application_Model_Product $product){
+		
 		$data = array(
 			'id'			=> $product->getId(),
 			'sid'			=> $product->getSid(),
@@ -105,8 +119,12 @@ class Application_Model_ProductMapper
 	}//end function
 	public function fetchAllWithOptions($opts, $inStock = true){
 		
-		$table 		= $this->getDbTable();
-		$select		= $table->select();
+		//todo construct entries from 2 tables.
+		$registry = Zend_Registry::getInstance();
+		$db			= $registry->get('db');
+		
+		$pSylesTable 		= $this->getProductStylesTable();
+		$select		= $pSylesTable->select();
 		foreach(array_keys($opts) as $column){
 			$n = $column.' = ?';
 			$select->where($n, $opts[$column]);
@@ -117,7 +135,7 @@ class Application_Model_ProductMapper
 		//oc: to view the query string
 		//echo $select->__toString();
 		
-		$resultSet	= $table->fetchAll($select);
+		$resultSet	= $pSylesTable->fetchAll($select);
 		
 		$entries	= array();
 		foreach($resultSet as $row){

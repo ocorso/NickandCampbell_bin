@@ -23,7 +23,50 @@ class CheckoutController extends Zend_Controller_Action
 	// =================================================
 	// ================ Handlers
 	// =================================================
-
+	protected function _callAuthorizeDotNet($order)
+	{
+		// action body
+		print_r("hey there");
+		print_r($order);
+		$transaction_id = 69;
+	
+		require_once 'anet_php_sdk/AuthorizeNet.php';
+		define("AUTHORIZENET_API_LOGIN_ID", "94EtqH8y");
+		define("AUTHORIZENET_TRANSACTION_KEY", "64UyF8TFt7cUA22U");
+		define("AUTHORIZENET_SANDBOX", true);
+		$sale = new AuthorizeNetAIM;
+	
+		$sale->amount 		= $order['subtotal'];
+		$sale->card_num 	= $order['billing2']['card_num'];
+		$sale->exp_date 	= $order['billing2']['exp_date'];
+		$response 			= $sale->authorizeAndCapture();
+	
+		if ($response->approved) {
+			$transaction_id = $response->transaction_id;
+			echo "trans id: ".$transaction_id;
+		}//end if
+		else echo "fail";
+	
+		//todo: dump more meaningful stuff about the fail.
+	
+		return $transaction_id;
+	}
+	protected function _sendEmail($order){
+		$mail = new Zend_Mail();
+		$body = 'Hi,
+		
+		An order has been submitted.
+		
+		
+		Kind regards,
+		Nick + Campbell';  
+		$mail->setFrom('info@nickandcampbell.com', 'Nick + Campbell');
+		$mail->addTo('owen.corso@yahoo.com', 'Owen Admin');
+		$mail->setSubject("Order Submitted");
+		$mail->setBodyText($body);
+		$mail->send();
+		//echo $body;
+	}
 	// =================================================
 	// ================ Animation
 	// =================================================
@@ -48,7 +91,7 @@ class CheckoutController extends Zend_Controller_Action
 	// =================================================
 
 	// =================================================
-	// ================ Constructor
+	// ================ Actions
 	// =================================================
 
 	public function indexAction()
@@ -98,34 +141,7 @@ class CheckoutController extends Zend_Controller_Action
 		}//end if
 		else echo "fail";
 	}
-	protected function _callAuthorizeDotNet($order)
-	{
-		// action body
-		print_r("hey there");
-		print_r($order);
-		$transaction_id = 69;
-		
-		require_once 'anet_php_sdk/AuthorizeNet.php';
-		define("AUTHORIZENET_API_LOGIN_ID", "94EtqH8y");
-		define("AUTHORIZENET_TRANSACTION_KEY", "64UyF8TFt7cUA22U");
-		define("AUTHORIZENET_SANDBOX", true);
-		$sale = new AuthorizeNetAIM;
-		
-		$sale->amount 		= $order['subtotal'];
-		$sale->card_num 	= $order['billing2']['card_num'];
-		$sale->exp_date 	= $order['billing2']['exp_date'];
-		$response 			= $sale->authorizeAndCapture();
-		
-		if ($response->approved) {
-			$transaction_id = $response->transaction_id;
-			echo "trans id: ".$transaction_id;
-		}//end if
-		else echo "fail";
-		
-		//todo: dump more meaningful stuff about the fail.
-		
-		return $transaction_id;
-	}
+
 
 	public function transactionResultsAction()
 	{
@@ -150,13 +166,14 @@ class CheckoutController extends Zend_Controller_Action
 		$this->view->orderId = $orderId;
 			
 		//1. send email with order info
+		$this->_sendEmail($values);
 		//2. save cust data
 		//3. save shipping address
 		//4. save billing address
 		//5. save order
 		//
 		
-		$this->view->isValid = true;
+		$this->view->isValid = $orderId == 69 ? false : true;
 		
 		
 	}
