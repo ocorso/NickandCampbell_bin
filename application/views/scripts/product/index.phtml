@@ -1,13 +1,21 @@
 <ul class="shop-subnav subnav-grad">
 	<li><a href="shop" rel="address:/shop" title="Back">« Back</a></li>
 </ul>
-<div class="product-content" style="background-color: #ccc;">
+<div class="product-content">
+	<div id="product_data" class="hidden" 
+			
+			data-Name="<?= $this->product->name; ?>"
+			data-Price="<?= $this->product->price; ?>"
+			data-Pretty="<?= $this->product->pretty; ?>">
+	</div>
+	
 	<h1><?= $this->product->name; ?></h1>
-	<img src="img/shop/mens/underwear/large/product-1.jpg" alt=""/>
+	<h2><?= $this->product->description1; ?></h2>
+
+	<img src="<?= $this->lrgImgSrc; ?>" alt=""/>
 	<?= $this->form; ?>
+	<div id="add_to_cart_form_extended">
+		<label>Price:</label><p>$<?= $this->product->price; ?></p>
+		<div class="checkout-btn btn">Checkout</div>
+	</div>
 </div>
-
-<?php //print_r($this->products); ?>
-<?php //print_r($this->sizeArr); ?>
-
-</dl>

@@ -3,7 +3,8 @@
 class Application_Model_Product
 {
 	protected $_pid; 		//product id
-	protected $_size;		//
+	protected $_ref_sid;
+	protected $_ref_size;		//
 	protected $_color;
 	protected $_sku;
 	protected $_weight;
@@ -65,12 +66,21 @@ class Application_Model_Product
 		return $this->_pid;
 	}
 	
-	//size
-	public function setSize($s){
-		$this->_size			= (int) $s;
+	//style id reference
+	public function setRef_sid($id){
+		$this->_ref_sid = (int) $id;
 		return $this;
 	}
-	public function getSize(){ return $this->_size; }
+	public function getRef_sid(){
+		return $this->_ref_sid;
+	}
+	
+	//size
+	public function setRef_size($s){
+		$this->_ref_size			= (int) $s;
+		return $this;
+	}
+	public function getRef_size(){ return $this->_ref_size; }
 	
 	//color
 	public function setColor($color){
@@ -78,14 +88,6 @@ class Application_Model_Product
 		return $this;
 	}
 	public function getColor(){ return $this->_color; }
-	
-
-	//price
-	public function setPrice($price){
-		$this->_price			= (float) $price;
-		return $this;
-	}
-	public function getPrice(){ return $this->_price; }
 	
 	//stock keeping unit
 	public function setSku($q){

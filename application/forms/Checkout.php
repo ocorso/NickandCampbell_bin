@@ -155,9 +155,9 @@ class Application_Form_Checkout extends Zend_Form
 										$shState,
 										$shZip));
 		
-// =================================================
+// ========================================================================
 // ============= Shipping2 : Shipping Type
-// =================================================		
+// ========================================================================		
 		$shType1 = new Zend_Form_Element_Checkbox("sh_type1");
 		$shType1->setLabel("Express Mail 5-7 Business Days $4.95")
 			->setAttrib("class", "co-shipping-type");

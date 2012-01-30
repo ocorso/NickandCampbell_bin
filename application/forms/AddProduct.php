@@ -6,6 +6,7 @@ class Application_Form_AddProduct extends Zend_Form
 	protected $_categories;
 	protected $_gender;
 	protected $_ncLabel = array('black', 'select');
+	protected $_colors = array('black', 'white', 'gray','red');
 	
 	public function setSizes(array $sizes){
 		$this->_sizes = $sizes;
@@ -22,6 +23,9 @@ class Application_Form_AddProduct extends Zend_Form
 	
     public function init()
     {
+    	$this->setMethod('post')
+    		->setAction('/product/add');
+    	
     	$filters 	= array('StringTrim', 'StringToLower');
     	
     	//sub forms:
@@ -30,7 +34,11 @@ class Application_Form_AddProduct extends Zend_Form
     	
     	$productSylesTable		= new Zend_Form_SubForm();
     	$productsTable			= new Zend_Form_SubForm();
-		
+    	$productImages			= new Zend_Form_SubForm();
+
+    	// =================================================
+    	// ================ Product Styles
+    	// =================================================
     	//Product Name
 		$productName			= new Zend_Form_Element_Text("product_name");
 		$productName->setLabel('Product Name')
@@ -62,44 +70,46 @@ class Application_Form_AddProduct extends Zend_Form
 		//campaign
 		$campaign			= new Zend_Form_Element_Text("campaign");
 		$campaign->setLabel('campaign')
-		//	->setRequired(true)
+			->setRequired(true)
 		//	->addValidator('')
 			->setFilters($filters);
 		//label
 		$label			= new Zend_Form_Element_Select("nclabel");
 		$label->setLabel('label')
 			->setMultiOptions($this->_ncLabel)
-		//	->setRequired(true)
+			->setRequired(true)
 		//	->addValidator('')
 			->setFilters($filters);
 		
-		//weight
-		
 		//price
-		//pid
-		//ref_size
-		//color
-		//sku
+		$price			= new Zend_Form_Element_Text("price");
+		$price->setLabel('price')
+			->setRequired(true)
+		//	->addValidator('')
+			->setFilters($filters);
+		//weight
+		$weight			= new Zend_Form_Element_Text("weight");
+		$weight->setLabel('weight')
+			->setRequired(true)
+		//	->addValidator('')
+			->setFilters($filters);
 		
-		//size select
-		$size		= new Zend_Form_Element_Select('size');
-		$size->setLabel("Size:")
-		->setRequired(true)
-		->setMultiOptions($this->_sizes);
+		
 		//gender select
 		$gender		= new Zend_Form_Element_Select('gender');
 		$gender->setLabel("Gender:")
-		->setRequired(true)
+				->setRequired(true)
 		->setMultiOptions($this->_gender);
-    	//category
+		
+		//category
 		$category			= new Zend_Form_Element_Select("category");
 		$category->setLabel('Category')
-			->setRequired(true)
-			->setFilters($filters)
-			->setMultiOptions($this->_categories);
+		->setRequired(true)
+		->setFilters($filters)
+		->setMultiOptions($this->_categories);
 			
 		$productSylesTable->addElements(array(
-			$productName, 
+			$productName,
 			$description1,
 			$description2,
 			$campaign,
@@ -107,8 +117,46 @@ class Application_Form_AddProduct extends Zend_Form
 			$gender,
 			$category
 		));
-		$productsTable->addElements(array($size));
-		$this->addSubForms(array($productSylesTable, $productsTable));
+    	// =================================================
+    	// ================ Products
+    	// =================================================
+		//color
+		$color			= new Zend_Form_Element_Select("color");
+		$color->setLabel('color')
+			->setMultiOptions($this->_colors)
+			->setRequired(true)
+		//	->addValidator('')
+			->setFilters($filters);
+		//sku
+		
+		//size select
+		$size		= new Zend_Form_Element_Select('size');
+		$size->setLabel("Size:")
+		->setRequired(true)
+		->setMultiOptions($this->_sizes);
+	
+		$productsTable->addElements(array(
+			$size,
+			$weight,
+			$color
+		));
+    	// =================================================
+    	// ================ Product Images
+    	// =================================================
+    	$thumbImg	= new Zend_Form_Element_File('thumb_img');
+    	$thumbImg->setLabel("Thumbnail Image (183x137)");
+    	$largeImg	= new Zend_Form_Element_File('large_img');
+    	$largeImg->setLabel("Product Detail Image (457x304)");
+		
+    	$productImages->addElements(array($thumbImg,$largeImg));
+		
+		
+		$this->addSubForms(array($productSylesTable, $productsTable, $productImages));
+		
+		$submit 	= new Zend_Form_Element_Submit('submit_btn');
+		$submit->setLabel('Submit')
+		->setAttrib('class', 'btn');
+		$this->addElement($submit);
     }
 
 

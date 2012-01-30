@@ -49,15 +49,7 @@ class Application_Model_BillingAddressMapper
 			return;
 		}
 		$row - $result->current();
-		$billingAddress->setBid($row->bid)
-			->setRefcid($row->ref_cid)
-			->setAddress1($row->address1)
-			->setAddress2($row->address2)
-			->setCity($row->city)
-			->setState($row->state)
-			->setZip($row->zip)
-			->setCountry($row->country)
-			->setCreated_at($row->created_at);
+		$billingAddress->setOptions($row->toArray());
 		
 	}
 	
@@ -66,15 +58,7 @@ class Application_Model_BillingAddressMapper
 		$entries	= array();
 		foreach($resultSet as $row){
 			$entry	= new Application_Model_BillingAddress();
-			$billingAddress->setBid($row->bid)
-				->setRefcid($row->ref_cid)
-				->setAddress1($row->address1)
-				->setAddress2($row->address2)
-				->setCity($row->city)
-				->setState($row->state)
-				->setZip($row->zip)
-				->setCountry($row->country)
-				->setCreated_at($row->created_at);
+			$billingAddress->setOptions($row->toArray());
 			$entries[]	= $entry;
 		}
 		return $entries;

@@ -13,14 +13,20 @@ class IndexController extends Zend_Controller_Action
     	
 		//shop
         //todo: figure out how to handle different gender/category combinations
+        	//default: men's underwear, 
+        		//accordion of gender/categories on sidebar
+        		//main nav pulldown of gender/categories also, 
+        		//onClick, replaces sidebar display and grid contents
+        		
         //initially, we're just hard coding 'Mens Underwear'
-        $products 					= new Application_Model_ProductMapper();	
+        $pMapper 					= new Application_Model_ProductMapper();	
         $options					= array('gender'=>'mens', 'category'=>'underwear');
-        $productsAllSizes			= $products->fetchAllWithOptions($options);
+        $productStyles				= $pMapper->fetchAllWithOptions($options);
         $this->view->products		= array();
         
+        //print_r($productStyles);
 		//filter out various sizes of same product
-        foreach ($productsAllSizes as $p){
+        foreach ($productStyles as $p){
         	//todo loop through what's already in the products
         	if (!array_key_exists($p->getPretty(), $this->view->products)) {
         		//add it

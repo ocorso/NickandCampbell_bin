@@ -38,7 +38,30 @@ class Application_Model_ProductMapper
 		return $this->_productStylesTable;
 	}//end function
 	
-	public function save(Application_Model_Product $product){
+	public function setProductsTable($dbTable)
+	{
+		if (is_string($dbTable)){
+			
+			//$dbTable = new $dbTable();
+			$dbTable = new Application_Model_DbTable_Product();
+		}//end if
+		
+		if (!$dbTable instanceof Zend_Db_Table_Abstract){
+			throw new Exception("Invalid table data gateway provided yo.");
+		}
+		$this->_productsTable = $dbTable;
+		return $this;
+	
+	}//end function
+
+	public function getProductsTable(){
+		if (null === $this->_productsTable){
+			$this->setProductsTable('Application_Model_DbTable_Product');
+		}
+		return $this->_productsTable;
+	}//end function
+	
+	public function save(Application_Model_Product $product, Application_Model_ProductStyle $productStyle){
 		
 		$data = array(
 			'id'			=> $product->getId(),
@@ -55,7 +78,7 @@ class Application_Model_ProductMapper
 			'gender'		=> $product->getGender(),
 			'weight'		=> $product->getWeight(),
 			'price'			=> $product->getPrice(),
-			'sku'		=> $product->getSku()
+			'sku'			=> $product->getSku()
 		);
 		if (null === ($id = $product->getId())){
 			unset($data['id']);
@@ -92,69 +115,47 @@ class Application_Model_ProductMapper
 	
 	public function fetchAll(){
 
-		$resultSet 	= $this->getDbTable()->fetchAll();
-		$entries	= array();
-		foreach($resultSet as $row){
+		$products 	= $this->getProductsTable()->fetchAll();
+		$entries1	= array();
+		foreach($products as $row){
 			$entry 	= new Application_Model_Product();
-			$entry->setId($row->id)
-				->setSid($row->sid)
-				->setName($row->name)
-				->setPretty($row->pretty)
-				->setDescription1($row->description1)
-				->setDescription2($row->description2)
-				->setCampaign($row->campaign)
-				->setLabel($row->label)
-				->setSize($row->size)
-				->setColor($row->color)
-				->setCategory($row->category)
-				->setGender($row->gender)
-				->setWeight($row->weight)
-				->setPrice($row->price)
-				->setSku($row->sku);
-			$entries[]	= $entry; 
+			$entry->setOptions($row->toArray());
+			$entries1[]	= $entry; 
 		}// endforeach
 		
-		return $entries;
+		$productStyles = $this->getProductStylesTable()->fetchAll();
+		$entries2	= array();
+		foreach($productStyles as $row){
+			$entry 	= new Application_Model_ProductStyle();
+			$entry->setOptions($row->toArray());
+			$entries2[]	= $entry; 
+		}// endforeach
+		
+		return array('products'=>$entries1, 'productStyles'=>$entries2);
 		
 	}//end function
 	public function fetchAllWithOptions($opts, $inStock = true){
 		
 		//todo construct entries from 2 tables.
-		$registry = Zend_Registry::getInstance();
-		$db			= $registry->get('db');
-		
+
 		$pSylesTable 		= $this->getProductStylesTable();
-		$select		= $pSylesTable->select();
-		foreach(array_keys($opts) as $column){
+		$select				= $pSylesTable->select();
+		foreach($opts as $column => $value){
 			$n = $column.' = ?';
-			$select->where($n, $opts[$column]);
+			$select->where($n, $value);
 		}
-		//only return products we have in stock.
-		if($inStock)	$select->where('sku > ?', 0);
+//print_r($select->__toString());
+		//cts we have in stock.
+		//if($inStock)	$select->where('sku > ?', 0);
 		
 		//oc: to view the query string
 		//echo $select->__toString();
-		
 		$resultSet	= $pSylesTable->fetchAll($select);
 		
 		$entries	= array();
 		foreach($resultSet as $row){
-			$entry 	= new Application_Model_Product();
-			$entry->setId($row->id)
-				->setName($row->name)
-				->setSid($row->sid)
-				->setPretty($row->pretty)
-				->setDescription1($row->description1)
-				->setDescription2($row->description2)
-				->setCampaign($row->campaign)
-				->setLabel($row->label)
-				->setSize($row->size)
-				->setColor($row->color)
-				->setCategory($row->category)
-				->setGender($row->gender)
-				->setWeight($row->weight)
-				->setPrice($row->price)
-				->setSku($row->sku);
+			$entry 	= new Application_Model_ProductStyle();
+			$entry->setOptions($row->toArray());
 			$entries[]	= $entry; 
 		}// endforeach
 		
@@ -162,5 +163,18 @@ class Application_Model_ProductMapper
 		
 	}//end function
 
+	public function getProductsByStyleId($sid){
+		$table 		= $this->getProductsTable();
+		$select 	= $table->select();
+		$select->where("ref_sid = ?", $sid);
+		$resultSet	= $table->fetchAll($select);
+		$entries	= array();
+		foreach($resultSet as $row){
+			$entry 	= new Application_Model_Product();
+			$entry->setOptions($row->toArray());
+			$entries[]	= $entry; 
+		}// endforeach
+		return $entries;
+	}
 }//end class
 

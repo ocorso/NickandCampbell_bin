@@ -46,11 +46,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         														array(	'controller'	=> 'index',
         																'action'		=> 'shipping')
         					);
-        $mensRoute	= new Zend_Controller_Router_Route(	'shop/mens/:category/:product',
+        $mensRoute	= new Zend_Controller_Router_Route(	'shop/mens/:category/:pretty',
         														array(	'controller'	=> 'shop',
         																'action'		=> 'mens')
         					);
-        $womensRoute	= new Zend_Controller_Router_Route(	'shop/womens/:category/:product',
+        $womensRoute	= new Zend_Controller_Router_Route(	'shop/womens/:category/:pretty',
         														array(	'controller'	=> 'shop',
         																'action'		=> 'womens')
         					);

@@ -3,15 +3,14 @@
 </ul>
 <div class="product-content">
 	<div id="product_data" class="hidden" 
-			<?php foreach(array_keys($this->productIdBySize) as $p): ?>
-			data-<?= ucfirst($p); ?>="<?= $this->productIdBySize[$p]; ?>"
-			<?php endforeach;?>
+			
 			data-Name="<?= $this->product->name; ?>"
 			data-Price="<?= $this->product->price; ?>"
 			data-Pretty="<?= $this->product->pretty; ?>">
 	</div>
 	
 	<h1><?= $this->product->name; ?></h1>
+	<h2><?= $this->product->description1; ?></h2>
 
 	<img src="<?= $this->lrgImgSrc; ?>" alt=""/>
 	<?= $this->form; ?>

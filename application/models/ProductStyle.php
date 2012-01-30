@@ -140,5 +140,14 @@ class Application_Model_ProductStyle
 		return $this->_gender;
 	}
 
+	//price
+	public function setPrice($price){
+		$this->_price			= (float) $price;
+		return $this;
+	}
+	public function getPrice(){
+		return $this->_price;
+	}
+
 }//end class
 

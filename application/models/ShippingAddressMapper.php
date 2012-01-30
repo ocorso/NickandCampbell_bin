@@ -49,15 +49,7 @@ class Application_Model_ShippingAddressMapper
 			return;
 		}
 		$row = $result->current();
-		$shippingAddress->setShid($row->shid)
-			->setRefcid($row->ref_cid)
-			->setAddress1($row->address1)
-			->setAddress2($row->address2)
-			->setCity($row->city)
-			->setState($row->state)
-			->setZip($row->zip)
-			->setCountry($row->country)
-			->setCreated_at($row->created_at);
+		$shippingAddress->setOptions($row->toArray());
 		
 	}
 	
@@ -66,15 +58,7 @@ class Application_Model_ShippingAddressMapper
 		$entries	= array();
 		foreach($resultSet as $row){
 			$entry	= new Application_Model_ShippingAddress();
-			$shippingAddress->setShid($row->shid)
-				->setRefcid($row->ref_cid)
-				->setAddress1($row->address1)
-				->setAddress2($row->address2)
-				->setCity($row->city)
-				->setState($row->state)
-				->setZip($row->zip)
-				->setCountry($row->country)
-				->setCreated_at($row->created_at);
+			$shippingAddress->setOptions($row->toArray());
 			$entries[]	= $entry;
 		}
 		return $entries;
