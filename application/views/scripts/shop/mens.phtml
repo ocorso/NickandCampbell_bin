@@ -3,7 +3,9 @@
 </ul>
 <div class="product-content">
 	<div id="product_data" class="hidden" 
-			
+			<?php foreach(array_keys($this->sizeNameToPid) as $p): ?>
+            data-<?= ucfirst($p); ?>="<?= $this->sizeNameToPid[$p]; ?>"                       
+            <?php endforeach;?>
 			data-Name="<?= $this->product->name; ?>"
 			data-Price="<?= $this->product->price; ?>"
 			data-Pretty="<?= $this->product->pretty; ?>">
@@ -13,9 +15,13 @@
 	<h2><?= $this->product->description1; ?></h2>
 
 	<img src="<?= $this->lrgImgSrc; ?>" alt=""/>
-	<?= $this->form; ?>
+	
+	<?php if( count($this->sizeNameToPid) == 0) echo "Sold Out";
+	else {
+	 echo $this->form; ?>
 	<div id="add_to_cart_form_extended">
 		<label>Price:</label><p>$<?= $this->product->price; ?></p>
 		<div class="checkout-btn btn">Checkout</div>
+		<?php }//end else?>
 	</div>
 </div>

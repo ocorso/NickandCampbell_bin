@@ -2,41 +2,21 @@
 
 class ProductController extends Zend_Controller_Action
 {
-	//reference to product mapper in true O Red fashion
-	protected $_m;
-	protected $_sizes;
 
-	// =================================================
-	// ================ Workers
-	// =================================================
+    protected $_m = null;
+
+    protected $_sizes = null;
+
     public function init()
     {
    		//disable layout
     	$layout = $this->_helper->layout();
     	$layout->disableLayout();
        	$this->_m 		= new Application_Model_ProductMapper();
-       	$this->_sizes 	= new Application_Model_SizingChartMapper();
+       	$sizeMapper		= new Application_Model_SizingChartMapper();
+       	$this->_sizes 	= $sizeMapper->fetchAll();
     }
-    private function _getSizeOpts($products){
-    	 
-    	//first get sizing chart
-    	$sizes 		= new Application_Model_SizingChartMapper();
-    	$sizeArr	= $sizes->fetchAll();
-    	$sOpts		= array();
-    	//loop through what's already in the array of sizes
-    	foreach ($products as $p){
-    		if (!array_key_exists($sizeArr[$p->getRef_size()]['name'], $sOpts)) {
-    			//if its not there add it
-    			$sOpts[] 	= $sizeArr[$p->getRef_size()]['name'];
-    			$productIdBySize[$sizeArr[$p->getRef_size()]['name']] = $p->getPid();
-    		}
-    	}
-    	return $sOpts;
-    }
-    
-    // =================================================
-    // ================ Actions
-    // =================================================
+
     public function indexAction()
     {
 
@@ -55,54 +35,33 @@ class ProductController extends Zend_Controller_Action
 			$products			= $this->_m->getProductsByStyleId($sid);
 			
 			//add to cart form
-			$sOpts				= $this->_getSizeOpts($products);
-			$form				= new Application_Form_AddToCart(array('sizes'=>$sOpts));
-			
+			$sizes				= $this->_sizes;
+			$sObj				= ORed_Utils::getSizeOpts($products, $sizes);
+			$form				= new Application_Form_AddToCart(array('sizes'=>$sObj->sOpts));
 			
 			//load up view
 			$this->view->form 				= $form;
 			$this->view->product 			= $pStyle[0];
 			$this->view->href				= 'shop/'.$pStyle[0]->gender.'/'.$pStyle[0]->category.'/'.$pStyle[0]->pretty;
 			$this->view->lrgImgSrc			= 'img/shop/'.$pStyle[0]->gender.'/'.$pStyle[0]->category.'/large/style-'.$pStyle[0]->sid.'.jpg';
-				
+			$this->view->sizeNameToPid		=  $sObj->sizeNameToPid;
 		}else{
 	    	if ($req->getParam('gender')) 	$opts['gender']		= $req->getParam('gender');
 			if ($req->getParam('category')) $opts['category']	= $req->getParam('category');
 			if ($req->getParam('nc_label'))	$opts['label']		= $req->getParam('nc_label');
 			if (count($opts) > 0) print_r($opts);
 			//get product info since we're ajaxing it in
-	    	//$everything = $this->_m->fetchAll();
-	    	//$products	= $pMapper->fetchAll
+	    	$everything = $this->_m->fetchAll();
+	    	//$products	= $this->_m->fetchAll();
     		print_r($everything);
-    		
-    	//we just need one for most of the info
-    	//$this->view->product = $pStyles[0];
-		
-    	//oc: create array of sizes
-	    
-    	//first get sizing chart
-	    $sizeArr	= $this->_sizes->fetchAll();
-	    
-	    //temp
-        $sOpts		= array("small", "medium");
-       	//loop through what's already in the array of sizes
-//         foreach ($pStyles as $p){
-//         	if (!array_key_exists($sizeArr[$p->getSize()]['name'], $sOpts)) {
-//         		//if its not there add it
-//         		$sOpts[] = $sizeArr[$p->getSize()]['name'];
-//         	} 
-//         }
+ 
 
 		}//endif	
 
     }
 
-    /*
-     * This method takes post data and inserts a new product to the catalogue.
-     * new record on products table and/or product_styles
-     * choice to use existing category or create new category (one to many)
-     */
-    public function addAction(){
+    public function addAction()
+    {
     	
     	//disable layout
     	$layout = $this->_helper->layout();
@@ -133,8 +92,17 @@ class ProductController extends Zend_Controller_Action
         //take post 
     }
 
+    public function listProductsAction()
+    {
+        $obj				= new stdClass();
+        $obj->products 		= $this->_m->fetchAll();
+        $this->view->json	= json_encode($obj);
+    }
+
 
 }
+
+
 
 
 

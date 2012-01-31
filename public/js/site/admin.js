@@ -11,6 +11,14 @@ adminController.nCloneTd = document.createElement( 'td' );
 adminController.nCloneTd.innerHTML = '<img class="expand-btn" src="../css/admin-theme/images/details_open.png">';
 adminController.nCloneTd.className = "center";
 
+
+//=================================================
+//================ Callable
+//=================================================
+     
+//=================================================
+//================ Workers
+//=================================================
 /* Formating function for row details */
 adminController.fnFormatDetails = function (nTr )
 {
@@ -25,14 +33,60 @@ adminController.fnFormatDetails = function (nTr )
     return sOut;
 };
 
+//=================================================
+//================ Handlers
+//=================================================
+adminController.change 	= function ($e){
+	
+
+		log('change admin')
+		switch ($.address.value()){
+			case "/" : log("we're at admin base");
+				//mainController.cart.open();
+				break;
+			case "/edit-product" : log("checkout complete");
+				break;
+			default: 
+				var url = $.address.baseURL().replace('/admin', "") +$.address.value();
+				window.location = url;
+		}//endswitch
+};
+
 adminController.onShippingClick	= function ($e){
 	log("shipping on " + $(this));
 };
-adminController.onAJAXComplete = function ($e, $d){
+
+adminController.onProductTdClick	= function ($e){
+	$('#products_grid tbody td').unbind();
+		log("ah HA!");
+		var e	= $(this);
+		var input = document.createElement("input");
+		input.type = "text";
+		input.value	= e.text();
+		e.html(input);
+};
+//=================================================
+//================ Animation
+//=================================================
+     
+//=================================================
+//================ Getters / Setters
+//=================================================
+     
+//=================================================
+//================ Interfaced
+//=================================================
+     
+//=================================================
+//================ Core Handler
+//=================================================
+adminController.ordersAJAXComplete = function ($e, $d, $i){
 	
 	log("orders ajax complete");
 	if ($e) log($e);
-	if ($d) adminController.orders = $d;
+	if ($d.orders	) adminController.orders = $d;
+	if ($d.products) adminController.products = $d;
+	if ($i) log($i);
 	
 	//add expand
     $('#orders_grid tbody tr').each( function () {
@@ -70,6 +124,23 @@ adminController.onAJAXComplete = function ($e, $d){
 		}
 	} );
 };
+adminController.productsAJAXComplete = function ($e, $d, $i){
+	
+	log("products ajax complete");
+	if ($e) log($e);
+	if ($d.orders	) adminController.orders = $d;
+	if ($d.products) adminController.products = $d;
+	if ($i) log($i);
+	$('#products_grid tbody td').bind('click', adminController.onProductTdClick);
+	
+};
+//=================================================
+//================ Overrides
+//=================================================
+     
+//=================================================
+//================ Constructor
+//=================================================
 
 adminController.init = function() {
 	log('admin init');	
@@ -81,14 +152,17 @@ adminController.init = function() {
 			var oTable = $('div.dataTables_scrollBody>table.display', ui.panel).dataTable();
 			if ( oTable.length > 0 ) {
 				oTable.fnAdjustColumnSizing();
+				adminController.oTable.fnAdjustColumnSizing();
+				adminController.pTable.fnAdjustColumnSizing();
 			}
 		}
 	} );
      
     /*
-     * Initialse DataTables, with no sorting on the 'details' column
+     * Initialize DataTables, with no sorting on the 'details' column
      */
     
+	//orders table
     adminController.oTable = $('#orders_grid').dataTable( {
         "aoColumnDefs": [
 //                         { "bSortable": false, "aTargets": [ 0 ] },
@@ -98,7 +172,7 @@ adminController.init = function() {
         "aaSorting": [[1, 'asc']],	
     	"bProcessing": true,
     	"bJQueryUI": true,
-    	"fnInitComplete": adminController.onAJAXComplete,
+    	"fnInitComplete": adminController.ordersAJAXComplete,
     	"sAjaxDataProp": "orders",
     	"sAjaxSource": "/order",
     	"aoColumns": [
@@ -111,29 +185,32 @@ adminController.init = function() {
     	              ]
     } );
     
-    //products
-	$('#products_grid.display').dataTable( {
-		"sScrollY": "200px",
-		"bScrollCollapse": true,
-		"bPaginate": false,
-		"bJQueryUI": true,
+    //products table
+    adminController.pTable = $('#products_grid.display').dataTable( {
+		"sScrollY": 		"200px",
+		"bScrollCollapse": 	true,
+		"fnInitComplete": 	adminController.productsAJAXComplete,
+		"sAjaxDataProp": 	"products",
+		"sAjaxSource": 		"/product/list-products",
+		"bPaginate": 		false,
+		"bJQueryUI":		true,
 		"aoColumnDefs": [
 			{ "sWidth": "10%", "aTargets": [ -1 ] }
-		]
+		],
+		"aoColumns": [
+                  { "mDataProp": "pid" },
+                  { "mDataProp": "sid" },
+                  { "mDataProp": "name" },
+                  { "mDataProp": "description1" },
+                  { "mDataProp": "gender" },
+                  { "mDataProp": "category"},
+                  { "mDataProp": "price"},
+                  { "mDataProp": "campaign"},
+                  { "mDataProp": "label"},
+                  { "mDataProp": "ref_size"},
+                  { "mDataProp": "color"},
+                  { "mDataProp": "weight"},
+                  { "mDataProp":"sku"}
+                  ]
 	} );
-};
-adminController.change 	= function ($e){
-	
-
-		log('change admin')
-		switch ($.address.value()){
-			case "/" : log("we're at admin base");
-				//mainController.cart.open();
-				break;
-			case "/edit-product" : log("checkout complete");
-				break;
-			default: 
-				var url = $.address.baseURL().replace('/admin', "") +$.address.value();
-				window.location = url;
-		}//endswitch
 };

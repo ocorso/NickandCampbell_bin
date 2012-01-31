@@ -10,10 +10,14 @@ class Application_Model_ProductMapper
 	//     ON p.product_id = l.product_id
 	
 // 	$select = $db->select()
-// 	->from(array('p' => 'products'),
-// 	array('product_id', 'product_name'))
-// 	->join(array('l' => 'line_items'),
-// 	                    'p.product_id = l.product_id');
+// 	->from(
+// 		array('p' => 'products'),
+//  		array('product_id', 'product_name')
+//  	);
+// // 	->join(
+// 		array('l' => 'line_items'),
+//  	   	'p.product_id = l.product_id'
+// 		);
 
 	public function setProductSylesTable($dbTable)
 	{
@@ -113,25 +117,38 @@ class Application_Model_ProductMapper
 				
 	}//endfunction
 	
+	/*
+	 * this is where we join 
+	 * the product_styles table
+	 * and 
+	 * the product table
+	 * 
+	 */
 	public function fetchAll(){
-
-		$products 	= $this->getProductsTable()->fetchAll();
-		$entries1	= array();
-		foreach($products as $row){
-			$entry 	= new Application_Model_Product();
-			$entry->setOptions($row->toArray());
-			$entries1[]	= $entry; 
-		}// endforeach
 		
-		$productStyles = $this->getProductStylesTable()->fetchAll();
-		$entries2	= array();
-		foreach($productStyles as $row){
-			$entry 	= new Application_Model_ProductStyle();
-			$entry->setOptions($row->toArray());
-			$entries2[]	= $entry; 
-		}// endforeach
+		$db			= Zend_Registry::get('db');
+		$select		= $db->select();
+		$select->from(array('p'=>'products'))
+			->join(array('s'=>'product_styles'), 'p.ref_sid = s.sid');
+		$result = $db->fetchAll($select);
+		return($result);
+// 		$products 	= $this->getProductsTable()->fetchAll();
+// 		$entries1	= array();
+// 		foreach($products as $row){
+// 			$entry 	= new Application_Model_Product();
+// 			$entry->setOptions($row->toArray());
+// 			$entries1[]	= $entry; 
+// 		}// endforeach
 		
-		return array('products'=>$entries1, 'productStyles'=>$entries2);
+// 		$productStyles = $this->getProductStylesTable()->fetchAll();
+// 		$entries2	= array();
+// 		foreach($productStyles as $row){
+// 			$entry 	= new Application_Model_ProductStyle();
+// 			$entry->setOptions($row->toArray());
+// 			$entries2[]	= $entry; 
+// 		}// endforeach
+		
+// 		return array('products'=>$entries1, 'productStyles'=>$entries2);
 		
 	}//end function
 	public function fetchAllWithOptions($opts, $inStock = true){

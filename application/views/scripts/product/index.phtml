@@ -3,7 +3,9 @@
 </ul>
 <div class="product-content">
 	<div id="product_data" class="hidden" 
-			
+			<?php foreach(array_keys($this->sizeNameToPid) as $p): ?>
+            data-<?= ucfirst($p); ?>="<?= $this->sizeNameToPid[$p]; ?>"                       
+            <?php endforeach;?>
 			data-Name="<?= $this->product->name; ?>"
 			data-Price="<?= $this->product->price; ?>"
 			data-Pretty="<?= $this->product->pretty; ?>">
