@@ -36,7 +36,6 @@ class Application_Model_ShippingAddressMapper
 		);
 		
 		if(null === ($shid = $shippingAddress->getShid())){
-			unset($data('shid'));
 			$this->getDbTable()->insert($data);
 		} else {
 			$this->getDbTable()->update($data, array('shid = ?'=> $shid));

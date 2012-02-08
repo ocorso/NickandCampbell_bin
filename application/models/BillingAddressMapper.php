@@ -36,7 +36,6 @@ class Application_Model_BillingAddressMapper
 		);
 		
 		if(null === ($bid = $billingAddress->getBid())){
-			unset($data('bid'));
 			$this->getDbTable()->insert($data);
 		} else {
 			$this->getDbTable()->update($data, array('bid = ?'=> $bid));

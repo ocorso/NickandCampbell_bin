@@ -40,7 +40,7 @@ class Application_Form_Checkout extends Zend_Form
 			->setAttrib('id', 'checkout_form');
 		
     	//oc: add data from session obj
-    	$this->addHid('subtotal', $cart->subTotal);
+    	ORed_Form_Utils::addHid('subtotal', $cart->subTotal);
 		
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
 //++++++++++++++++++++++ ZEND FILTERS ++++++++++++++++++++++++++++++++++++++		
@@ -116,31 +116,32 @@ class Application_Form_Checkout extends Zend_Form
 			->setFilters($filters);//todo: validate for email
 			
 		//address 1
-		$shAddr1			= new Zend_Form_Element_Text("sh_addr1");
+		$shAddr1			= new Zend_Form_Element_Text("addr1");
 		$shAddr1->setLabel('Address 1')
 			->setRequired(true)
 			->setFilters($filters);
 		
 		//address 2
-		$shAddr2			= new Zend_Form_Element_Text("sh_addr2");
+		$shAddr2			= new Zend_Form_Element_Text("addr2");
 		$shAddr2->setLabel('Address 2')
 			->setFilters($filters);
 		
 		//city
-		$shCity				= new Zend_Form_Element_Text("sh_city");
+		$shCity				= new Zend_Form_Element_Text("city");
 		$shCity->setLabel("City")
 			->setRequired(true)
 			->setFilters($filters);
 
 		//state
-		$shState			= new Zend_Form_Element_Select("sh_state");
+		$shState			= new Zend_Form_Element_Select("state");
 		$shState->setLabel("State")
 			->setRequired(true)
+			->setAttrib('class', 'normal-case')
 		//	->addFilter($filters)
 			->setMultiOptions($this->_statesArr);
 		
 		//zip
-		$shZip				= new Zend_Form_Element_Text("sh_zip");
+		$shZip				= new Zend_Form_Element_Text("zip");
 		$shZip->setLabel("Zip Code")
 			->setRequired(true)
 			->addFilter("Digits");
@@ -179,31 +180,32 @@ class Application_Form_Checkout extends Zend_Form
 		$billSameAsShipping->setLabel("Same as shipping");
 
 		//address 1
-		$billAddr1			= new Zend_Form_Element_Text("bill_addr1");
+		$billAddr1			= new Zend_Form_Element_Text("addr1");
 		$billAddr1->setLabel('Address 1')
 			->setRequired(true)
 			->setFilters($filters);
 		
 		//address 2
-		$billAddr2			= new Zend_Form_Element_Text("bill_addr2");
+		$billAddr2			= new Zend_Form_Element_Text("addr2");
 		$billAddr2->setLabel('Address 2')
 			->setFilters($filters);
 		
 		//city
-		$billCity				= new Zend_Form_Element_Text("bill_city");
+		$billCity				= new Zend_Form_Element_Text("city");
 		$billCity->setLabel("City")
 			->setRequired(true)
 			->setFilters($filters);
 
 		//state
-		$billState			= new Zend_Form_Element_Select("bill_state");
+		$billState			= new Zend_Form_Element_Select("state");
 		$billState->setLabel("State")
 			->setRequired(true)
+			->setAttrib('class', 'normal-case')
 		//	->addFilter($filters)
 			->setMultiOptions($this->_statesArr);
 		
 		//zip
-		$billZip				= new Zend_Form_Element_Text("bill_zip");
+		$billZip				= new Zend_Form_Element_Text("zip");
 		$billZip->setLabel("Zip Code")
 			->setRequired(true)
 			->addFilter("Digits");
@@ -229,6 +231,7 @@ class Application_Form_Checkout extends Zend_Form
 		$cartTypeSelect = new Zend_Form_Element_Select('card_type');
 		$cartTypeSelect->setRequired(true)
 			->setLabel("Card Type")
+			->setAttrib('class', 'normal-case')
 			->setMultiOptions(array('Visa', 'Mastercard','Discover'));
 			
 		//card number
@@ -306,14 +309,7 @@ class Application_Form_Checkout extends Zend_Form
 // =================================================
 // ============= Confirm : Submit
 // =================================================		
-		//amount
-// 		$confirm->addElement('text','amount',array(
-// 			'label'		=> 	'Amount:',
-// 			'required'	=>	true,
-// 			'validators'=> 	array(
-// 						array('validator'=>'StringLength', 'options'=>array(0,20))
-// 						)
-// 		));	
+
 
 		
 		//submit button
@@ -341,19 +337,7 @@ class Application_Form_Checkout extends Zend_Form
 		
 	}//end init
 
-	/**
-	* Add Hidden Element
-	* @param $field
-	* @param value
-	* @return nothing - adds hidden element
-	* */
-	public function addHid($field, $value){
-		$hiddenIdField = new Zend_Form_Element_Hidden($field);
-		$hiddenIdField->setValue($value)
-		->removeDecorator('label')
-		->removeDecorator('HtmlTag');
-		$this->addElement($hiddenIdField);
-	}
+
 	
 }//end class
 

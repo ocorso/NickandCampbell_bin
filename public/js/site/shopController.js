@@ -27,7 +27,7 @@ shopController.change 	= function (){
 		//if not, set css and fade in.
 		if( $('#s_shop').css('display') == "block"){
 			$('.section-content-wrapper').animate({left:"-786px"});
-			$('#s_shop .section-content').animate({height: $('#shop_grid').height()});
+		//	$('#s_shop .section-content').animate({height: $('#shop_grid').height()});
 		
 		}else{
 			$('.section-content-wrapper').css('left',"-786px");
@@ -44,7 +44,7 @@ shopController.change 	= function (){
 		if( $('#s_shop').css('display') == "block" && $('.section-content-wrapper').css('left') == "-786px" ){
 			
 			$('.section-content-wrapper').animate({left:"0"});
-			$('#s_shop .section-content').animate({height: "580px"});
+			$('#s_shop .section-content').animate({height: $('#shop_grid').height()});
 		}else{
 			$('.section-content-wrapper').css('left',"0");
 			$('section, #s_loader, #s_shop .section-content, #s_shop .right-img, .section').hide();

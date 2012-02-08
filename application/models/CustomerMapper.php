@@ -23,21 +23,27 @@ class Application_Model_CustomerMapper
 	}//end function
 		
 	public function save(Application_Model_Customer $customer){
-		$data 	= array(	'first_name'	=> $customer->getLname(),
+		$exists	= $this->fetchAll(array('email'=>$customer->getEmail()));
+		print_r($exists);
+		
+		$data 	= array(	'first_name'	=> $customer->getFname(),
 							'last_name'		=> $customer->getLname(),
 							'email'			=> $customer->getEmail(),
-							'phone'			=> $customer->getPhone(),
-							'ref_shid'		=> $customer->getShid(),
-							'ref_bid'		=> $customer->getBid()
+							'phone'			=> $customer->getPhone()
+
 		);
 		
-		if(null === ($cid = $customer->getCid())){
-			unset($data('cid'));
-			$this->getDbTable()->insert($data);
+		//need to improve this checking.
+		if(null == $customer->getCid()){
+			echo "insert";
+			$cid = $this->getDbTable()->insert($data);
+			return $cid;
 		}else {
-			$this->getDbTable()->update($data, array('cid = ?'=> $cid));
-			
+			echo "update";
+			$cid = $this->getDbTable()->update($data, array('cid = ?'=> $customer->getCid()));
+			return $cid;
 		}//endif
+		
 	}//end function
 	
 	public function find($cid, Application_Model_Customer $customer){
@@ -46,14 +52,21 @@ class Application_Model_CustomerMapper
 			return;
 		}
 		$row 		= $result->current();
-		$customer->setCid($row->cid)
-			->setFname($row->first_name)//oc: how will the data come back from the db?
-			->setLname($row->last_name)
-			->setEmail($row->email)
-			->setPhone($row->phone)
-			->setShid($row->ref_shid)//oc: this is peculier on my part
-			->setBid($row->ref_bid)
-			->setCreated_at($row->created_at);
+		$customer->setOptions($row->toArray());
 	}
+	public function fetchAll(array $options = null){
+		$db 	= $this->getDbTable();
+		$select = $db->select();
+		
+		if($options){
+			foreach($options as $column => $value){
+				$select->where($column."= ?",$value);
+			}//endforeach
+		}//endif
+		$result = $db->fetchAll($select);
+		//print_r($select); 
+		return $result->toArray();
+	}
+	
 }
 

@@ -64,7 +64,7 @@ class CheckoutController extends Zend_Controller_Action
 		$mail->addTo('owen.corso@yahoo.com', 'Owen Admin');
 		$mail->setSubject("Order Submitted");
 		$mail->setBodyText($body);
-		$mail->send();
+		// $mail->send();
 		//echo $body;
 	}
 	// =================================================
@@ -116,6 +116,7 @@ class CheckoutController extends Zend_Controller_Action
 				$form->populate($form->getUnfilteredValues());
 				print_r($form->getValues());
 			}//end if form is valid
+			
 		}//end if there's post data present
 
 		$this->view->form = $form;
@@ -145,29 +146,71 @@ class CheckoutController extends Zend_Controller_Action
 
 	public function transactionResultsAction()
 	{
-		 
+		
+		//disable layout
+		$layout = $this->_helper->layout();
+		$layout->disableLayout();
+		 $orderId = 69;
 		 
 		// we don't have results go to checkout page
-		if (!$this->getRequest()->isPost()) {
+		if (!$this->getRequest()->isPost() || !$this->_getForm()->isValid($_POST)) {
 
-			return $this->_forward('index');
+		//	return $this->_forward('index');
+			$tempValues = array(
+				'subtotal'=> 35.00,
+				'shipping1'=>array(	'cust_first_name'=>'Owen',
+									'cust_last_name'=>'Corso',
+									'cust_email'=>'owen@ored.net',
+									'cust_phone'=>'2016020069',
+									'addr1'=>'410 E13th Street',
+									'addr2'=>'Apt 1E',
+									'city'=>'New York',
+									'state'=>'NY',
+									'zip'=>10003
+					),
+				'shipping2'=>array('sh_type1'=>1	),
+				'billing1'=>array(	'addr1'=>'410 E13th Street',
+									'addr2'=>'Apt 1E',
+									'city'=>'New York',
+									'state'=>'NY',
+									'zip'=>10003
+					),
+				'billing2'=>array(	'name_on_card'=>"Owen M Corso",
+									'card_type'=>'visa',
+									'card_num'=>12341234122341234,
+									'ccv'=>123,
+									'exp_date'=>122012
+					)
+			
+			);
 		}//endif
 
-		$form = $this->_getForm();
-		if(!$form->isValid($_POST)){
-			 
-			//failed validation; redisplay form
-			return $this->_forward('index');
-		}//endif
+		$form 		= $this->_getForm();
+		$formValues = $form->getValues();
 
+		//MODELS
+		$cModel		= new Application_Model_CustomerMapper();
+		$shModel	= new Application_Model_ShippingAddressMapper();
+		$bModel		= new Application_Model_BillingAddressMapper();
+		//$oModel		= new Application_Model_OrderMapper();
+		
+		
 		//omg we have a valid form and it looks like this:
-		$values = $form->getValues();
-		$orderId = $this->_callAuthorizeDotNet($values);
-		$this->view->orderId = $orderId;
+		$values 	= $formValues['debug'] ==1 ? $formValues : $tempValues;
+//print_r($values);
+		//oc: todo: check internet connection before making call.
+		//$orderId = $this->_callAuthorizeDotNet($values);
+		//$this->view->orderId = $orderId;
 			
 		//1. send email with order info
-		$this->_sendEmail($values);
+		//$this->_sendEmail($values);
 		//2. save cust data
+		$cust 		= ORed_Checkout_Utils::createCustomer($values['shipping1']);
+		//$cust->setCid(12);
+		$cid		= $cModel->save($cust);
+		$all		= $cModel->fetchAll(array('email'=>$cust->getEmail()));
+		print_r($all);
+		
 		//3. save shipping address
 		//4. save billing address
 		//5. save order

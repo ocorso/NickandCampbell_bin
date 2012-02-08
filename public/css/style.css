@@ -223,6 +223,7 @@ h1, h2,h3,h4,h5,p, a, form, li, .vip{
 	font-family: 'VIPRegular';
 	text-transform: lowercase;
 }
+.normal-case{ text-transform: none;}
 /* =============================================================================
    @Global
    ========================================================================== */
@@ -254,7 +255,7 @@ h1{
 	font-weight: lighter;
 
 	margin-bottom: 0;
-	font-size: 70px;
+	font-size: 53px;
 	line-height: 51px;
 	
 }
@@ -280,7 +281,7 @@ section, #s_loader{
 .sidebar{
 	background-image: url('/../img/logo/nc-sidebar.png');
 	background-repeat: no-repeat;
-	background-position: 0 -120px;
+	/* background-position: 0 -120px; */
 	height: 660px;
 	float:left;
 	width: 243px;
@@ -289,7 +290,7 @@ section, #s_loader{
 .sidebar h1{
 	margin-top: -25px;
 	margin-bottom: 20px;
-	text-align: center;
+/* 	text-align: center; */
 }
 /* =============================================================================
    @Header

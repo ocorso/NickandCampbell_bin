@@ -41,7 +41,7 @@ class ShopController extends Zend_Controller_Action
 			
 			//add to cart form
 			$sizes				= $this->_sizes;
-			$sObj				= ORed_Utils::getSizeOpts($products, $sizes);
+			$sObj				= ORed_Form_Utils::getSizeOpts($products, $sizes);
 			$form				= new Application_Form_AddToCart(array('sizes'=>$sObj->sOpts));
 			
 			//load up view

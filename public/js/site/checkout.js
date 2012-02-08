@@ -12,16 +12,16 @@ coController.states	 	= [{	'name':'shipping1',
                    	 	   	},
                    	 	   {	'name':'billing1',
                    	 	   		'id':'#fieldset-billing1',
-               	 	   			'leftOffset':-1240
+               	 	   			'leftOffset':-1280
                    	 			   
                    	 	   	},
                    	 	   {	'name':'billing2',
                    	 	   		'id':'#fieldset-billing1',
-	       	 			    	'leftOffset':-1860
+	       	 			    	'leftOffset':-1847
                    	 	   	},
-                   	 	   {'name':'confirm',
-               	 	   		'id':'#fieldset-confirm'
-                   	 		
+                   	 	   {	'name':'confirm',
+                   	 	   		'id':'#fieldset-confirm',
+                   	 	   		'leftOffset':-2422
                    	 	   }
 ];
 coController.stateIndex	= 0;
@@ -43,12 +43,14 @@ coController.addHandlers = function(){
 			$('#co_next').bind("click", coController.onNextClick).css(coController.enabledArrowCSS);
 			coController.disableArrow("#co_prev");
 			break;
+			
 		case coController.states[4].name:
 			
 			log("prev is good to go, next isn't");
 			coController.disableArrow("#co_next");
 			$('#co_prev').bind("click", coController.onPrevClick).css(coController.enabledArrowCSS);
 			break;
+		
 		default:
 
 			$('#co_prev').bind("click", coController.onPrevClick).css(coController.enabledArrowCSS);
@@ -73,11 +75,11 @@ coController.copyAddress = function(){
 	log("copy Address? "+ 	coController.isBillSame);
 	
 	if (coController.isBillSame){
-		$('#billing1-bill_addr1').val($('#shipping1-sh_addr1').val());
-		$('#billing1-bill_addr2').val($('#shipping1-sh_addr2').val());
-		$('#billing1-bill_city').val($('#shipping1-sh_city').val());
-		$('#billing1-bill_state').val($('#shipping1-sh_state').val());
-		$('#billing1-bill_zip').val($('#shipping1-sh_zip').val());
+		$('#billing1-addr1').val($('#shipping1-addr1').val());
+		$('#billing1-addr2').val($('#shipping1-addr2').val());
+		$('#billing1-city').val($('#shipping1-city').val());
+		$('#billing1-state').val($('#shipping1-state').val());
+		$('#billing1-zip').val($('#shipping1-zip').val());
 	}else{
 		$('#billing1-bill_addr1').val("");
 		$('#billing1-bill_addr2').val("");
@@ -108,6 +110,7 @@ coController.onPrevClick = function($e){
 	//todo: validate current state and then move on.
 	coController.animation.moveStates("right"); 
 	coController.animation.moveArrows();
+	coController.animation.moveIndicator();
 };
 coController.onNextClick = function($e){
 	log('Next Click  left off: '+$('#checkout_form .zend_form').css("left"))
@@ -121,6 +124,7 @@ coController.onNextClick = function($e){
 	//todo: resize element containers on cart construction and state change
 	coController.animation.moveStates("left"); 
 	coController.animation.moveArrows();
+	coController.animation.moveIndicator();
 };
 
 coController.onShippingTypeClick = function ($e){
@@ -138,13 +142,13 @@ coController.focus.onShipping2	= function($e){
 coController.animation.moveStates = function ($direction){
 	var offset = "do something";
 	switch($direction){
-	case "left":
-		$('#checkout_form .zend_form').animate({"left": "-=620"}, coController.addHandlers);
-		break;
-	case "right":
-		$('#checkout_form .zend_form').animate({"left": "+=620"}, coController.addHandlers);
-		break;
-		default : log("XXXERRORXXXXX: unknown direction to move the states carousel");
+		case "left":
+			$('#checkout_form .zend_form').animate({"left": coController.states[coController.stateIndex].leftOffset}, coController.addHandlers);
+			break;
+		case "right":
+			$('#checkout_form .zend_form').animate({"left": coController.states[coController.stateIndex].leftOffset}, coController.addHandlers);
+			break;
+			default : log("XXXERRORXXXXX: unknown direction to move the states carousel");
 	}//endswitch
 };
 
@@ -156,6 +160,30 @@ coController.animation.moveArrows = function (){
 	$('.co-arrow').animate(opts);
 };
 
+coController.animation.moveIndicator = function (){
+	log('move indicator');
+	var leftOffset = "21%";
+	switch(coController.curState){
+		
+		case coController.states[0].name:
+			break;
+		case coController.states[1].name:
+			break;
+		case coController.states[2].name:
+			leftOffset = '38%';
+			break;
+		case coController.states[3].name:
+			leftOffset = '38%';
+			break;
+		case coController.states[4].name:
+			leftOffset = '55%';
+			break;
+		default: log("unknown indicator location");
+		
+	}//end switch
+	$('#co_indicator').animate({'left':leftOffset});
+};//end function
+
 //=================================================
 //================ Utility
 //=================================================
@@ -164,16 +192,16 @@ coController.populateFakeData = function () {
 	$('#shipping1-cust_last_name').val("Corso");
 	$('#shipping1-cust_email').val("owen@ored.net");
 	$('#shipping1-cust_phone').val("2016020069");
-	$('#shipping1-sh_addr1').val("281 Stewart Lane");
-	$('#shipping1-sh_city').val("Franklin Lakes");
-	$('#shipping1-sh_zip').val("07417");
-	$('#shipping1-sh_state').val("NJ");
+	$('#shipping1-addr1').val("281 Stewart Lane");
+	$('#shipping1-city').val("Franklin Lakes");
+	$('#shipping1-zip').val("07417");
+	$('#shipping1-state').val("NJ");
 	
-	$('#billing1-bill_addr1').val("281 Stewart Lane");
-	$('#billing1-bill_addr2').val("");
-	$('#billing1-bill_city').val("Franklin Lakes");
-	$('#billing1-bill_state').val("NJ");
-	$('#billing1-bill_zip').val("07417");
+	$('#billing1-addr1').val("281 Stewart Lane");
+	$('#billing1-addr2').val("");
+	$('#billing1-city').val("Franklin Lakes");
+	$('#billing1-state').val("NJ");
+	$('#billing1-zip').val("07417");
 	
 	$('#billing2-name_on_card').val("Owen M Corso");
 	$('#billing2-card_type').val(1);

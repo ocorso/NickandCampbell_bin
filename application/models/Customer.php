@@ -7,8 +7,6 @@ class Application_Model_Customer
 	protected $_lname;	//last name
 	protected $_email;
 	protected $_phone;
-	protected $_shid;	//shipping id
-	protected $_bid; 	//billing id
 	protected $_create_at;
 
 	   
@@ -82,23 +80,6 @@ class Application_Model_Customer
 	}
 	public function getPhone(){ return $this->_phone; }
 
-	public function setShid($shid){
-		$this->_shid	= (int) $shid;
-		return $this;
-	}
-	public function getShid(){$this->_shid; }
-
-	public function setBid($bid){
-		$this->_bid		= (int) $bid;
-		return $this;
-	}
-	public function getBid(){ $this->_bid; }
-	
-	//created at
-	public function setCreated_at($d){
-		$this->_created_at	= $d;
-		return $this;
-	}
 	public function getCreated_at(){ return $this->_created_at; }
 	
 }//end class

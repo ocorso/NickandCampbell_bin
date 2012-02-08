@@ -36,7 +36,7 @@ class ProductController extends Zend_Controller_Action
 			
 			//add to cart form
 			$sizes				= $this->_sizes;
-			$sObj				= ORed_Utils::getSizeOpts($products, $sizes);
+			$sObj				= ORed_Form_Utils::getSizeOpts($products, $sizes);
 			$form				= new Application_Form_AddToCart(array('sizes'=>$sObj->sOpts));
 			
 			//load up view
@@ -72,9 +72,9 @@ class ProductController extends Zend_Controller_Action
 		//sizes select box
     	//first get sizing chart
     	
-    	$sizeArr	= $this->_sizes->fetchAll();
+    	//$sizeArr	= $this->_sizes->fetchAll();
 		$sOpts		= array();
-		foreach($sizeArr as $size){
+		foreach($this->_sizes as $size){
 			$sOpts[] = $size['name'];
 		}
     	$opts 		= array(
