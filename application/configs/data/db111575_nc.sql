@@ -1,13 +1,3 @@
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
---
--- Database: `db111575_nc`
---
-
--- --------------------------------------------------------
----------------------------------------------
--- Table structure for table `customers`
----------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `customers` (
   `cid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -19,9 +9,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
   UNIQUE KEY `cid` (`cid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
----------------------------------------------
--- Table structure for table `shipping_addresses`
----------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `shipping_addresses` (
 	`shid` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'shipping address id',
 	`ref_cid` BIGINT UNSIGNED NOT NULL COMMENT 'ref to customer id',
@@ -34,9 +22,7 @@ CREATE TABLE IF NOT EXISTS `shipping_addresses` (
 	`created_at` DATETIME NOT NULL
 );
 
----------------------------------------------
--- Table structure for table `billing_addresses`
----------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `billing_addresses` (
 	`bid` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'billing address id',
 	`ref_cid` BIGINT UNSIGNED NOT NULL COMMENT 'ref to customer id',
@@ -48,10 +34,6 @@ CREATE TABLE IF NOT EXISTS `billing_addresses` (
 	`zip` VARCHAR( 10 ) NOT NULL ,
 	`created_at` DATETIME NOT NULL
 );
-
---
--- Table structure for table `product_styles`
---
 
 CREATE TABLE IF NOT EXISTS `product_styles` (
   `sid` mediumint(100) unsigned NOT NULL,
@@ -67,9 +49,6 @@ CREATE TABLE IF NOT EXISTS `product_styles` (
   PRIMARY KEY (`sid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `product_styles`
---
 
 INSERT INTO `product_styles` (`sid`, `name`, `pretty`, `description1`, `description2`, `campaign`, `label`, `category`, `gender`, `price`) VALUES
 (1, 'Brazil Boxer Brief', 'brazil-boxer-brief', 'Seamless Front and Back', NULL, 'FW11', 'select', 'underwear', 'mens', 35.00),
@@ -78,9 +57,6 @@ INSERT INTO `product_styles` (`sid`, `name`, `pretty`, `description1`, `descript
 (4, 'Sexy Campbell Brief', 'sexy-campbell-brief', 'Less coverage than Classic Brief', NULL, 'FW11', 'select', 'underwear', 'mens', 35.00),
 (5, 'Cowboy Brief', 'cowboy-brief', 'Two buttons for the open seam', NULL, 'FW11', 'select', 'underwear', 'mens', 35.00);
 
----------------------------------------------
--- Table structure for table `products`
----------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `products` (
   `pid` tinyint(100) unsigned NOT NULL AUTO_INCREMENT,
@@ -92,9 +68,6 @@ CREATE TABLE IF NOT EXISTS `products` (
   PRIMARY KEY (`pid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
---
--- Dumping data for table `products`
---
 
 INSERT INTO `products` (`pid`, `ref_sid`, `ref_size`, `color`, `weight`, `sku`) VALUES
 (1, 1, 0, 'black', 2.00, 0),
@@ -129,10 +102,6 @@ INSERT INTO `products` (`pid`, `ref_sid`, `ref_size`, `color`, `weight`, `sku`) 
 (30, 5, 5, 'black', 2.00, 0);
 
 
-
-----------------------------------------------
--- Table structure for table `ref_sizing_chart`
-----------------------------------------------
 CREATE TABLE IF NOT EXISTS `ref_sizing_chart` (
   `size_id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -140,9 +109,6 @@ CREATE TABLE IF NOT EXISTS `ref_sizing_chart` (
   PRIMARY KEY (`size_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
---
--- Dumping data for table `ref_sizing_chart`
---
 
 INSERT INTO `ref_sizing_chart` (`size_id`, `name`, `description`) VALUES
 (0, 'extra extra small', 'this size is for extremely skinny guys'),
