@@ -23,9 +23,12 @@ class Application_Model_CustomerMapper
 	}//end function
 		
 	public function save(Application_Model_Customer $customer){
-		$exists	= $this->fetchAll(array('email'=>$customer->getEmail()));
-		print_r($exists);
 		
+		//oc: check by email
+		$custWithMatchingEmail	= $this->fetchAll(array('email'=>$customer->getEmail()));
+		$exists = count($custWithMatchingEmail) > 0 ? true : false;
+		
+		//oc: get new info from form data
 		$data 	= array(	'first_name'	=> $customer->getFname(),
 							'last_name'		=> $customer->getLname(),
 							'email'			=> $customer->getEmail(),
@@ -33,19 +36,20 @@ class Application_Model_CustomerMapper
 
 		);
 		
-		//need to improve this checking.
-		if(null == $customer->getCid()){
-			echo "insert";
+		//oc: this checking seems to work.
+		if(!$exists){
+			echo "insert cust\n";
 			$cid = $this->getDbTable()->insert($data);
 			return $cid;
 		}else {
-			echo "update";
-			$cid = $this->getDbTable()->update($data, array('cid = ?'=> $customer->getCid()));
+			echo "update cust\n";
+			$cid = $custWithMatchingEmail[0]['cid'];
+			$updateResults = $this->getDbTable()->update($data, array('cid = ?'=> $cid));
 			return $cid;
 		}//endif
 		
 	}//end function
-	
+
 	public function find($cid, Application_Model_Customer $customer){
 		$result		= $this->getDbTable()->find($cid);
 		if(0 == count($result)){

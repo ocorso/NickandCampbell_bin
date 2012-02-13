@@ -78,17 +78,6 @@ class CheckoutController extends Zend_Controller_Action
 
 		return $this->_form;
 	}
-	// =================================================
-	// ================ Interfaced
-	// =================================================
-
-	// =================================================
-	// ================ Core Handler
-	// =================================================
-
-	// =================================================
-	// ================ Overrides
-	// =================================================
 
 	// =================================================
 	// ================ Actions
@@ -166,14 +155,16 @@ class CheckoutController extends Zend_Controller_Action
 									'addr2'=>'Apt 1E',
 									'city'=>'New York',
 									'state'=>'NY',
-									'zip'=>10003
+									'zip'=>10003,
+									'country'=>"United States"
 					),
 				'shipping2'=>array('sh_type1'=>1	),
 				'billing1'=>array(	'addr1'=>'410 E13th Street',
 									'addr2'=>'Apt 1E',
 									'city'=>'New York',
 									'state'=>'NY',
-									'zip'=>10003
+									'zip'=>10003,
+									'country'=>"United States"
 					),
 				'billing2'=>array(	'name_on_card'=>"Owen M Corso",
 									'card_type'=>'visa',
@@ -201,17 +192,37 @@ class CheckoutController extends Zend_Controller_Action
 		//oc: todo: check internet connection before making call.
 		//$orderId = $this->_callAuthorizeDotNet($values);
 		//$this->view->orderId = $orderId;
-			
+
+		
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++	EMAIL	  ++++++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//1. send email with order info
 		//$this->_sendEmail($values);
+		
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++	CUSTOMER	 +++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//2. save cust data
 		$cust 		= ORed_Checkout_Utils::createCustomer($values['shipping1']);
-		//$cust->setCid(12);
 		$cid		= $cModel->save($cust);
-		$all		= $cModel->fetchAll(array('email'=>$cust->getEmail()));
-		print_r($all);
+		echo "cid: ".$cid."\n";
+		$allCusts	= $cModel->fetchAll(array('email'=>$cust->getEmail()));
+		//print_r($allCusts);
 		
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++	SHIPPING	 +++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//3. save shipping address
+		$sh			= ORed_Checkout_Utils::createShippingAddress($cid, $values['shipping1']);
+		print_r($sh);
+		$shid		= $shModel->save($sh);
+		echo "shid: ".$shid."\n";
+		
+		//3.5 add shipping cost to 
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++	BILLING		 +++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//4. save billing address
 		//5. save order
 		//

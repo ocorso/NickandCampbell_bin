@@ -62,6 +62,8 @@ class Application_Model_Customer
 		$this->_fname	= (string) $fname;
 		return $this;
 	}
+	public function getFname(){ return $this->_fname; }
+	
 	public function setLname($lname){
 		$this->_lname	= (string) $lname;
 		return $this;

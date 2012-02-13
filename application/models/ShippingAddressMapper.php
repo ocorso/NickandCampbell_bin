@@ -25,7 +25,7 @@ class Application_Model_ShippingAddressMapper
 	public function save(Application_Model_ShippingAddress $shippingAddress){
 		
 		$data 	= array(
-			'ref_cid'	=> $shippingAddress->getRefcid(),
+			'ref_cid'	=> $shippingAddress->getRef_cid(),
 			'address1'	=> $shippingAddress->getAddress1(),
 			'address2'	=> $shippingAddress->getAddress2(),
 			'city'		=> $shippingAddress->getCity(),
@@ -36,10 +36,14 @@ class Application_Model_ShippingAddressMapper
 		);
 		
 		if(null === ($shid = $shippingAddress->getShid())){
-			$this->getDbTable()->insert($data);
+			echo "shipping address insert";
+			$shid = $this->getDbTable()->insert($data);
 		} else {
-			$this->getDbTable()->update($data, array('shid = ?'=> $shid));
+			echo "shipping address update";
+			//$this->getDbTable()->update($data, array('shid = ?'=> $shid));
 		}//endif
+		
+		return $shid;
 	}//end function
 	
 	public function find($shid, Application_Model_ShippingAddress $shippingAddress){

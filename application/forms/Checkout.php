@@ -2,23 +2,7 @@
 
 class Application_Form_Checkout extends Zend_Form
 {
-	protected $_cart; //this is the session var that we'll hopefully populate in init
 	protected $_statesArr = array('AL'=>'Alabama','AK'=>'Alaska','AZ'=>'Arizona','AR'=>'Arkansas','CA'=>'California','CO'=>'Colorado','CT'=>'Connecticut','DE'=>'Delaware','DC'=>'District Of Columbia','FL'=>'Florida','GA'=>'Georgia','HI'=>'Hawaii','ID'=>'Idaho','IL'=>'Illinois', 'IN'=>'Indiana', 'IA'=>'Iowa',  'KS'=>'Kansas','KY'=>'Kentucky','LA'=>'Louisiana','ME'=>'Maine','MD'=>'Maryland', 'MA'=>'Massachusetts','MI'=>'Michigan','MN'=>'Minnesota','MS'=>'Mississippi','MO'=>'Missouri','MT'=>'Montana','NE'=>'Nebraska','NV'=>'Nevada','NH'=>'New Hampshire','NJ'=>'New Jersey','NM'=>'New Mexico','NY'=>'New York','NC'=>'North Carolina','ND'=>'North Dakota','OH'=>'Ohio','OK'=>'Oklahoma', 'OR'=>'Oregon','PA'=>'Pennsylvania','RI'=>'Rhode Island','SC'=>'South Carolina','SD'=>'South Dakota','TN'=>'Tennessee','TX'=>'Texas','UT'=>'Utah','VT'=>'Vermont','VA'=>'Virginia','WA'=>'Washington','WV'=>'West Virginia','WI'=>'Wisconsin','WY'=>'Wyoming');
-	protected function _formatCartContents($cart)
-	{
-	
-		//calc cost of all items in the cart
-		$subTotal 	= 0;
-		foreach ($cart->items as $item){
-			$subTotal += (int) $item['quantity']* (float)$item['price'];
-		}
-		 
-		//3. return json so JS can populate shopping cart
-		$cartObj 			= new stdClass();
-		$cartObj->subTotal 	= number_format($subTotal, 2);
-		$cartObj->items		= $cart->items;
-		return $cartObj;
-	}
 	
 
     public function init()
@@ -29,21 +13,19 @@ class Application_Form_Checkout extends Zend_Form
     	$debugRadioBtn->setLabel("Fill out shit")
     	->setAttrib("class", "debug-radio");
     	$this->addElement($debugRadioBtn);
-    	//get cart
-    	$this->_cart = new Zend_Session_Namespace('cart');
-    	
-    	//print_r( $this->_formatCartContents($this->_cart));
-    	$cart = $this->_formatCartContents($this->_cart);
-    	
+
+
+    	 
     	$this->setAction("/checkout/transaction-results")
 			->setMethod("post")
 			->setAttrib('id', 'checkout_form');
 		
     	//oc: add data from session obj
-    	ORed_Form_Utils::addHid('subtotal', $cart->subTotal);
+    	//oc: wtf is this doing here?
+    	//ORed_Form_Utils::addHid('subtotal', $cart->subTotal);
 		
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
-//++++++++++++++++++++++ ZEND FILTERS ++++++++++++++++++++++++++++++++++++++		
+//++++++++++++++++++++++ ZEND FILTERS ++++++++++++++++++++++++++++++++++++	
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
 		// Concrete filter instance:
 		//$element->addFilter(new Zend_Filter_Alnum());
@@ -72,7 +54,6 @@ class Application_Form_Checkout extends Zend_Form
 //++++++++++++++++++++++++ZEND SUB FORMS +++++++++++++++++++++++++++++++++++++++		
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
 		$shipping1 	= new Zend_Form_SubForm();
-		
 		$shipping2 	= new Zend_Form_SubForm();
 		$billing1	= new Zend_Form_SubForm();
 		$billing2	= new Zend_Form_SubForm();
@@ -146,6 +127,10 @@ class Application_Form_Checkout extends Zend_Form
 			->setRequired(true)
 			->addFilter("Digits");
 			
+		
+		//country 
+		$shCountry = ORed_Form_Utils::addHid('country', 'United States');
+		
 		$shipping1->addElements(array(	$firstName, 
 										$lastName, 
 										$phone,
@@ -154,7 +139,8 @@ class Application_Form_Checkout extends Zend_Form
 										$shAddr2,
 										$shCity,
 										$shState,
-										$shZip));
+										$shZip,
+										$shCountry));
 		
 // ========================================================================
 // ============= Shipping2 : Shipping Type

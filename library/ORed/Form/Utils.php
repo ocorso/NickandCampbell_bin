@@ -12,7 +12,7 @@ class ORed_Form_Utils{
 		$hiddenIdField->setValue($value)
 		->removeDecorator('label')
 		->removeDecorator('HtmlTag');
-		$this->addElement($hiddenIdField);
+		return $hiddenIdField;
 	}
 	
 	public function getSizeOpts($products, $sizes){

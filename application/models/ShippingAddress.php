@@ -33,7 +33,7 @@ class Application_Model_ShippingAddress
 		$method = 'get'.$name;
 		
 		if(('mapper' == $name)|| !method_exists($this, $method)){
-			throw new Exeception('invalid shipping address property');
+			throw new Exception('invalid shipping address property');
 		}//end if
 			
 		return $this->$method();
@@ -64,11 +64,11 @@ class Application_Model_ShippingAddress
 	public function getShid(){ return $this->_shid; }
 
 	//ref cid
-	public function setRefcid($cid){
+	public function setRef_cid($cid){
 		$this->_ref_cid	= (int) $cid;
 		return $this;
 	}
-	public function getRefcid(){ return $this->ref_cid;}
+	public function getRef_cid(){ return $this->_ref_cid;}
 	
 	//address1
 	public function setAddress1($addr1){

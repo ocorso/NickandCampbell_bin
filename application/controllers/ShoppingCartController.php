@@ -2,56 +2,39 @@
 
 class ShoppingCartController extends Zend_Controller_Action
 {
-	protected $_cart; //this is the session var that we'll hopefully populate in init
     public function init()
     {
-    	//get cart
-    	$this->_cart = new Zend_Session_Namespace('cart');
     	
     	//disable layout
         $layout = $this->_helper->layout();
       	$layout->disableLayout();
     }
 
-    protected function _formatCartContents($cart)
-    {
-		
-		//calc cost of all items in the cart
-        $subTotal 	= 0;
-        foreach ($cart->items as $item){	$subTotal += (int) $item['quantity']* (float)$item['price'];}
-        							
-        //3. return json so JS can populate shopping cart
-        $cartObj 			= new stdClass();
-        $cartObj->subTotal 	= number_format($subTotal, 2);
-        $cartObj->items		= $cart->items;
-       	return $cartObj;
-    }
-
     public function indexAction()
     {
-    	$this->view->cartObj	= $this->_formatCartContents($this->_cart);
+    	$this->view->cartObj	= 	ORed_ShoppingCart_Utils::getCart();
     }
 
     public function addAction()
     {
-
+        //oc
+        //1. gather stuff we need
+        $cart 		= new Zend_Session_Namespace('cart');
+        $itemToAdd 	= $this->getRequest()->getParam('itemToAdd');
         
-        //todo
-        //1. create session, if doesn't exists
-        $itemToAdd = $this->getRequest()->getParam('itemToAdd');
-        				
-        if (isset($this->_cart->items) && count($this->_cart->items) !=0) {
+        
         	//loop through to see if this product is already in the cart
         	//if yes, update quantity
         	//if no, add it to the cart
+        if (isset($cart->items) && count($cart->items) !=0) {
         	$i = -1;//index we found id at
-        	foreach ($this->_cart->items as $key=>$item){
-        		if ($this->_cart->items[$key]['id'] == $itemToAdd['id']) $i = $key;
+        	foreach ($cart->items as $key=>$item){
+        		if ($cart->items[$key]['id'] == $itemToAdd['id']) $i = $key;
         	}//end for each
-        	if($i != -1) $this->_cart->items[$i]['quantity'] += $itemToAdd['quantity'];
+        	if($i != -1) $cart->items[$i]['quantity'] += $itemToAdd['quantity'];
         	else{
         //2. put new product in there
-        		$this->_cart->items[] = array(	'id'		=>$itemToAdd['id'],
+        		$cart->items[] = array(	'id'		=>$itemToAdd['id'],
         		   					'name'		=>$itemToAdd['name'],
         		   					'pretty'	=>$itemToAdd['pretty'],
         		   					'price'		=>$itemToAdd['price'],
@@ -61,7 +44,7 @@ class ShoppingCartController extends Zend_Controller_Action
         	}//endif 
             			
         } else {
-        	$this->_cart->items = array(	array(	'id'		=>$itemToAdd['id'],
+        	$cart->items = array(	array(	'id'		=>$itemToAdd['id'],
         		    						'name'		=>$itemToAdd['name'],
         		    						'pretty'	=>$itemToAdd['pretty'],
         		    						'price'		=>$itemToAdd['price'],
@@ -71,7 +54,7 @@ class ShoppingCartController extends Zend_Controller_Action
        }//endif
         				 
         			
-       $this->view->json	= json_encode($this->_formatCartContents($this->_cart));
+       $this->view->json	= json_encode(ORed_ShoppingCart_Utils::getCart());
        //4. grab a beer, you're almost there.
        //cheers!
     }
@@ -80,14 +63,15 @@ class ShoppingCartController extends Zend_Controller_Action
     {
 
         $itemToRemove = $this->getRequest()->getParam('itemToRemove');
-        foreach ($this->_cart->items as $key => $item){
+        $cart 		= new Zend_Session_Namespace('cart');
+        foreach ($cart->items as $key => $item){
         	
         	if ($item['id'] == $itemToRemove) {
-        		unset($this->_cart->items[$key]);
-				$this->_cart->items = array_values($this->_cart->items);        		
+        		unset($cart->items[$key]);
+				$cart->items = array_values($cart->items);        		
         	}
         }
-        $this->view->json	= json_encode($this->_formatCartContents($this->_cart));
+        $this->view->json	= json_encode(ORed_ShoppingCart_Utils::getCart());
         
     }
 
