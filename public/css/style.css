@@ -789,9 +789,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	border: solid 1px #333;
 }
 #fieldset-shipping2 dl{overflow: hidden;}
-#fieldset-shipping2 dt{ float:left;}
+#fieldset-shipping2 dt{ 
+/*float:left;*/
+}
+#shipping2-sh_type-label label, #shipping2-sh_type-element label{
+	width: 450px;
+}
+
 #fieldset-shipping2 dd, #billing1-bill_as_ship-element{ 
-	margin-left: 500px;
+/*	margin-left: 500px;*/
 	line-height: 12px;
 	margin-top: 5px;
 }

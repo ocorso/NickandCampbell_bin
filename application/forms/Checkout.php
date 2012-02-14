@@ -145,6 +145,12 @@ class Application_Form_Checkout extends Zend_Form
 // ========================================================================
 // ============= Shipping2 : Shipping Type
 // ========================================================================		
+$shType = new Zend_Form_Element_Radio("sh_type");
+$shType->setLabel("Please select a type of shipping")
+	->setMultiOptions(array(	"Express Mail 5-7 Business Days $4.95",	
+								"Priority Mail 3-4 Business Days $6.95",
+								"First Class 1-2 Business Days $10.95"
+		));
 		$shType1 = new Zend_Form_Element_Checkbox("sh_type1");
 		$shType1->setLabel("Express Mail 5-7 Business Days $4.95")
 			->setAttrib("class", "co-shipping-type");
@@ -157,7 +163,8 @@ class Application_Form_Checkout extends Zend_Form
 		$shType3->setLabel("First Class 1-2 Business Days $10.95")
 			->setAttrib("class", "co-shipping-type");
 			
-		$shipping2->addElements(array($shType1, $shType2, $shType3));
+		//$shipping2->addElements(array($shType1, $shType2, $shType3));
+		$shipping2->addElements(array($shType));
 		
 // =================================================
 // ============= Billing1 : Billing Address
