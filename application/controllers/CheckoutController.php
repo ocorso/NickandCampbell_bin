@@ -139,7 +139,7 @@ class CheckoutController extends Zend_Controller_Action
 		//disable layout
 		$layout = $this->_helper->layout();
 		$layout->disableLayout();
-		 $orderId = 69;
+		$orderId = 69;
 		 
 		// we don't have results go to checkout page
 		if (!$this->getRequest()->isPost() || !$this->_getForm()->isValid($_POST)) {
@@ -175,6 +175,10 @@ class CheckoutController extends Zend_Controller_Action
 			
 			);
 		}//endif
+		else {
+			echo "form isn't post OR its not valid";
+//			return;
+		}
 
 		$form 		= $this->_getForm();
 		$formValues = $form->getValues();
@@ -187,11 +191,9 @@ class CheckoutController extends Zend_Controller_Action
 		
 		
 		//omg we have a valid form and it looks like this:
-		$values 	= $formValues['debug'] ==1 ? $formValues : $tempValues;
+		$values 	= $formValues['debug'] == 1 ? $formValues : $tempValues;
 //print_r($values);
-		//oc: todo: check internet connection before making call.
-		//$orderId = $this->_callAuthorizeDotNet($values);
-		//$this->view->orderId = $orderId;
+
 
 		
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -215,18 +217,28 @@ class CheckoutController extends Zend_Controller_Action
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//3. save shipping address
 		$sh			= ORed_Checkout_Utils::createShippingAddress($cid, $values['shipping1']);
-		print_r($sh);
 		$shid		= $shModel->save($sh);
 		echo "shid: ".$shid."\n";
 		
 		//3.5 add shipping cost to 
+		$shType		= $values['shipping2']['shippingType'];
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	BILLING		 +++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//4. save billing address
+		$b			= ORed_Checkout_Utils::createBillingAddress($cid, $values['billing1']);
+		$bid		= $bModel->save($b);
+		echo "bid: ".$bid."\n";
+		
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++	A	 +++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//5. save order
 		//
-		
+		$o			= ORed_Checkout_Utils::createOrder($cid,$shid,$bid,$shType);
+		//oc: todo: check internet connection before making call.
+		//$orderId = $this->_callAuthorizeDotNet($values);
+		//$this->view->orderId = $orderId;
 		$this->view->isValid = $orderId == 69 ? false : true;
 		
 		

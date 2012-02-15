@@ -40,13 +40,12 @@ class Application_Model_CustomerMapper
 		if(!$exists){
 			echo "insert cust\n";
 			$cid = $this->getDbTable()->insert($data);
-			return $cid;
 		}else {
 			echo "update cust\n";
 			$cid = $custWithMatchingEmail[0]['cid'];
 			$updateResults = $this->getDbTable()->update($data, array('cid = ?'=> $cid));
-			return $cid;
 		}//endif
+		return $cid;
 		
 	}//end function
 

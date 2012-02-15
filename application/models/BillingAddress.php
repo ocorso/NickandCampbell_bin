@@ -64,11 +64,11 @@ class Application_Model_BillingAddress
 	public function getBid(){ return $this->_bid; }
 
 	//ref cid
-	public function setRefcid($cid){
+	public function setRef_cid($cid){
 		$this->_ref_cid	= (int) $cid;
 		return $this;
 	}
-	public function getRefcid(){ return $this->ref_cid;}
+	public function getRef_cid(){ return $this->_ref_cid;}
 	
 	//address1
 	public function setAddress1($addr1){

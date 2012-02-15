@@ -793,11 +793,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 /*float:left;*/
 }
 #shipping2-sh_type-label label, #shipping2-sh_type-element label{
-	width: 450px;
+	width: 485px;
+	text-align: left;
 }
-
+#shipping2-sh_type-label label{
+	margin-bottom: 20px;
+}
 #fieldset-shipping2 dd, #billing1-bill_as_ship-element{ 
-/*	margin-left: 500px;*/
+	margin-left: 0px;
 	line-height: 12px;
 	margin-top: 5px;
 }

@@ -22,10 +22,20 @@ class Application_Model_BillingAddressMapper
 		return $this->_dbTable;
 	}
 	
+	/**
+	 * As for now, we overwrite whatever exists in billing_addresses
+	 * under ref_cid, with new data
+	 * 
+	 * @param Application_Model_BillingAddress $billingAddress
+	 */
 	public function save(Application_Model_BillingAddress $billingAddress){
 		
+		//oc: check by ref_cid
+		$addresses	= $this->fetchAll(array('ref_cid'=>$billingAddress->getRef_cid()));
+		$exists = count($addresses) > 0 ? true : false;
+		
 		$data 	= array(
-			'ref_cid'	=> $billingAddress->getRefcid(),
+			'ref_cid'	=> $billingAddress->getRef_cid(),
 			'address1'	=> $billingAddress->getAddress1(),
 			'address2'	=> $billingAddress->getAddress2(),
 			'city'		=> $billingAddress->getCity(),
@@ -35,11 +45,17 @@ class Application_Model_BillingAddressMapper
 			'created_at'=> date('Y-m-d H:i:s')
 		);
 		
-		if(null === ($bid = $billingAddress->getBid())){
-			$this->getDbTable()->insert($data);
+		if(!$exists){
+			echo "billing address insert";
+			$bid = $this->getDbTable()->insert($data);
 		} else {
+			echo "billing address overwrite";
+			$bid = $addresses[0]['bid'];
 			$this->getDbTable()->update($data, array('bid = ?'=> $bid));
 		}//endif
+		
+		return $bid;
+		
 	}//end function
 	
 	public function find($bid, Application_Model_BillingAddress $billingAddress){
@@ -52,16 +68,19 @@ class Application_Model_BillingAddressMapper
 		
 	}
 	
-	public function fetchAll(){
-		$resultSet 	= $this->getDbTable()->fetchAll();
-		$entries	= array();
-		foreach($resultSet as $row){
-			$entry	= new Application_Model_BillingAddress();
-			$billingAddress->setOptions($row->toArray());
-			$entries[]	= $entry;
-		}
-		return $entries;
-	}
-
-}
+	public function fetchAll(array $options = null){
+		$db 	= $this->getDbTable();
+		$select = $db->select();
+		
+		if($options){
+			foreach($options as $column => $value){
+				$select->where($column."= ?",$value);
+			}//endforeach
+		}//endif
+		$result = $db->fetchAll($select);
+		//print_r($select); 
+		return $result->toArray();
+	}//end function
+	
+}//end class
 

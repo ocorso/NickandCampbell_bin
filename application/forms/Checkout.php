@@ -2,8 +2,8 @@
 
 class Application_Form_Checkout extends Zend_Form
 {
-	protected $_statesArr = array('AL'=>'Alabama','AK'=>'Alaska','AZ'=>'Arizona','AR'=>'Arkansas','CA'=>'California','CO'=>'Colorado','CT'=>'Connecticut','DE'=>'Delaware','DC'=>'District Of Columbia','FL'=>'Florida','GA'=>'Georgia','HI'=>'Hawaii','ID'=>'Idaho','IL'=>'Illinois', 'IN'=>'Indiana', 'IA'=>'Iowa',  'KS'=>'Kansas','KY'=>'Kentucky','LA'=>'Louisiana','ME'=>'Maine','MD'=>'Maryland', 'MA'=>'Massachusetts','MI'=>'Michigan','MN'=>'Minnesota','MS'=>'Mississippi','MO'=>'Missouri','MT'=>'Montana','NE'=>'Nebraska','NV'=>'Nevada','NH'=>'New Hampshire','NJ'=>'New Jersey','NM'=>'New Mexico','NY'=>'New York','NC'=>'North Carolina','ND'=>'North Dakota','OH'=>'Ohio','OK'=>'Oklahoma', 'OR'=>'Oregon','PA'=>'Pennsylvania','RI'=>'Rhode Island','SC'=>'South Carolina','SD'=>'South Dakota','TN'=>'Tennessee','TX'=>'Texas','UT'=>'Utah','VT'=>'Vermont','VA'=>'Virginia','WA'=>'Washington','WV'=>'West Virginia','WI'=>'Wisconsin','WY'=>'Wyoming');
-	
+	protected $_statesArr 		= array('AL'=>'Alabama','AK'=>'Alaska','AZ'=>'Arizona','AR'=>'Arkansas','CA'=>'California','CO'=>'Colorado','CT'=>'Connecticut','DE'=>'Delaware','DC'=>'District Of Columbia','FL'=>'Florida','GA'=>'Georgia','HI'=>'Hawaii','ID'=>'Idaho','IL'=>'Illinois', 'IN'=>'Indiana', 'IA'=>'Iowa',  'KS'=>'Kansas','KY'=>'Kentucky','LA'=>'Louisiana','ME'=>'Maine','MD'=>'Maryland', 'MA'=>'Massachusetts','MI'=>'Michigan','MN'=>'Minnesota','MS'=>'Mississippi','MO'=>'Missouri','MT'=>'Montana','NE'=>'Nebraska','NV'=>'Nevada','NH'=>'New Hampshire','NJ'=>'New Jersey','NM'=>'New Mexico','NY'=>'New York','NC'=>'North Carolina','ND'=>'North Dakota','OH'=>'Ohio','OK'=>'Oklahoma', 'OR'=>'Oregon','PA'=>'Pennsylvania','RI'=>'Rhode Island','SC'=>'South Carolina','SD'=>'South Dakota','TN'=>'Tennessee','TX'=>'Texas','UT'=>'Utah','VT'=>'Vermont','VA'=>'Virginia','WA'=>'Washington','WV'=>'West Virginia','WI'=>'Wisconsin','WY'=>'Wyoming');
+	protected $_shippingTypes;
 
     public function init()
     {
@@ -145,26 +145,11 @@ class Application_Form_Checkout extends Zend_Form
 // ========================================================================
 // ============= Shipping2 : Shipping Type
 // ========================================================================		
-$shType = new Zend_Form_Element_Radio("sh_type");
-$shType->setLabel("Please select a type of shipping")
-	->setMultiOptions(array(	"Express Mail 5-7 Business Days $4.95",	
-								"Priority Mail 3-4 Business Days $6.95",
-								"First Class 1-2 Business Days $10.95"
-		));
-		$shType1 = new Zend_Form_Element_Checkbox("sh_type1");
-		$shType1->setLabel("Express Mail 5-7 Business Days $4.95")
-			->setAttrib("class", "co-shipping-type");
-			
-		$shType2 = new Zend_Form_Element_Checkbox("sh_type2");
-		$shType2->setLabel("Priority Mail 3-4 Business Days $6.95")
-			->setAttrib("class", "co-shipping-type");
-			
-		$shType3 = new Zend_Form_Element_Checkbox("sh_type3");
-		$shType3->setLabel("First Class 1-2 Business Days $10.95")
-			->setAttrib("class", "co-shipping-type");
-			
-		//$shipping2->addElements(array($shType1, $shType2, $shType3));
-		$shipping2->addElements(array($shType));
+		$shType = new Zend_Form_Element_Radio("sh_type");
+		$shType->setLabel("Please select a type of shipping")
+			->setAttrib('class', 'co-shipping-type')
+			->setMultiOptions(ORed_Form_Utils::getShippingOpts());
+		$shipping2->addElement($shType);
 		
 // =================================================
 // ============= Billing1 : Billing Address
@@ -203,13 +188,16 @@ $shType->setLabel("Please select a type of shipping")
 			->setRequired(true)
 			->addFilter("Digits");
 			
+		//country
+		$billCountry = ORed_Form_Utils::addHid('country', 'United States');
 		
 		$billing1->addElements(array(	$billSameAsShipping,
 										$billAddr1, 
 										$billAddr2,
 										$billCity,
 										$billState,
-										$billZip
+										$billZip,
+										$billCountry
 		));
 		
 // =================================================

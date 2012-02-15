@@ -22,7 +22,22 @@ class Application_Model_ShippingAddressMapper
 		return $this->_dbTable;
 	}
 	
+	/**
+	 * This function (like all other first phase checkout
+	 * methods will overwrite what is already there.
+	 * 
+	 * we can possibly put an AJAX db query on the checkout page
+	 * when a user enters an email, we immediately look for
+	 * shipping and billing addresses to display on the side.
+	 *
+	 * @param Application_Model_ShippingAddress $shippingAddress
+	 * @return Ambigous <number, mixed, multitype:>
+	 */
 	public function save(Application_Model_ShippingAddress $shippingAddress){
+		
+		//oc: check by ref_cid
+		$addresses	= $this->fetchAll(array('ref_cid'=>$shippingAddress->getRef_cid()));
+		$exists = count($addresses) > 0 ? true : false;
 		
 		$data 	= array(
 			'ref_cid'	=> $shippingAddress->getRef_cid(),
@@ -35,12 +50,13 @@ class Application_Model_ShippingAddressMapper
 			'created_at'=> date('Y-m-d H:i:s')
 		);
 		
-		if(null === ($shid = $shippingAddress->getShid())){
+		if(!$exists){
 			echo "shipping address insert";
 			$shid = $this->getDbTable()->insert($data);
 		} else {
-			echo "shipping address update";
-			//$this->getDbTable()->update($data, array('shid = ?'=> $shid));
+			echo "shipping address overwrite";
+			$shid = $addresses[0]['shid'];
+			$this->getDbTable()->update($data, array('shid = ?'=> $shid));
 		}//endif
 		
 		return $shid;
@@ -56,15 +72,18 @@ class Application_Model_ShippingAddressMapper
 		
 	}
 	
-	public function fetchAll(){
-		$resultSet 	= $this->getDbTable()->fetchAll();
-		$entries	= array();
-		foreach($resultSet as $row){
-			$entry	= new Application_Model_ShippingAddress();
-			$shippingAddress->setOptions($row->toArray());
-			$entries[]	= $entry;
-		}
-		return $entries;
+	public function fetchAll(array $options = null){
+		$db 	= $this->getDbTable();
+		$select = $db->select();
+		
+		if($options){
+			foreach($options as $column => $value){
+				$select->where($column."= ?",$value);
+			}//endforeach
+		}//endif
+		$result = $db->fetchAll($select);
+		//print_r($select); 
+		return $result->toArray();
 	}
 }
 

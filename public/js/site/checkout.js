@@ -8,7 +8,7 @@ coController.states	 	= [{	'name':'shipping1',
 							},
                    	 	   {	'name':'shipping2',
 								'id':'#fieldset-shipping2',
-								'leftOffset':-620
+								'leftOffset':-590
                    	 	   	},
                    	 	   {	'name':'billing1',
                    	 	   		'id':'#fieldset-billing1',
@@ -34,7 +34,7 @@ coController.enabledArrowCSS= {	'opacity': 1, 	'cursor': 'pointer'};
 //================ Callable
 //=================================================
 coController.addHandlers = function(){
-	
+
 	switch (coController.curState){
 	 
 		case coController.states[0].name:
