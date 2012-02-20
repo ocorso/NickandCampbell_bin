@@ -55,7 +55,7 @@ shopController.change 	= function (){
 
 shopController.onProductAJAXComplete	= function ($data) {
 	
-	//todo: convert to xml and just populate markup with data values of the product
+	//oc: convert to xml and just populate markup with data values of the product
 	$('#s_loader').fadeOut('fast', function($e){$('#s_shop, #s_shop .section-content').fadeIn(); });
 	$('#product_detail').html($data);
 	

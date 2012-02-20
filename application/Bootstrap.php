@@ -33,7 +33,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front->setBaseUrl($baseUrl);
     	
         $router = $front->getRouter();
-
+        $config = Zend_Registry::get('config', 'production');
+        $router->addConfig($config, 'routes');
+        
         // Add some routes
         $sitemapRoute	= new Zend_Controller_Router_Route(	'sitemap',
         														array(	'controller'	=> 'index',
@@ -91,6 +93,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->headLink()->prependStylesheet('/css/style.css');
 
     	// Set the initial JS to load:
+    	$view->headScript()->appendFile("/js/libs/jquery.hoverIntent.minified.js");
+    	$view->headScript()->appendFile("/js/libs/jquery.easing.1.3.js");
     	$view->headScript()->appendFile("/js/libs/swfobject.js");
 		$view->headScript()->appendFile("/js/libs/plugins.js");
 		$view->headScript()->appendFile("/js/site/mainController.js");

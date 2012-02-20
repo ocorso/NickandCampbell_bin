@@ -301,9 +301,9 @@ header{
 	margin-bottom: 35px;
 }
 #logo{
-	width: 230px;	
+/* 	width: 230px;	
 	height: 70px;
-	float: left;
+	float: left; */
 }
 #logo_on, #logo_off{
 	position: absolute;
@@ -311,7 +311,7 @@ header{
 nav{ 
 	float: right;
 	margin-top: 45px;
-	overflow: hidden;
+	margin-right: -2px;
 }
 nav .nav-edge{
 	background: url('/../img/icons/sprite-sheet.png') no-repeat;
@@ -322,11 +322,12 @@ nav .nav-edge{
 	float: left;
 }
 nav ul {float:left;}
-nav ul{
+nav ul.headings{
 	background-color:#333;
 	height: 25px;
 }
 nav ul li{
+	position: relative;
 	width: 50px;
 	display: inline;
 	font-size: 32px;
@@ -339,7 +340,44 @@ nav ul li a, nav ul li a:visited{
 	margin-left: 40px;
 	margin-bottom: 4px;
 }
+/* @dropdowns
+*************************/
 
+ul.dropdown{
+	background-color:#333;
+	margin: 0;
+	padding: 0;
+	display: block;
+	position: absolute;
+	z-index: 999;
+	/* top: 100%; */
+	width: 150px;
+	display: none;
+	left: 40px;
+	border-left: solid 1px #999;
+}
+
+ul.dropdown ul.dropdown{
+	top: 0;
+	left: 95%;
+}
+ul.dropdown li{
+	margin: 0;
+	padding: 0;
+	float: none;
+	position: relative;
+	list-style: none;
+	display: block;
+}
+
+ul.dropdown li a{
+	margin-left:8px;
+	display: block;
+	font-size: 18px;
+}
+.dropdown li a:hover{
+	background: url('../img/icons/list-style-img.png') no-repeat left 6px;
+}
 #overlay{
 	position: absolute;
 	background-color: #0ff;
@@ -398,6 +436,12 @@ section{
 /* =============================================================================
    @Shop
    ========================================================================== */
+.product-loader{
+	display: block;
+	margin: 250px auto;
+	width: 66px;
+	height: 66px;
+}
 #s_shop .sidebar{
 	background-image: none;	
 }
@@ -508,7 +552,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	height: 560px;
 	width: 781px;
 	float: right;
-	    
+	position: relative;
 }
 .product-content{
 	padding: 25px;

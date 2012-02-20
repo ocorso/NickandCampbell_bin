@@ -21,6 +21,17 @@ jQuery(function($) {
 					  }
 		);//end hover
 		
+		//dropdowns
+		var hoverIntentOpts 	= {};
+		hoverIntentOpts.timeout = 100;
+		hoverIntentOpts.over 	= function () { var c = $('.dropdown:eq(0)', this); c.slideDown(100); };
+//		hoverIntentOpts.out	 	= function () {  };
+		hoverIntentOpts.out	 	= function () { var c = $('.dropdown:eq(0)', this); c.fadeOut(200); };
+		$('.dropdown').each(function () {$(this).parent().eq(0).hoverIntent(hoverIntentOpts);});
+		$('.dropdown a').hover(
+			function () {$(this).stop(true).animate({paddingLeft: '15px'}, {speed: 100, easing: 'easeOutBack'});}, 
+			function () {$(this).stop(true).animate({paddingLeft: '0'}, {speed: 100, easing: 'easeOutBounce'});
+		});
 		//flip toggle cart handle
 		$("#open_close").hover(
 				function () {

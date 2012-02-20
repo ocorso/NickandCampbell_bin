@@ -7,7 +7,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title>Nick + Campbell | Mens Underwear | NYC :: <?= APPLICATION_ENV; ?></title>
+	<title>Admin :: Nick + Campbell :: <?= APPLICATION_ENV; ?></title>
 	<meta name="description" content="Nick and Campbell is a Designer Mens Fashion Line">
 	<meta name="author" content="Owen Corso">
 	<meta name="keywords" content="underwear, nick lemons, fashion, mens, womens, clothing, apparel">
@@ -30,34 +30,17 @@
 				<li><?= $this->dashboardOrRegister(); ?></li>
 			</ul>
 		</div>
-		<div id="cart_pulldown" class="shadow">
-			<a id="open_close" href="#" title="Open Cart">Shopping Cart<span class="cart-arrow"></span></a>
-			<div class="cart-contents" style="display:none;">
-				<?php echo $this->action('index', 'shopping-cart'); ?>
-			</div>
-			<a class="checkout-btn btn" style="display: none;" href="checkout">Checkout</a>
-		</div>
+		
 		<aside id="logo">
-			<a id="logo_off" href="/" title="Nick + Campbell"><img src="/img/logo/nc-logo-off.png"/></a>
-			<a id="logo_on" rel="address:/" style="display:none" href="/" title="Nick + Campbell"><img src="/img/logo/nc-logo-on.png"/></a>
+			<a id="logo_off" href="<?= $this->baseUrl(); ?>/" title="Nick + Campbell"><img src="/img/logo/nc-logo-off.png"/></a>
+			<a id="logo_on" style="display:none" href="<?= $this->baseUrl(); ?>/" title="Nick + Campbell"><img src="/img/logo/nc-logo-on.png"/></a>
 		</aside>
 		<nav class="shadow"><div class="nav-edge"></div>
-			<ul class="headings">
-				<li>
-					<a id='l-1' rel="address:/learn" 	href="learn" title="Learn about Nick and Campbell">Learn</a>
-					<ul class="dropdown shadow">
-						<li><a class="first" href="#" >nicholas lemons</a></li>
-						<li><a href="#">owen corso</a></li>
-						<li><a href="#">leila tonuzi</a></li>
-					</ul>
-				</li>
-				<li><a id='l-2' rel="address:/shop" 	href="shop" title="Shop Nick and Campbell Mens Underwear">Shop</a>
-					<ul class="dropdown shadow">
-						<li><a href="#" >mens underwear</a></li>
-					</ul>
-				</li>
-				<li><a id='l-3' rel="address:/campaign" href="campaign" title="The Nick and Campbell Fashion Campaign">Campaign</a></li>
-				<li><a id='l-4' rel="address:/contact" 	href="contact" title="Contact Nick and Campbell">Contact</a></li>
+			<ul>
+				<li><a id='l-1' href="<?= $this->baseUrl(); ?>/learn" title="Learn about Nick and Campbell">Learn</a></li>
+				<li><a id='l-2'	href="<?= $this->baseUrl(); ?>/shop" title="Shop Nick and Campbell Mens Underwear">Shop</a></li>
+				<li><a id='l-3' href="<?= $this->baseUrl(); ?>/campaign" title="The Nick and Campbell Fashion Campaign">Campaign</a></li>
+				<li><a id='l-4' href="<?= $this->baseUrl(); ?>/contact" title="Contact Nick and Campbell">Contact</a></li>
 			</ul>
 		</nav>
 		<div class="clearfix"></div>
@@ -71,11 +54,11 @@
 		<aside><ul>
 			<li>&copy; nick+campbell 2011</li>
 			<li><img src="/img/icons/list-style-img.png" alt="Nick and Campbell List Separator" /></li>
-			<li><a rel="address:/shipping" href="shipping" title="Shipping Policy">Shipping Policy</a></li>
+			<li><a href="<?= $this->baseUrl(); ?>/shipping" title="Shipping Policy">Shipping Policy</a></li>
 			<li><img src="/img/icons/list-style-img.png" alt="Nick and Campbell List Separator" /></li>
-			<li><a rel="address:/returns" href="returns" title="Returns Policy">Returns Policy</a></li>
+			<li><a href="<?= $this->baseUrl(); ?>/returns" title="Returns Policy">Returns Policy</a></li>
 			<li><img src="/img/icons/list-style-img.png" alt="Nick and Campbell List Separator" /></li>
-			<li><a rel="address:/sitemap" href="/index/sitemap" title="Sitemap">Sitemap</a></li>
+			<li><a href="<?= $this->baseUrl(); ?>/sitemap" title="Sitemap">Sitemap</a></li>
 		</ul></aside>
 	</footer>
 </div> <!--! end of #container -->
