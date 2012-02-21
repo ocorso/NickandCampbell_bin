@@ -237,6 +237,11 @@ h1, h2,h3,h4,h5,p, a, form, li, .vip{
   -webkit-box-shadow: 5px 5px 5px #000;
   box-shadow: 5px 5px 5px #000;
 }
+.first-shadow {
+	-webkit-box-shadow: inset 0 8px 6px -6px black;
+	   -moz-box-shadow: inset 0 8px 6px -6px black;
+	        box-shadow: inset 0 8px 6px -6px black;
+}
 .red-grad{
 	background-image: -moz-linear-gradient(center bottom , #7C150A 25%, #B71301 75%);
 }
@@ -311,7 +316,7 @@ header{
 nav{ 
 	float: right;
 	margin-top: 45px;
-	margin-right: -2px;
+/* 	margin-right: -2px; */
 }
 nav .nav-edge{
 	background: url('/../img/icons/sprite-sheet.png') no-repeat;
@@ -336,7 +341,7 @@ nav ul li{
 nav ul li a, nav ul li a:visited{
 	text-decoration: none;
 	display: inline-block;
-	width: 150px;
+	width: 147px;
 	margin-left: 40px;
 	margin-bottom: 4px;
 }
@@ -350,7 +355,7 @@ ul.dropdown{
 	display: block;
 	position: absolute;
 	z-index: 999;
-	/* top: 100%; */
+	top: 38px;
 	width: 150px;
 	display: none;
 	left: 40px;
@@ -371,12 +376,13 @@ ul.dropdown li{
 }
 
 ul.dropdown li a{
-	margin-left:8px;
+	margin-left:0;
+	padding-left:8px;
 	display: block;
 	font-size: 18px;
 }
 .dropdown li a:hover{
-	background: url('../img/icons/list-style-img.png') no-repeat left 6px;
+	background: url('../img/icons/list-style-img.png') no-repeat 8px 6px;
 }
 #overlay{
 	position: absolute;

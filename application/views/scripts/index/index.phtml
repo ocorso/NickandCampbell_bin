@@ -26,7 +26,7 @@
 		<div class="sidebar">
 			<h1>Shop</h1>
 			<div id="shop_sidenav">
-				<h2><a href="#" title="Mens Underwear">Mens Underwear</a></h2>
+				<h2><a rel="address:/shop" href="shop" title="Mens Underwear">Mens Underwear</a></h2>
 				<ul>
 					<?php foreach($this->products as $p): ?>
 					<li><a id="sidenav_<?= $p->pretty; ?>" href="<?= $p->href; ?>" rel="address:/<?= $p->href; ?>" title="<?= $p->name; ?>"><?= $p->name; ?></a></li>

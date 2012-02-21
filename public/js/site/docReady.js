@@ -29,8 +29,8 @@ jQuery(function($) {
 		hoverIntentOpts.out	 	= function () { var c = $('.dropdown:eq(0)', this); c.fadeOut(200); };
 		$('.dropdown').each(function () {$(this).parent().eq(0).hoverIntent(hoverIntentOpts);});
 		$('.dropdown a').hover(
-			function () {$(this).stop(true).animate({paddingLeft: '15px'}, {speed: 100, easing: 'easeOutBack'});}, 
-			function () {$(this).stop(true).animate({paddingLeft: '0'}, {speed: 100, easing: 'easeOutBounce'});
+			function () {$(this).stop(true).animate({paddingLeft: '23px'}, {speed: 100, easing: 'easeOutBack'});}, 
+			function () {$(this).stop(true).animate({paddingLeft: '8px'}, {speed: 100, easing: 'easeOutBounce'});
 		});
 		//flip toggle cart handle
 		$("#open_close").hover(
