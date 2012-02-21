@@ -22,13 +22,13 @@ shopController.change 	= function (){
 			};
 		$.ajax(ajaxObj);
 		
-		//were we already at shop?
-		//if so, animate
-		//if not, set css and fade in.
+		//oc: were we already at shop?
+		//if so, slide left
 		if( $('#s_shop').css('display') == "block"){
 			$('.section-content-wrapper').animate({left:"-786px"});
 		//	$('#s_shop .section-content').animate({height: $('#shop_grid').height()});
 		
+		//if not, set css and fade in.
 		}else{
 			$('.section-content-wrapper').css('left',"-786px");
 			$('#s_shop .section-content').css('height', "580px");

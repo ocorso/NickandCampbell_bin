@@ -479,6 +479,7 @@ section{
 #shop_sidenav ul, #shop_sidenav h2{
 	padding-left: 0;
 	margin: 0;
+	list-style-image: none;
 }
 #shop_sidenav h2 a, #shop_sidenav h2 a:visited {
 	color: #999;

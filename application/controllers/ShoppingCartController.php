@@ -4,7 +4,7 @@ class ShoppingCartController extends Zend_Controller_Action
 {
     public function init()
     {
-    	
+    //	print_r($_SESSION);
     	//disable layout
         $layout = $this->_helper->layout();
       	$layout->disableLayout();
