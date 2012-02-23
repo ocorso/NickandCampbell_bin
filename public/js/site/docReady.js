@@ -24,7 +24,7 @@ jQuery(function($) {
 		//dropdowns
 		var hoverIntentOpts 	= {};
 		hoverIntentOpts.timeout = 100;
-		hoverIntentOpts.over 	= function () { var c = $('.dropdown:eq(0)', this); c.slideDown(100); };
+		hoverIntentOpts.over 	= function () { var c = $('.dropdown:eq(0)', this); c.show(100); };
 //		hoverIntentOpts.out	 	= function () {  };
 		hoverIntentOpts.out	 	= function () { var c = $('.dropdown:eq(0)', this); c.fadeOut(200); };
 		$('.dropdown').each(function () {$(this).parent().eq(0).hoverIntent(hoverIntentOpts);});

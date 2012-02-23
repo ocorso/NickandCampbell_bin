@@ -34,7 +34,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	
         $router = $front->getRouter();
         $config = Zend_Registry::get('config', 'production');
-        $router->addConfig($config, 'routes');
+     //   print_r($this->getOptions());
+        print_r($config);
+  //      $router->addConfig($config['resources']['router'], 'routes');
         
         // Add some routes
         $sitemapRoute	= new Zend_Controller_Router_Route(	'sitemap',
