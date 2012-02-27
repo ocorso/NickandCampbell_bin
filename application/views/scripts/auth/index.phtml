@@ -1,5 +1,6 @@
 <?php $this->headTitle('Login'); ?>
 <div id="s_login">
 <h1>Login below</h1>
+<?php if($this->isIncorrect) echo "<ul class='errors'><li>The email or password is incorrect</li></ul>" ?>
 <?php echo $this->form; ?>
 </div>

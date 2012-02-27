@@ -6,10 +6,10 @@ class Zend_View_Helper_LoggedInAs extends Zend_View_Helper_Abstract
     {
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity()) {
-            $username = $auth->getIdentity()->username;
+            $fname = $auth->getIdentity()->first_name;
             $logoutUrl = $this->view->url(array('controller'=>'auth',
                 'action'=>'logout'), null, true);
-            return 'Welcome ' . $username .  '. <a href="'.$logoutUrl.'">Logout</a>';
+            return 'Welcome ' . $fname .  '. <a href="'.$logoutUrl.'">Logout</a>';
         } 
 
         $request = Zend_Controller_Front::getInstance()->getRequest();

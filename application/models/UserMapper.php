@@ -9,7 +9,7 @@ class Application_Model_UserMapper
 			$dbTable = new $dbTable();
 		}
 		if (!$dbTable instanceof Zend_Db_Table_Abstract){
-			throw new Exception('Invalid table data gateway provided for customer');
+			throw new Exception('Invalid table data gateway provided for user');
 		}
 		$this->_dbTable = $dbTable;
 		return $this;
@@ -39,13 +39,13 @@ class Application_Model_UserMapper
 		//oc: this checking seems to work.
 		if(!$exists){
 			echo "insert user\n";
-			$cid = $this->getDbTable()->insert($data);
+			$uid = $this->getDbTable()->insert($data);
 		}else {
 			echo "update user\n";
-			$cid = $custWithMatchingEmail[0]['uid'];
-			$updateResults = $this->getDbTable()->update($data, array('cid = ?'=> $cid));
+			$uid = $custWithMatchingEmail[0]['uid'];
+			$updateResults = $this->getDbTable()->update($data, array('uid = ?'=> $uid));
 		}//endif
-		return $cid;
+		return $uid;
 		
 	}//end function
 
@@ -71,5 +71,6 @@ class Application_Model_UserMapper
 		return $result->toArray();
 	}
 	
+
 }
 

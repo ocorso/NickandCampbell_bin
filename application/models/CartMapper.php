@@ -26,7 +26,10 @@ class Application_Model_CartMapper
 		
 	public function savePre(Application_Model_PreOrderCart $c){
 		
-//		$exists?
+//		oc: 1. check if exists by session_id (sesh_id update with identity will already have been handled)
+//			2. either update quantity on existing cart item
+//			3. OR insert new cart item into PreOrderCart Table using $c
+
 	}//end function 
 	
 	public function fetchAllWithOptions($cartType, array $opts){
@@ -52,5 +55,12 @@ class Application_Model_CartMapper
 		}
 	}//end function 
 	
+	public function updateCartWithNewSession($uid, $sesh_id){
+		echo 'update with new sesh: '.$sesh_id;
+		//oc: todo: select * FROM preorder_cart WHERE uid=$uid
+		// 1. update created_at with current time
+		// 2. update sesh_id with current session_id
+		
+	}
 }//end class
 

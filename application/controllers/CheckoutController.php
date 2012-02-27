@@ -150,6 +150,7 @@ class CheckoutController extends Zend_Controller_Action
 				'shipping1'=>array(	'cust_first_name'=>'Owen',
 									'cust_last_name'=>'Corso',
 									'cust_email'=>'owen@ored.net',
+									'password'=>'studionc',
 									'cust_phone'=>'2016020069',
 									'addr1'=>'410 E13th Street',
 									'addr2'=>'Apt 1E',
@@ -158,7 +159,7 @@ class CheckoutController extends Zend_Controller_Action
 									'zip'=>10003,
 									'country'=>"United States"
 					),
-				'shipping2'=>array('sh_type1'=>1	),
+				'shipping2'=>array('sh_type'=>1	),
 				'billing1'=>array(	'addr1'=>'410 E13th Street',
 									'addr2'=>'Apt 1E',
 									'city'=>'New York',
@@ -209,24 +210,24 @@ class CheckoutController extends Zend_Controller_Action
 		$user 		= ORed_Checkout_Utils::createUser($values['shipping1']);
 		$uid		= $uModel->save($user);
 		echo "uid: ".$uid."\n";
-		$allCusts	= $cModel->fetchAll(array('email'=>$user->getEmail()));
+		$allCusts	= $uModel->fetchAll(array('email'=>$user->getEmail()));
 		//print_r($allCusts);
 		
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	SHIPPING	 +++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//3. save shipping address
-		$sh			= ORed_Checkout_Utils::createShippingAddress($cid, $values['shipping1']);
+		$sh			= ORed_Checkout_Utils::createShippingAddress($uid, $values['shipping1']);
 		$shid		= $shModel->save($sh);
 		echo "shid: ".$shid."\n";
 		
 		//3.5 add shipping cost to 
-		$shType		= $values['shipping2']['shippingType'];
+		$shType		= $values['shipping2']['sh_type'];
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	BILLING		 +++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//4. save billing address
-		$b			= ORed_Checkout_Utils::createBillingAddress($cid, $values['billing1']);
+		$b			= ORed_Checkout_Utils::createBillingAddress($uid, $values['billing1']);
 		$bid		= $bModel->save($b);
 		echo "bid: ".$bid."\n";
 		
@@ -235,13 +236,13 @@ class CheckoutController extends Zend_Controller_Action
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//5. save order
 		//
-		$o			= ORed_Checkout_Utils::createOrder($cid,$shid,$bid,$shType);
+		$o			= ORed_Checkout_Utils::createOrder($uid,$shid,$bid,$shType);
 		//oc: todo: check internet connection before making call.
 		//$orderId = $this->_callAuthorizeDotNet($values);
 		//$this->view->orderId = $orderId;
 		$this->view->isValid = $orderId == 69 ? false : true;
 		
-		
+		$this->view->form = $this->_getForm();
 	}
 
 

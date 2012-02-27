@@ -14,7 +14,7 @@ class Application_Form_AddToCart extends Zend_Form
     	
     	$this->setMethod("post")
     		->setAttrib('id', 'add_to_cart_form');
-
+		
     	//size select
     	$size		= new Zend_Form_Element_Select('size');
        	$size->setLabel("Size:")
@@ -33,7 +33,8 @@ class Application_Form_AddToCart extends Zend_Form
        	$submit->setLabel('Add to Cart')
        		->setAttrib('class', 'btn');
        	
-       	$this->addElements(array($size, $quantity, $submit));
+       	$cartType 	= ORed_Form_Utils::addHid('cart_type','real');
+       	$this->addElements(array($size, $quantity, $cartType,$submit));
     }
 
 

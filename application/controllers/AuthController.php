@@ -11,14 +11,21 @@ class AuthController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $form = new Application_Form_Login();
-       $request = $this->getRequest();
+    	$this->view->isIncorrect = false;
+    	
+       	$form = new Application_Form_Login();
+       	$request = $this->getRequest();
         if ($request->isPost()) {
             if ($form->isValid($request->getPost())) {
                 if ($this->_process($form->getValues())) {
                     // We're authenticated! Redirect to the home page
+                    ORed_ShoppingCart_Utils::renewSession();
+                    
+                    //oc: todo: determine where to redirect based on role (ref_rid)
                     $this->_helper->redirector('index', 'admin');
-                }
+                	$this->view->isIncorrect = false;
+                }else 
+                	$this->view->isIncorrect = true;
             }//todo: make else
         }
         $this->view->form = $form;

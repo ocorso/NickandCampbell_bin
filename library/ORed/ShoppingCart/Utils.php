@@ -38,11 +38,11 @@ class ORed_ShoppingCart_Utils{
 		//oc: todo: discount and promo
 		$itemArr =	array(								
 			'sesh_id'	=> Zend_Session::getId(),
-	 		'type'		=>$item['cartType'],
+	 		'type'		=>$item['cart_type'],
 			'ref_pid'	=>$item['id'],
 			'ref_uid'	=>$uid,
-			'discount'	=>0,
-			'promo'		=>0,
+			'discount'	=>0,//todo: determine discount from join
+			'promo'		=>0,//todo: uhhhh..??
 	     // 'name'		=>$item['name'],
 	     // 'pretty'	=>$item['pretty'],
 	     //	'price'		=>$item['price'],
@@ -54,5 +54,14 @@ class ORed_ShoppingCart_Utils{
 //		$cMapper->fetchAllWithOptions($item['cartType'], array('sesh_id'=>))
 	}
 	
+	public function renewSession(){
+		
+		$auth = Zend_Auth::getInstance();
+		$identity 	= $auth->getIdentity();
+		$uid		= $identity->uid; 
+		
+		$cMapper	= new Application_Model_CartMapper();
+		$cMapper->updateCartWithNewSession($uid, Zend_Session::getId());
+	}
 	
 }
