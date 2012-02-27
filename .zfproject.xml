@@ -75,8 +75,10 @@
           <dbTableFile dbTableName="Order"/>
           <dbTableFile dbTableName="ShippingAddresses"/>
           <dbTableFile dbTableName="BillingAddresses"/>
-          <dbTableFile dbTableName="Customer"/>
+          <dbTableFile dbTableName="User"/>
           <dbTableFile dbTableName="ProductStyles"/>
+          <dbTableFile dbTableName="PreorderCart"/>
+          <dbTableFile dbTableName="PostorderCart"/>
         </dbTableDirectory>
         <modelFile modelName="ProductMapper"/>
         <modelFile modelName="Product"/>
@@ -87,9 +89,12 @@
         <modelFile modelName="ShippingAddress"/>
         <modelFile modelName="ShippingAddressMapper"/>
         <modelFile modelName="BillingAddressMapper"/>
-        <modelFile modelName="Customer"/>
-        <modelFile modelName="CustomerMapper"/>
+        <modelFile modelName="User"/>
+        <modelFile modelName="UserMapper"/>
         <modelFile modelName="ProductStyle"/>
+        <modelFile modelName="PreOrderCart"/>
+        <modelFile modelName="SiteModel"/>
+        <modelFile modelName="CartMapper"/>
       </modelsDirectory>
       <modulesDirectory>
         <moduleDirectory moduleName="Shop">

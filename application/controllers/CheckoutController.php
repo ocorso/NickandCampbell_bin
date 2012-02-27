@@ -115,16 +115,16 @@ class CheckoutController extends Zend_Controller_Action
 	{
 		// action body
 		print_r("hey there");
-		require_once 'anet_php_sdk/AuthorizeNet.php';
+		require_once 'ANet/AuthorizeNet.php';
 		define("AUTHORIZENET_API_LOGIN_ID", "94EtqH8y");
 		define("AUTHORIZENET_TRANSACTION_KEY", "64UyF8TFt7cUA22U");
 		define("AUTHORIZENET_SANDBOX", true);
-		$sale = new AuthorizeNetAIM;
+		$sale = new AuthorizeNetAIM();
 		$sale->amount 		= "25.99";
 		$sale->card_num 	= '6011000000000012';
 		$sale->exp_date 	= '04/15';
 		$response 			= $sale->authorizeAndCapture();
-		$print_r($response);
+	print_r($response);
 		if ($response->approved) {
 			$transaction_id = $response->transaction_id;
 			echo "trans id: ".$transaction_id;
@@ -184,7 +184,7 @@ class CheckoutController extends Zend_Controller_Action
 		$formValues = $form->getValues();
 
 		//MODELS
-		$cModel		= new Application_Model_CustomerMapper();
+		$uModel		= new Application_Model_UserMapper();
 		$shModel	= new Application_Model_ShippingAddressMapper();
 		$bModel		= new Application_Model_BillingAddressMapper();
 		//$oModel		= new Application_Model_OrderMapper();
@@ -206,10 +206,10 @@ class CheckoutController extends Zend_Controller_Action
 		//++++++++++++++++++++++	CUSTOMER	 +++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//2. save cust data
-		$cust 		= ORed_Checkout_Utils::createCustomer($values['shipping1']);
-		$cid		= $cModel->save($cust);
-		echo "cid: ".$cid."\n";
-		$allCusts	= $cModel->fetchAll(array('email'=>$cust->getEmail()));
+		$user 		= ORed_Checkout_Utils::createUser($values['shipping1']);
+		$uid		= $uModel->save($user);
+		echo "uid: ".$uid."\n";
+		$allCusts	= $cModel->fetchAll(array('email'=>$user->getEmail()));
 		//print_r($allCusts);
 		
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

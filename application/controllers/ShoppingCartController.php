@@ -4,10 +4,11 @@ class ShoppingCartController extends Zend_Controller_Action
 {
     public function init()
     {
-    //	print_r($_SESSION);
+  //	print_r('session id: '.Zend_Session::getId());
     	//disable layout
         $layout = $this->_helper->layout();
       	$layout->disableLayout();
+
     }
 
     public function indexAction()
@@ -21,6 +22,9 @@ class ShoppingCartController extends Zend_Controller_Action
         //1. gather stuff we need
         $cart 		= new Zend_Session_Namespace('cart');
         $itemToAdd 	= $this->getRequest()->getParam('itemToAdd');
+        
+       
+        $newCart	= ORed_ShoppingCart_Utils::add($itemToAdd);
         
         
         	//loop through to see if this product is already in the cart
@@ -56,6 +60,7 @@ class ShoppingCartController extends Zend_Controller_Action
         			
        $this->view->json	= json_encode(ORed_ShoppingCart_Utils::getCart());
        //4. grab a beer, you're almost there.
+//       $this->view->json	= json_encode($newCart);
        //cheers!
     }
 

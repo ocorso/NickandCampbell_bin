@@ -1,12 +1,15 @@
-CREATE TABLE IF NOT EXISTS `customers` (
-  `cid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `users` (
+  `uid` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'user id',
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `salt` varchar(50) NOT NULL,
+  `ref_rid` tinyint(4) NOT NULL COMMENT 'reference to roles_chart',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY `cid` (`cid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  PRIMARY KEY (`uid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 CREATE TABLE IF NOT EXISTS `shipping_types` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -67,18 +70,8 @@ CREATE TABLE IF NOT EXISTS `products` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 CREATE TABLE IF NOT EXISTS `sizing_chart` (
-  `size_id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `size_id` x NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`size_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
-
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `salt` varchar(50) NOT NULL,
-  `role` varchar(50) NOT NULL,
-  `date_created` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;

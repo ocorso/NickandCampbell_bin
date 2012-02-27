@@ -37,7 +37,7 @@ class Application_Form_Checkout extends Zend_Form
 		// Short filter name:
 		//$element->addFilter('Alnum');
 		
-		//3 in 1 package
+		//2 in 1 package
 		$filters 	= array('StringTrim', 'StringToLower');
 		
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
@@ -94,7 +94,7 @@ class Application_Form_Checkout extends Zend_Form
 		$email->setLabel('Email')
 			->setRequired(true)
 			->addValidator($validatorEmail)
-			->setFilters($filters);//todo: validate for email
+			->setFilters($filters);//todo: filter for email
 			
 		//address 1
 		$shAddr1			= new Zend_Form_Element_Text("addr1");

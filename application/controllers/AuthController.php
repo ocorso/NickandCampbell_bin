@@ -19,7 +19,7 @@ class AuthController extends Zend_Controller_Action
                     // We're authenticated! Redirect to the home page
                     $this->_helper->redirector('index', 'admin');
                 }
-            }
+            }//todo: make else
         }
         $this->view->form = $form;
     }
@@ -28,7 +28,7 @@ class AuthController extends Zend_Controller_Action
     {
         // Get our authentication adapter and check credentials
         $adapter = $this->_getAuthAdapter();
-        $adapter->setIdentity($values['username']); 
+        $adapter->setIdentity($values['email']); 
         $adapter->setCredential($values['password']);
 
         $auth = Zend_Auth::getInstance();
@@ -48,9 +48,9 @@ class AuthController extends Zend_Controller_Action
         $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
         
         $authAdapter->setTableName('users')
-            ->setIdentityColumn('username')
+            ->setIdentityColumn('email')
+     //       ->setCredentialTreatment('SHA1(CONCAT(?,salt))')
             ->setCredentialColumn('password');
-      //      ->setCredentialTreatment('SHA1(CONCAT(?,salt))');
             
         
         return $authAdapter;

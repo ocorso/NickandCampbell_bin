@@ -5,7 +5,9 @@ class Admin_IndexController extends Zend_Controller_Action
 
     public function init()
     {
-        	$view = $this->view;
+    	$layout = $this->_helper->layout();
+    	$layout->setLayout('admin');
+        $view = $this->view;
     	$view->headLink()->appendStylesheet('/css/admin-theme/jquery-ui-1.8.16.custom.css');
 	 	$view->headLink()->appendStylesheet('/css/admin-theme/dataTable.css');
 	 	$view->headLink()->appendStylesheet('/css/admin-theme/dataTable_jui.css');

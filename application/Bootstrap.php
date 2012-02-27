@@ -2,12 +2,55 @@
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
+	protected $_logger;
+	protected function _initLogging()
+	{
+		$this->bootstrap('frontController');
+		//       $this->frontController = $this->getResource('frontController');
+		$logger = new Zend_Log();
+	
+		$writer = 'production' == $this->getEnvironment() ?
+		new Zend_Log_Writer_Stream(APPLICATION_PATH . '/../data/logs/app.log') :
+		new Zend_Log_Writer_Firebug();
+		$logger->addWriter($writer);
+	
+	
+		$filter = new Zend_Log_Filter_Priority(Zend_Log::CRIT);
+		$logger->addFilter($filter);
+	
+	
+		$this->_logger = $logger;
+		Zend_Registry::set('log', $logger);
+	}
+	
 	protected function _initConfig(){
 		
 		Zend_Registry::set('config', new Zend_Config($this->getOptions()));
 		
 	}
-	
+    protected function _initSession(){
+    	Zend_Session::start();
+    	//print_r('session id: '.Zend_Session::getId());
+    }
+    
+	/**
+	* function autoloads the different modules
+	*/
+    protected function _initFrontModules() {
+    	
+ 			$this->_logger->info('Bootstrap ' . __METHOD__);
+    	
+		$front = Zend_Controller_Front::getInstance();
+		$moduleArr = array(
+		//	'admin'		=> APPLICATION_PATH.'/modules/admin/controllers',
+			'default'	=> APPLICATION_PATH.'/controllers'
+		);
+		$front->setControllerDirectory($moduleArr);
+		
+		//echo Zend_Controller_Front::getModuleControllerDirectoryName('admin');
+		
+
+    }
 	protected function _initDatabase()
     {
 		$config	= $this->getOptions();
@@ -28,15 +71,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
     	
         $front = Zend_Controller_Front::getInstance();
-		
         $baseUrl 	= isset ($_ENV["HTTPS"]) ? 'https://'.$_SERVER["HTTP_HOST"] : 'http://'.$_SERVER["HTTP_HOST"];
         $front->setBaseUrl($baseUrl);
     	
         $router = $front->getRouter();
-        $config = Zend_Registry::get('config', 'production');
-     //   print_r($this->getOptions());
-        print_r($config);
-  //      $router->addConfig($config['resources']['router'], 'routes');
+        $config = Zend_Registry::get('config');
+        
+        //oc: figure out how to use a module.
+        
+	// print_r($this);
+    // $config = $this->getOptions();
+    // print_r($config['resources']['router']);
+    // $router->addConfig($config, 'routes');
         
         // Add some routes
         $sitemapRoute	= new Zend_Controller_Router_Route(	'sitemap',
@@ -75,9 +121,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
         // Returns the router resource to bootstrap resource registry
         return $router;
-    }
-    protected function _initSession(){
-    	Zend_Session::start();
     }
     
     protected function _initPlaceholders()

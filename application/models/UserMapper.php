@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_CustomerMapper
+class Application_Model_UserMapper
 {
 	protected $_dbTable;
 	
@@ -17,45 +17,45 @@ class Application_Model_CustomerMapper
 	
 	public function getDbTable(){ 
 		if (null === $this->_dbTable){
-			$this->setDbTable('Application_Model_DbTable_Customer');
+			$this->setDbTable('Application_Model_DbTable_User');
 		}
 		return $this->_dbTable;
 	}//end function
 		
-	public function save(Application_Model_Customer $customer){
+	public function save(Application_Model_User $user){
 		
 		//oc: check by email
-		$custWithMatchingEmail	= $this->fetchAll(array('email'=>$customer->getEmail()));
+		$custWithMatchingEmail	= $this->fetchAll(array('email'=>$user->getEmail()));
 		$exists = count($custWithMatchingEmail) > 0 ? true : false;
 		
 		//oc: get new info from form data
-		$data 	= array(	'first_name'	=> $customer->getFname(),
-							'last_name'		=> $customer->getLname(),
-							'email'			=> $customer->getEmail(),
-							'phone'			=> $customer->getPhone()
+		$data 	= array(	'first_name'	=> $user->getFname(),
+							'last_name'		=> $user->getLname(),
+							'email'			=> $user->getEmail(),
+							'phone'			=> $user->getPhone()
 
 		);
 		
 		//oc: this checking seems to work.
 		if(!$exists){
-			echo "insert cust\n";
+			echo "insert user\n";
 			$cid = $this->getDbTable()->insert($data);
 		}else {
-			echo "update cust\n";
-			$cid = $custWithMatchingEmail[0]['cid'];
+			echo "update user\n";
+			$cid = $custWithMatchingEmail[0]['uid'];
 			$updateResults = $this->getDbTable()->update($data, array('cid = ?'=> $cid));
 		}//endif
 		return $cid;
 		
 	}//end function
 
-	public function find($cid, Application_Model_Customer $customer){
-		$result		= $this->getDbTable()->find($cid);
+	public function find($cid, Application_Model_User $user){
+		$result		= $this->getDbTable()->find($uid);
 		if(0 == count($result)){
 			return;
 		}
 		$row 		= $result->current();
-		$customer->setOptions($row->toArray());
+		$user->setOptions($row->toArray());
 	}
 	public function fetchAll(array $options = null){
 		$db 	= $this->getDbTable();

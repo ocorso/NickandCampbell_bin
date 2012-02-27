@@ -8,7 +8,8 @@
             <?php endforeach;?>
 			data-Name="<?= $this->product->name; ?>"
 			data-Price="<?= $this->product->price; ?>"
-			data-Pretty="<?= $this->product->pretty; ?>">
+			data-Pretty="<?= $this->product->pretty; ?>"
+			data-CartType="<?= count($this->sizeNameToPid) == 0 ? "wishlist":"real"; ?>">
 	</div>
 	
 	<h1><?= $this->product->name; ?></h1>
@@ -18,7 +19,7 @@
 	
 	<?php if( count($this->sizeNameToPid) == 0) echo "Sold Out";
 	else {
-	 echo $this->form; ?>
+	 echo $this->addToCartForm; ?>
 	<div id="add_to_cart_form_extended">
 		<label>Price:</label><p>$<?= $this->product->price; ?></p>
 		<div class="checkout-btn btn">Checkout</div>

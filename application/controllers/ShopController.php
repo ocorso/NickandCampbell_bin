@@ -42,10 +42,10 @@ class ShopController extends Zend_Controller_Action
 			//add to cart form
 			$sizes				= $this->_sizes;
 			$sObj				= ORed_Form_Utils::getSizeOpts($products, $sizes);
-			$form				= new Application_Form_AddToCart(array('sizes'=>$sObj->sOpts));
+			$addToCartForm		= new Application_Form_AddToCart(array('sizes'=>$sObj->sOpts));
 			
 			//load up view
-			$this->view->form 				= $form;
+			$this->view->addToCartForm		= $addToCartForm;
 			$this->view->product 			= $pStyle[0];
 			$this->view->href				= 'shop/'.$pStyle[0]->gender.'/'.$pStyle[0]->category.'/'.$pStyle[0]->pretty;
 			$this->view->lrgImgSrc			= 'img/shop/'.$pStyle[0]->gender.'/'.$pStyle[0]->category.'/large/style-'.$pStyle[0]->sid.'.jpg';

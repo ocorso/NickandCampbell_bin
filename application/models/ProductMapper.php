@@ -99,21 +99,7 @@ class Application_Model_ProductMapper
 			return;
 		}//endif
 		$row 	= $result->current();
-		$product->setId($row->id)
-				->setSid($row->sid)
-				->setName($row->name)
-				->setPretty($row->pretty)
-				->setDescription1($row->description1)
-				->setDescription2($row->description2)
-				->setCampaign($row->campaign)
-				->setLabel($row->label)
-				->setSize($row->size)
-				->setColor($row->color)
-				->setCategory($row->category)
-				->setGender($row->gender)
-				->setWeight($row->weight)
-				->setPrice($row->price)
-				->setSku($row->sku);
+		$product->setOptions($row->toArray());
 				
 	}//endfunction
 	
@@ -128,29 +114,15 @@ class Application_Model_ProductMapper
 		
 		$db			= Zend_Registry::get('db');
 		$select		= $db->select();
+		
+		//oc: forget about db-table objects i guess;
 		$select->from(array('p'=>'products'))
 			->join(array('s'=>'product_styles'), 'p.ref_sid = s.sid');
 		$result = $db->fetchAll($select);
 		return($result);
-// 		$products 	= $this->getProductsTable()->fetchAll();
-// 		$entries1	= array();
-// 		foreach($products as $row){
-// 			$entry 	= new Application_Model_Product();
-// 			$entry->setOptions($row->toArray());
-// 			$entries1[]	= $entry; 
-// 		}// endforeach
-		
-// 		$productStyles = $this->getProductStylesTable()->fetchAll();
-// 		$entries2	= array();
-// 		foreach($productStyles as $row){
-// 			$entry 	= new Application_Model_ProductStyle();
-// 			$entry->setOptions($row->toArray());
-// 			$entries2[]	= $entry; 
-// 		}// endforeach
-		
-// 		return array('products'=>$entries1, 'productStyles'=>$entries2);
-		
+
 	}//end function
+
 	public function fetchAllWithOptions($opts, $inStock = true){
 		
 		//todo construct entries from 2 tables.

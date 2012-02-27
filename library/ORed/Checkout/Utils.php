@@ -9,11 +9,12 @@ class ORed_Checkout_Utils{
 	* @param  $shipping1 	- the first subform on the checkout
 	* @return $c			- the first class citizen Customer object
 	* */
-	public function createCustomer($shipping1){
-		$c 			= new Application_Model_Customer();
+	public function createUser($shipping1){
+		$c 			= new Application_Model_User();
 		$options	= array('fname'=>$shipping1['cust_first_name'],
 							'lname'=>$shipping1['cust_last_name'],
 							'email'=>$shipping1['cust_email'],
+							'password'=>Zend_Session::getId(),
 							'phone'=>$shipping1['cust_phone']
 			);
 		$c->setOptions($options);

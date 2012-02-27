@@ -6,11 +6,11 @@ class Application_Form_Register extends Zend_Form
     public function init()
     {
        	$user 	= new Zend_Form_SubForm();
-       	$usn 	= new Zend_Form_Element_Text('username');
+       	$usn 	= new Zend_Form_Element_Text('email');
     	$usn->setRequired(true)
-    		->setLabel('Username')
+    		->setLabel('Email')
     		->setFilters(array('StringTrim','StringToLower'))
-    		->addValidator(	'Alnum',
+    		->addValidator(	'Email',
     						array('Regex', false, array('/^[a-z][a-z0-9]{2,}$/'))
     						);
        	$pwd 	= new Zend_Form_Element_Text('password');
