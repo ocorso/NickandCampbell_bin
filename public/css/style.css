@@ -634,7 +634,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	margin: 1px;
 }
 .subtotal{
-	color: #00fcff;	
+	color: #ddd;	
 	font-family: 'VIPRegular';
 	text-transform: lowercase;	
 	font-size: 20px;
