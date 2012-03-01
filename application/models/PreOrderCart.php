@@ -7,7 +7,7 @@ class Application_Model_PreOrderCart
 	protected $_discount;
 	protected $_promo;
 	protected $_ref_pid;
-	protected $_ref_cid;
+	protected $_ref_uid;
 	protected $_quantity;
 	protected $_created_at;
 
@@ -31,7 +31,7 @@ class Application_Model_PreOrderCart
 		$method = 'get'.$name;
 	
 		if(('mapper' == $name)|| !method_exists($this, $method)){
-			throw new Exeception('invalid preorder_cart property');
+			throw new Exception('invalid preorder_cart property');
 		}//end if
 			
 		return $this->$method();
@@ -49,6 +49,18 @@ class Application_Model_PreOrderCart
 	
 	}//end function
 	
+	public function toArray(){
+		$a = array( 'sesh_id'	=> $this->_sesh_id,
+			 		'type'		=> $this->_type,
+					'discount'	=> $this->_discount,
+					'promo'		=> $this->_promo,
+					'ref_pid'	=> $this->_ref_pid,
+					'ref_uid'	=> $this->_ref_uid,
+				    'quantity'	=> $this->_quantity,
+				    'created_at'=> $this->_created_at
+				   );
+		return $a;
+	}
 	// =================================================
 	// ================ Getters / Setters
 	// =================================================
@@ -67,8 +79,8 @@ class Application_Model_PreOrderCart
 	public function getRef_pid(){ return $this->_ref_pid;}
 	public function setRef_pid($d){ $this->_ref_pid = $d; return $this;}
 	
-	public function getRef_cid(){ return $this->_ref_cid;}
-	public function setRef_cid($d){ $this->_ref_cid = $d; return $this;}
+	public function getRef_uid(){ return $this->_ref_uid;}
+	public function setRef_uid($d){ $this->_ref_uid = $d; return $this;}
 	
 	public function getQuantity(){ return $this->_quantity;}
 	public function setQuantity($d){ $this->_quantity = $d; return $this;}

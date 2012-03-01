@@ -18,11 +18,26 @@ class AuthController extends Zend_Controller_Action
         if ($request->isPost()) {
             if ($form->isValid($request->getPost())) {
                 if ($this->_process($form->getValues())) {
-                    // We're authenticated! Redirect to the home page
-                    ORed_ShoppingCart_Utils::renewSession();
                     
-                    //oc: todo: determine where to redirect based on role (ref_rid)
-                    $this->_helper->redirector('index', 'admin');
+                	// We're authenticated!
+                	
+
+                	ORed_ShoppingCart_Utils::renewSession();
+                    
+                    
+                	// Redirect to the appropriate place
+                	$auth 		= Zend_Auth::getInstance();
+                	$whoAmI 	= $auth->getIdentity();
+                	
+                	$db			= Zend_Registry::get("db");
+                	$whoCouldIBe= $db->fetchAll($db->select()->from("roles_chart"));
+print_r($whoCouldIBe);
+                	//oc: todo: determine where to redirect based on role (ref_rid)
+                    switch($whoAmI->ref_rid){
+                    	case $whoCouldIBe[0]['rid'] : echo "yeah"
+                    	default : 
+	                   //$this->_helper->redirector('index', 'admin');
+                    }
                 	$this->view->isIncorrect = false;
                 }else 
                 	$this->view->isIncorrect = true;

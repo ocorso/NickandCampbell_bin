@@ -14,7 +14,7 @@ class Application_Form_Login extends Zend_Form
             'filters'    => $filters,
             'validators' => array($validatorEmail),
             'required'   => true,
-            'label'      => 'Email:',
+            'label'      => 'Email:'
         ));
 
         $this->addElement('password', 'password', array(
