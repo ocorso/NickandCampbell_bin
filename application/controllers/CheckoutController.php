@@ -207,6 +207,10 @@ class CheckoutController extends Zend_Controller_Action
 		//++++++++++++++++++++++	CUSTOMER	 +++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//2. save cust data
+		//oc: todo: put password from identity into $values
+		$auth 		= Zend_Auth::getInstance();
+		$whoAmI 	= $auth->getIdentity();
+		
 		$user 		= ORed_Checkout_Utils::createUser($values['shipping1']);
 		$uid		= $uModel->save($user);
 		echo "uid: ".$uid."\n";

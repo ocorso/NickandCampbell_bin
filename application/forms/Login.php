@@ -10,7 +10,7 @@ class Application_Form_Login extends Zend_Form
         $this->setName("form_login");
         $this->setMethod('post');
              
-        $this->addElement('text', 'email', array(
+        $this->addElement('text', 'cust_email', array(
             'filters'    => $filters,
             'validators' => array($validatorEmail),
             'required'   => true,

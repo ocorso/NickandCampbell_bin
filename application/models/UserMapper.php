@@ -32,7 +32,9 @@ class Application_Model_UserMapper
 		$data 	= array(	'first_name'	=> $user->getFname(),
 							'last_name'		=> $user->getLname(),
 							'email'			=> $user->getEmail(),
-							'phone'			=> $user->getPhone()
+							'phone'			=> $user->getPhone(),
+							'password'		=> $user->getPassword(),
+							'ref_rid'		=> $user->getRef_rid()
 
 		);
 		

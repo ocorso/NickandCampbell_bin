@@ -12,9 +12,9 @@ class Zend_View_Helper_LoggedInAs extends Zend_View_Helper_Abstract
             return 'Welcome ' . $fname .  '. <a href="'.$logoutUrl.'">Logout</a>';
         } 
 
-        $request = Zend_Controller_Front::getInstance()->getRequest();
+        $request 	= Zend_Controller_Front::getInstance()->getRequest();
         $controller = $request->getControllerName();
-        $action = $request->getActionName();
+        $action 	= $request->getActionName();
         if($controller == 'auth' && $action == 'index') {
             return 'Login';
         }

@@ -6,16 +6,19 @@ class ORed_Checkout_Utils{
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	/**
 	* Create Customer Model using form data from checkout
-	* @param  $shipping1 	- the first subform on the checkout
+	* @param  $data 	- the first subform on the checkout
 	* @return $c			- the first class citizen Customer object
 	* */
-	public function createUser($shipping1){
+	public function createUser($data){
 		$c 			= new Application_Model_User();
-		$options	= array('fname'=>$shipping1['cust_first_name'],
-							'lname'=>$shipping1['cust_last_name'],
-							'email'=>$shipping1['cust_email'],
-							'password'=>Zend_Session::getId(),
-							'phone'=>$shipping1['cust_phone']
+		$pwd		= isset($data['password']) ? $data['password'] : Zend_Session::getId();
+		
+		$options	= array('fname'=>$data['cust_first_name'],
+							'lname'=>$data['cust_last_name'],
+							'email'=>$data['cust_email'],
+							'password'=>$pwd,
+							'phone'=>$data['cust_phone'],
+							'ref_rid'=>2
 			);
 		$c->setOptions($options);
 		return $c;
@@ -23,18 +26,18 @@ class ORed_Checkout_Utils{
 	
 	/**
 	* Create ShippingAddress Model using form data from checkout
-	* @param  $shipping1 	- the first subform on the checkout
+	* @param  $data 	- the first subform on the checkout
 	* @return $sh			- the first class citizen Customer object
 	* */
-	public function createShippingAddress($cid, $shipping1){
+	public function createShippingAddress($cid, $data){
 		$sh			= new Application_Model_ShippingAddress();
 		$options	= array('ref_cid'=>$cid,
-							'address1'=>$shipping1['addr1'],
-							'address2'=>$shipping1['addr2'],
-							'city'=>$shipping1['city'],
-							'state'=>$shipping1['state'],
-							'zip'=>$shipping1['zip'],
-							'country'=>$shipping1['country']
+							'address1'=>$data['addr1'],
+							'address2'=>$data['addr2'],
+							'city'=>$data['city'],
+							'state'=>$data['state'],
+							'zip'=>$data['zip'],
+							'country'=>$data['country']
 			);
 		$sh->setOptions($options);
 		return $sh;

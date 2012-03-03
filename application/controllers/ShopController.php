@@ -1,14 +1,15 @@
 <?php
 class ShopController extends Zend_Controller_Action
 {
-	//reference to product mapper in true O Red fashion
-	protected $_m;
-	protected $_sizes;
 
-	
-    protected $_redirector 		= null;
-	protected $_deeplinkBase	= "/#/shop/";
-	
+    protected $_m = null;
+
+    protected $_sizes = null;
+
+    protected $_redirector = null;
+
+    protected $_deeplinkBase = '/#/shop/';
+
     public function init()
     {
     	
@@ -17,7 +18,6 @@ class ShopController extends Zend_Controller_Action
        	$this->_sizes 		= $sizeMapper->fetchAll();
        	$this->_redirector 	= $this->_helper->getHelper('Redirector');	
     }
-
 
     public function indexAction()
     {
@@ -74,7 +74,17 @@ class ShopController extends Zend_Controller_Action
 		$this->_redirector->gotoUrl($deeplink);						
         // action body
     }
+
+    public function accountAction()
+    {
+	    	$layout = $this->_helper->layout();
+	    	$layout->setLayout('admin');
+    }
+
+
 }
+
+
 
 
 
