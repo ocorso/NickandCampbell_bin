@@ -35,7 +35,6 @@
           <actionMethod actionName="index"/>
           <actionMethod actionName="mens"/>
           <actionMethod actionName="womens"/>
-          <actionMethod actionName="account"/>
         </controllerFile>
         <controllerFile controllerName="Learn">
           <actionMethod actionName="index"/>
@@ -57,6 +56,9 @@
           <actionMethod actionName="index"/>
         </controllerFile>
         <controllerFile controllerName="Order">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+        <controllerFile controllerName="Account">
           <actionMethod actionName="index"/>
         </controllerFile>
       </controllersDirectory>
@@ -258,6 +260,12 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Shop">
             <viewScriptFile forActionName="account"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="account"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Account">
+            <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

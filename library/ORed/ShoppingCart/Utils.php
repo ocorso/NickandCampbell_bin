@@ -28,13 +28,11 @@ class ORed_ShoppingCart_Utils{
 	public function add($item){
 		
 		$cMapper	= new Application_Model_CartMapper();
-		$uid		= "-1";
-		$auth = Zend_Auth::getInstance();
-		if ($auth->hasIdentity()) {
-			$identity 	= $auth->getIdentity();
-			//oc: refactor to email
-			$uid		= $identity->uid; 
-		}
+		
+		
+		$auth 		= Zend_Auth::getInstance();
+		$uid 		= $auth->hasIdentity()? $auth->getIdentity()->uid: -1; 
+
 		//oc: todo: discount and promo
 		$itemArr =	array(								
 			'sesh_id'	=> Zend_Session::getId(),
@@ -43,20 +41,17 @@ class ORed_ShoppingCart_Utils{
 			'ref_uid'	=>$uid,
 			'discount'	=>0,//todo: determine discount from join
 			'promo'		=>0,//todo: uhhhh..??
-	     // 'name'		=>$item['name'],
-	     // 'pretty'	=>$item['pretty'],
-	     //	'price'		=>$item['price'],
-		 //	'size'		=>$item['size'],
 		    'quantity'	=>$item['quantity']
 		);
 		$c = new Application_Model_PreOrderCart($itemArr);
+		print_r($c);
 		$cMapper->savePre($c);
 //		$cMapper->fetchAllWithOptions($item['cartType'], array('sesh_id'=>))
 	}
 	
 	public function renewSession(){
 		
-		$auth = Zend_Auth::getInstance();
+		$auth 		= Zend_Auth::getInstance();
 		$identity 	= $auth->getIdentity();
 		$uid		= $identity->uid; 
 		

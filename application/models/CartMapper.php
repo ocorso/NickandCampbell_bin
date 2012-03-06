@@ -29,7 +29,9 @@ class Application_Model_CartMapper
 //		oc: 1. check if ref_pid exists in any of the records that match the session_id
 		$records 	= $this->fetchAllWithOptions($c->getType(), array('sesh_id'=>$c->getSesh_id()));
 		$exists		= false;
+		print_r($records);
 		if (count($records)>0){
+			
 			foreach($records as $possibleMatch){
 				print_r($possibleMatch);
 				if ($possibleMatch->ref_pid == $c->getRef_pid()){
@@ -42,7 +44,7 @@ class Application_Model_CartMapper
 
 //		3. OR insert new cart item into PreOrderCart Table using $c
 		$db	= $this->getPreOTable();
-		if($exists){
+		if($exists){ 
 			$db->update($c->toArray());
 		}else{
 			$db->insert($c->toArray());
@@ -70,12 +72,23 @@ class Application_Model_CartMapper
 		if (isset($opts['sesh_id'])){
 			$select->where('sesh_id = ?', $opts['sesh_id']);
 		}
+		$records = $db->fetchAll($select);
+		return $records;
+		
 	}//end function 
 	
 	public function updateCartWithNewSession($uid, $sesh_id){
 		echo 'update with new sesh: '.$sesh_id;
 		
+		$cMappper = new Application_Model_CartMapper();
+		
 		// grab any shopping cart items under existing session
+		$recordsToUpdate 	= $this->fetchAllWithOptions('real', array('sesh_id'=>$sesh_id));
+		foreach($recordsToUpdate as $r){
+			$d = new Application_Model_PreOrderCart($r->toArray());
+			$d->setRef_uid($uid);
+			$cMappper->savePre($d);	
+		}
 		//put this uid in there
 		// grab any shopping cart items under this user
 		//put this session id in there

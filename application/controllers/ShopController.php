@@ -74,14 +74,6 @@ class ShopController extends Zend_Controller_Action
 		$this->_redirector->gotoUrl($deeplink);						
         // action body
     }
-
-    public function accountAction()
-    {
-	    	$layout = $this->_helper->layout();
-	    	$layout->setLayout('admin');
-    }
-
-
 }
 
 
