@@ -1,5 +1,6 @@
 //init global vars
 var mainController 				= {};//object to hold all deeplink data
+mainController.utils			= {};//just some utility stuff to help us on our dear way
 mainController.which_content 	= "";//overlay to show
 mainController.dlArr			= [];//array of deeplinks
 mainController.cart				= {};//cart object contains all stuff related to the cart :)
@@ -160,6 +161,7 @@ mainController.learnHandler = function(){
 	//show learn elements the way i want.
 	$('#s_learn').show('slow', function(){$('#s_learn .section-content').fadeIn('fast');});
 	
+	//window.setTimeout(mainController.utils.hideSidebar, 1000, true);
 	
 }//end function defaultHandler
 //********************************************************************
@@ -219,7 +221,7 @@ mainController.cart.close 		= function ($e){
 }//end function
 
 mainController.cart.onAJAXComplete	= function ($cart){
-	
+	log("cart.onAJAXComplete");
 	var subTotal 	= $cart.subTotal;
 	var items		= $cart.items;
 	log(items);
@@ -244,8 +246,8 @@ mainController.cart.onAJAXComplete	= function ($cart){
 }
 mainController.cart.itemFactory				= function ($i){
 	//log($i);	
-	var item 	= "<li class='item' data-Id='"+$i.id+"'>";
-	item	   += "<p>"+$i.name+"</p><p>"+$i.size+" x"+$i.quantity+" <span class='remove-item'>Remove</span>";
+	var item 	= "<li class='item' data-Pid='"+$i.pid+"'>";
+	item	   += "<p>"+$i.name+"</p><p>"+$i.size_name+" x"+$i.quantity+" <span class='remove-item'>Remove</span>";
 	item	   += "<span class='right'>$"+$i.price+"</span>";
 	item	   += "</p></li>";
 	return item
@@ -255,17 +257,35 @@ mainController.cart.removeItem				= function ($e){
 	log("remove: "+ item['id']);
 	
 	var url			= "shopping-cart/remove";
-	var data		= {itemToRemove: item['id']};
+	var data		= {itemToRemove: item['pid']};
 	var success 	= function ($d){ mainController.cart.onAJAXComplete($d);};
 	var datatype	= "json";
 		
 	$.post(url, data, success, datatype);
 }
+mainController.cart.handleQuantityClick		= function ($e){
+	var quantity = $(this).text();
+	log("quantity: "+quantity);
+	
+	//oc: todo: 
+	//1. change into input
+	//2. listen for enter or click off or change
+	//3. ajax update quantity
+	//4. replace subtotal 
+}
 mainController.cart.addHandlers				= function(){
 	
 	$('.remove-item').bind('click', mainController.cart.removeItem);
+	$('.quantity').bind('click', mainController.cart.handleQuantityClick);
 //	$('.checkout-btn').bind('click', function($e){	});
 
+}
+//*****************************************************
+//oc: Utils
+//*****************************************************
+mainController.utils.hideSidebar	= function(){
+	$('.sidebar').animate({opacity: 0.0}, function (){ $('.sidebar').css({'display':'none', 'opacity':0.0}); });
+	
 }
 //*****************************************************
 //oc: Resize

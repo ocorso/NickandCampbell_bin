@@ -3,10 +3,10 @@
 <?php else : ?>
 <ul>
 <?php foreach($this->cartObj->items as $item): ?>
-	<li class='item' data-Id="<?= $item['id']; ?>">
+	<li class='item' data-Pid="<?= $item['pid']; ?>">
 		<p><?= $item['name']; ?></p>
-		<p><?= $item['size']; ?> x<?= $item['quantity']; ?>
-			<span class='remove-item'>Remove</span>
+		<p><?= $item['size_name']; ?> <span class="quantity" >x<?= $item['quantity']; ?></span>
+			<span class='remove-item'remove</span>
 			<span class='right'><?= $item['price']; ?></span>
 		</p>
 	</li>

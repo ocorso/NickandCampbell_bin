@@ -19,64 +19,23 @@ class ShoppingCartController extends Zend_Controller_Action
     public function addAction()
     {
         //oc
-        //1. gather stuff we need
-        $cart 		= new Zend_Session_Namespace('cart');
-        $itemToAdd 	= $this->getRequest()->getParam('itemToAdd');
-        
-       
-        $newCart	= ORed_ShoppingCart_Utils::add($itemToAdd);
-        
-        
-        	//loop through to see if this product is already in the cart
-        	//if yes, update quantity
-        	//if no, add it to the cart
-        if (isset($cart->items) && count($cart->items) !=0) {
-        	$i = -1;//index we found id at
-        	foreach ($cart->items as $key=>$item){
-        		if ($cart->items[$key]['id'] == $itemToAdd['id']) $i = $key;
-        	}//end for each
-        	if($i != -1) $cart->items[$i]['quantity'] += $itemToAdd['quantity'];
-        	else{
-        //2. put new product in there
-        		$cart->items[] = array(	'id'		=>$itemToAdd['id'],
-        		   					'name'		=>$itemToAdd['name'],
-        		   					'pretty'	=>$itemToAdd['pretty'],
-        		   					'price'		=>$itemToAdd['price'],
-        		    				'quantity'	=>$itemToAdd['quantity'],
-        		    				'size'		=>$itemToAdd['size']
-        		);		
-        	}//endif 
-            			
-        } else {
-        	$cart->items = array(	array(	'id'		=>$itemToAdd['id'],
-        		    						'name'		=>$itemToAdd['name'],
-        		    						'pretty'	=>$itemToAdd['pretty'],
-        		    						'price'		=>$itemToAdd['price'],
-        		    						'quantity'	=>$itemToAdd['quantity'],
-        		    						'size'		=>$itemToAdd['size'])
-        	); // first time
-       }//endif
-        				 
-        			
-       $this->view->json	= json_encode(ORed_ShoppingCart_Utils::getCart());
-       //4. grab a beer, you're almost there.
-//       $this->view->json	= json_encode($newCart);
+        //1. gather stuff we need, add item, calc subtotal, feed it to view.
+        $itemToAdd 				= $this->getRequest()->getParam('itemToAdd');
+        $cart4View				= new stdClass();
+		$cart4View->items		= ORed_ShoppingCart_Utils::add($itemToAdd); 
+        $cart4View->subTotal 	= ORed_ShoppingCart_Utils::calcSubTotal($cart4View->items);
+       	$this->view->json		= json_encode($cart4View);
        //cheers!
     }
 
     public function removeAction()
     {
 
-        $itemToRemove = $this->getRequest()->getParam('itemToRemove');
-        $cart 		= new Zend_Session_Namespace('cart');
-        foreach ($cart->items as $key => $item){
-        	
-        	if ($item['id'] == $itemToRemove) {
-        		unset($cart->items[$key]);
-				$cart->items = array_values($cart->items);        		
-        	}
-        }
-        $this->view->json	= json_encode(ORed_ShoppingCart_Utils::getCart());
+        $itemToRemove 			= $this->getRequest()->getParam('itemToRemove');
+        $cart4View				= new stdClass();
+        $cart4View->items		= ORed_ShoppingCart_Utils::remove($itemToRemove);
+        $cart4View->subTotal 	= ORed_ShoppingCart_Utils::calcSubTotal($cart4View->items);
+        $this->view->json		= json_encode($cart4View);
         
     }
 

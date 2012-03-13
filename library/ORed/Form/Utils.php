@@ -1,4 +1,5 @@
 <?php
+
 class ORed_Form_Utils{
 	
 	/**
@@ -23,10 +24,10 @@ class ORed_Form_Utils{
 		
 		//loop through what's already in the array of sizes
 		foreach ($products as $p){
-			if (!array_key_exists($sizes[$p->getRef_size()]['name'], $sOpts) && $p->getSku() > 0) {
+			if (!array_key_exists($sizes[$p->getRef_size()]['size_name'], $sOpts) && $p->getSku() > 0) {
 				//if its not there add it
-				$sOpts[] 	= $sizes[$p->getRef_size()]['name'];
-				$sizeNameToPid[$sizes[$p->getRef_size()]['name']] = $p->getPid();
+				$sOpts[] 	= $sizes[$p->getRef_size()]['size_name'];
+				$sizeNameToPid[$sizes[$p->getRef_size()]['size_name']] = $p->getPid();
 			}
 		}
 		$returnObj 					= new stdClass();
@@ -37,8 +38,10 @@ class ORed_Form_Utils{
 	}//end function 
 	
 	public function getShippingOpts(){
+		//oc: todo: create a good array of options
 		$pricesById = ORed_Checkout_Utils::calcShipping();
-		return array(2=>	"Express Mail 5-7 Business Days $4.95",	
+		return array(			
+								1=>"Express Mail 5-7 Business Days $4.95",	
 								4=>"Priority Mail 3-4 Business Days $6.95",
 								9=>"First Class 1-2 Business Days $10.95"
 		);

@@ -1,4 +1,9 @@
 <?php
+/**
+ * This class contains utility functions related to the shopping cart ...
+ * @author Owen Corso
+ *
+ */
 class ORed_ShoppingCart_Utils{
 	
 	/**
@@ -9,20 +14,13 @@ class ORed_ShoppingCart_Utils{
 	* */
 	public function getCart()
 	{
-		//get cart
-		$cart = new Zend_Session_Namespace('cart');
-		 
-		//calc cost of all items in the cart
-		$subTotal 	= 0;
-		foreach ($cart->items as $item){
-			$subTotal += (int) $item['quantity']* (float)$item['price'];
-		}
-			
-		//3. return json so JS can populate shopping cart
-		$cartObj 			= new stdClass();
-		$cartObj->subTotal 	= number_format($subTotal, 2);
-		$cartObj->items		= $cart->items;
-		return $cartObj;
+
+		//oc: fetch cart for display
+		$cMapper				= new Application_Model_CartMapper();
+		$cart4View				= new stdClass();
+		$cart4View->items		= $cMapper->fetchCartForDisplay();
+		$cart4View->subTotal 	= ORed_ShoppingCart_Utils::calcSubTotal($cart4View->items);
+		return	$cart4View;
 	}
 	
 	public function add($item){
@@ -44,9 +42,33 @@ class ORed_ShoppingCart_Utils{
 		    'quantity'	=>$item['quantity']
 		);
 		$c = new Application_Model_PreOrderCart($itemArr);
-		print_r($c);
 		$cMapper->savePre($c);
-//		$cMapper->fetchAllWithOptions($item['cartType'], array('sesh_id'=>))
+//		$items = $cMapper->fetchAllWithOptions($item['cart_type'], array('sesh_id'=>Zend_Session::getId()));
+		$items = $cMapper->fetchCartForDisplay();
+		return $items;
+	}
+	
+	public function remove($pid){
+		$cMapper	= new Application_Model_CartMapper();
+		$cMapper->deleteCartByPid($pid);
+		$items		= $cMapper->fetchCartForDisplay();
+		return $items;
+	}
+	
+	
+	public function calcSubTotal($items, $shippingCost = 1.00){
+		
+		$subTotal = 0;
+		
+		foreach ($items as $i){
+			$i['price'] 	= $i['price'] * (1 - $i['discount']);//oc: yeah calc that discount!
+			$subTotal 	   += (float) $i['price'] * $i['quantity'];
+		}//endforeach
+		
+		//oc: todo: check to see if shipping is there.
+		$subTotal += $shippingCost;
+		
+		return $subTotal.".00";
 	}
 	
 	public function renewSession(){

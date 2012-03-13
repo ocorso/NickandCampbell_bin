@@ -30,7 +30,7 @@ class Application_Model_SizingChartMapper
 		$resultSet 	= $this->getDbTable()->fetchAll();
 		$entries	= array();
 		foreach($resultSet as $row){
-			$entries[$row->size_id]	= array('name'=> $row->name, 'description'=>$row->description);
+			$entries[$row->size_id]	= array('size_name'=> $row->size_name, 'description'=>$row->description);
 		}// endforeach
 		
 		return $entries;
@@ -41,7 +41,7 @@ class Application_Model_SizingChartMapper
 		$resultSet 	= $this->getDbTable()->fetchAll();
 		$entries	= array();
 		foreach($resultSet as $row){
-			$entries[$row->name]	= array('id'=> $row->size_id, 'description'=>$row->description);
+			$entries[$row->size_name]	= array('id'=> $row->size_id, 'description'=>$row->description);
 		}// endforeach
 		
 		return $entries;

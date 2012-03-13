@@ -32,6 +32,7 @@ jQuery(function($) {
 			function () {$(this).stop(true).animate({paddingLeft: '23px'}, {speed: 100, easing: 'easeOutBack'});}, 
 			function () {$(this).stop(true).animate({paddingLeft: '8px'}, {speed: 100, easing: 'easeOutBounce'});
 		});
+		
 		//flip toggle cart handle
 		$("#open_close").hover(
 				function () {

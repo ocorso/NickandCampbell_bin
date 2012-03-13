@@ -1,4 +1,4 @@
-<?php if($this->isValid):?>
-	<h1 style="font-size: 60px; margin-bottom: 20px;">thank <img src='/img/icons/list-style-img.png' alt= 'Nick and Campbell Cross'/> you </h1>
+<?php if($this->isGet):?>
+	<h1 style="font-size: 60px; margin-bottom: 20px;">thank + you </h1>
 	<h1>Order num: <?= $this->orderId; ?></h1>
 <?php else : echo $this->form; endif;?>

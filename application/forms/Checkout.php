@@ -16,7 +16,7 @@ class Application_Form_Checkout extends Zend_Form
 
 
     	 
-    	$this->setAction("/checkout/transaction-results")
+    	$this->setAction("/checkout")
 			->setMethod("post")
 			->setAttrib('id', 'checkout_form');
 		
@@ -148,6 +148,7 @@ class Application_Form_Checkout extends Zend_Form
 		$shType = new Zend_Form_Element_Radio("sh_type");
 		$shType->setLabel("Please select a type of shipping")
 			->setAttrib('class', 'co-shipping-type')
+			->setRequired(true)
 			->setMultiOptions(ORed_Form_Utils::getShippingOpts());
 		$shipping2->addElement($shType);
 		

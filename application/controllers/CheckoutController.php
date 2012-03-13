@@ -99,15 +99,18 @@ class CheckoutController extends Zend_Controller_Action
 
 
 		if($this->getRequest()->isPost()){
-			 
+			
 			if($form->isValid($request->getPost())){
-				//todo: make authorize.net call
+				//oc: todo: redirect
+				$this->_helper->redirector('transaction-results', 'checkout');
+			}else{
 				$form->populate($form->getUnfilteredValues());
-				print_r($form->getValues());
-			}//end if form is valid
+				$this->view->isValid = false;
+			}
 			
 		}//end if there's post data present
-
+		
+		$this->view->isGet = $request->isGet();
 		$this->view->form = $form;
 	}
 
@@ -136,15 +139,19 @@ class CheckoutController extends Zend_Controller_Action
 	public function transactionResultsAction()
 	{
 		
+		echo "<h1>Good Day Sir, lets see what happened.</h1>\n<br />";
+		
 		//disable layout
 		$layout = $this->_helper->layout();
 		$layout->disableLayout();
-		$orderId = 69;
-		 
-		// we don't have results go to checkout page
-		if (!$this->getRequest()->isPost() || !$this->_getForm()->isValid($_POST)) {
+		
+		//
+		$orderId 			= 69;
+		$this->view->isGet 	=  $this->getRequest()->isGet();
 
-		//	return $this->_forward('index');
+		// we don't have results go to checkout page
+		if ($this->getRequest()->isGet()) {
+			echo "temp results\n<br />";
 			$tempValues = array(
 				'subtotal'=> 35.00,
 				'shipping1'=>array(	'cust_first_name'=>'Owen',
@@ -175,14 +182,15 @@ class CheckoutController extends Zend_Controller_Action
 					)
 			
 			);
+			$values = $tempValues;
 		}//endif
 		else {
-			echo "form isn't post OR its not valid";
-//			return;
+			echo "real values";
+	
+			$form 		= $this->_getForm();
+			$formValues = $form->getValues();
+			$values = $formValues;
 		}
-
-		$form 		= $this->_getForm();
-		$formValues = $form->getValues();
 
 		//MODELS
 		$uModel		= new Application_Model_UserMapper();
@@ -190,12 +198,6 @@ class CheckoutController extends Zend_Controller_Action
 		$bModel		= new Application_Model_BillingAddressMapper();
 		//$oModel		= new Application_Model_OrderMapper();
 		
-		
-		//omg we have a valid form and it looks like this:
-		$values 	= $formValues['debug'] == 1 ? $formValues : $tempValues;
-//print_r($values);
-
-
 		
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	EMAIL	  ++++++++++++++++++++++++++++++++++++
@@ -213,7 +215,7 @@ class CheckoutController extends Zend_Controller_Action
 		
 		$user 		= ORed_Checkout_Utils::createUser($values['shipping1']);
 		$uid		= $uModel->save($user);
-		echo "uid: ".$uid."\n";
+		echo "uid: ".$uid."\n<br />";
 		$allCusts	= $uModel->fetchAll(array('email'=>$user->getEmail()));
 		//print_r($allCusts);
 		
@@ -223,7 +225,7 @@ class CheckoutController extends Zend_Controller_Action
 		//3. save shipping address
 		$sh			= ORed_Checkout_Utils::createShippingAddress($uid, $values['shipping1']);
 		$shid		= $shModel->save($sh);
-		echo "shid: ".$shid."\n";
+		echo "shid: ".$shid."\n<br />";
 		
 		//3.5 add shipping cost to 
 		$shType		= $values['shipping2']['sh_type'];
@@ -233,7 +235,7 @@ class CheckoutController extends Zend_Controller_Action
 		//4. save billing address
 		$b			= ORed_Checkout_Utils::createBillingAddress($uid, $values['billing1']);
 		$bid		= $bModel->save($b);
-		echo "bid: ".$bid."\n";
+		echo "bid: ".$bid."\n<br />";
 		
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	A	 +++++++++++++++++++++++++++++++++
@@ -243,10 +245,8 @@ class CheckoutController extends Zend_Controller_Action
 		$o			= ORed_Checkout_Utils::createOrder($uid,$shid,$bid,$shType);
 		//oc: todo: check internet connection before making call.
 		//$orderId = $this->_callAuthorizeDotNet($values);
-		//$this->view->orderId = $orderId;
-		$this->view->isValid = $orderId == 69 ? false : true;
-		
-		$this->view->form = $this->_getForm();
+		$this->view->orderId	= $orderId;
+		$this->view->form 		= $this->_getForm();
 	}
 
 

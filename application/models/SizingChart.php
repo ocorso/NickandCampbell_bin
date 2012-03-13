@@ -3,7 +3,7 @@
 class Application_Model_SizingChart
 {
 	protected $_size_id;
-	protected $_name;
+	protected $_size_name;
 	protected $_description;
 
 // =================================================
@@ -55,11 +55,11 @@ class Application_Model_SizingChart
 	public function getSizeid(){ return $this->_size_id;	}
 	
 	//name
-	public function setName($name){
-		$this->_name = (string) $name;
+	public function setSize_name($name){
+		$this->_size_name = (string) $name;
 		return $this;
 	}
-	public function getName(){ return $this->_name; }
+	public function get_Size_name(){ return $this->_size_name; }
 
 	//description
 	public function setDescription($d){

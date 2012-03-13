@@ -2,9 +2,9 @@
 
 class Application_Model_PreOrderCart
 {
+	protected $_id;
 	protected $_sesh_id;
 	protected $_type;
-	protected $_discount;
 	protected $_promo;
 	protected $_ref_pid;
 	protected $_ref_uid;
@@ -19,7 +19,7 @@ class Application_Model_PreOrderCart
 		$method = 'set'.$name;
 	
 		if(('mapper' == $name)|| !method_exists($this, $method)){
-			throw new Exeception('invalid preorder_cart property');
+			throw new Exeception($name.' is an invalid preorder_cart property');
 		}//end if
 	
 		$this->$method($value);
@@ -31,7 +31,7 @@ class Application_Model_PreOrderCart
 		$method = 'get'.$name;
 	
 		if(('mapper' == $name)|| !method_exists($this, $method)){
-			throw new Exception('invalid preorder_cart property');
+			throw new Exception($name.' is an invalid preorder_cart property');
 		}//end if
 			
 		return $this->$method();
@@ -50,9 +50,9 @@ class Application_Model_PreOrderCart
 	}//end function
 	
 	public function toArray(){
-		$a = array( 'sesh_id'	=> $this->_sesh_id,
+		$a = array( 'id'		=> $this->_id,
+					'sesh_id'	=> $this->_sesh_id,
 			 		'type'		=> $this->_type,
-					'discount'	=> $this->_discount,
 					'promo'		=> $this->_promo,
 					'ref_pid'	=> $this->_ref_pid,
 					'ref_uid'	=> $this->_ref_uid,
@@ -61,17 +61,18 @@ class Application_Model_PreOrderCart
 				   );
 		return $a;
 	}
+	
 	// =================================================
 	// ================ Getters / Setters
 	// =================================================
+	public function getId(){ return $this->_id; }
+	public function setId($id){ $this->_id = $id; return $this; }
+	
 	public function getSesh_id(){ return $this->_sesh_id;}
 	public function setSesh_id($d){ $this->_sesh_id = $d; return $this;}
 	
 	public function getType(){ return $this->_type; }
 	public function setType($d){ $this->_type = $d; return $this;}
-	
-	public function getDiscount(){ return $this->_discount;}
-	public function setDiscount($d){ $this->_discount = $d; return $this;}
 	
 	public function getPromo(){ return $this->_promo;}
 	public function setPromo($d){ $this->_promo = $d; return $this;}

@@ -4,20 +4,6 @@ class Application_Model_ProductMapper
 {
 	protected $_productStylesTable;
 	protected $_productsTable;
-	// Build this query:
-	//   SELECT p."product_id", p."product_name", l.*
-	//   FROM "products" AS p JOIN "line_items" AS l
-	//     ON p.product_id = l.product_id
-	
-// 	$select = $db->select()
-// 	->from(
-// 		array('p' => 'products'),
-//  		array('product_id', 'product_name')
-//  	);
-// // 	->join(
-// 		array('l' => 'line_items'),
-//  	   	'p.product_id = l.product_id'
-// 		);
 
 	public function setProductSylesTable($dbTable)
 	{
@@ -82,6 +68,7 @@ class Application_Model_ProductMapper
 			'gender'		=> $product->getGender(),
 			'weight'		=> $product->getWeight(),
 			'price'			=> $product->getPrice(),
+			'discount'		=> $product->getDiscount(),
 			'sku'			=> $product->getSku()
 		);
 		if (null === ($id = $product->getId())){

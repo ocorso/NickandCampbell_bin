@@ -31,7 +31,7 @@ class AuthController extends Zend_Controller_Action
     		case $whoCouldIBe[0]['rid'] :
     			$this->_helper->redirector('index', 'admin');
     			break;
-    		default : $this->_helper->redirector('account', 'shop');
+    		default : $this->_helper->redirector('index', 'account');
     	}//endswitch
     }
   

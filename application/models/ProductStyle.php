@@ -12,6 +12,7 @@ class Application_Model_ProductStyle
 	protected $_category;
 	protected $_gender;
 	protected $_price;
+	protected $_discount;
 
 	// =================================================
 	// ================ Workers
@@ -148,6 +149,13 @@ class Application_Model_ProductStyle
 	public function getPrice(){
 		return $this->_price;
 	}
-
+	
+	public function getDiscount(){
+		return $this->_discount;
+	}
+	public function setDiscount($d){
+		$this->_discount = $d; return $this;
+	}
+	
 }//end class
 

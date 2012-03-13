@@ -648,6 +648,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .remove-item:hover{
 	color: #d60000;	
 }
+.quantity{
+	color: #ddd;
+	border: dotted #333 1px;
+	cursor: pointer;
+}
 #cart_pulldown .checkout-btn{
 	color: #00c800;
 	position: absolute;

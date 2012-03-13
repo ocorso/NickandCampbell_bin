@@ -98,6 +98,7 @@
         <modelFile modelName="PreOrderCart"/>
         <modelFile modelName="SiteModel"/>
         <modelFile modelName="CartMapper"/>
+        <modelFile modelName="PostOrderCart"/>
       </modelsDirectory>
       <modulesDirectory>
         <moduleDirectory moduleName="Shop">

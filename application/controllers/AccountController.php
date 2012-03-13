@@ -12,6 +12,9 @@ class AccountController extends Zend_Controller_Action
     {
 		$layout = $this->_helper->layout();
 	    $layout->setLayout('admin');
+	    
+	    //oc: todo: construct page for customers to see.
+	    
     }
 
 
