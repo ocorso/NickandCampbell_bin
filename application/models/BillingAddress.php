@@ -21,7 +21,7 @@ class Application_Model_BillingAddress
 		$method = 'set'.$name;
 		
 		if(('mapper' == $name)|| !method_exists($this, $method)){
-			throw new Exeception('invalid billing address property');
+			throw new Exception('invalid billing address property');
 		}//end if
 
 		$this->$method($value);
@@ -33,7 +33,7 @@ class Application_Model_BillingAddress
 		$method = 'get'.$name;
 		
 		if(('mapper' == $name)|| !method_exists($this, $method)){
-			throw new Exeception('invalid billing address property');
+			throw new Exception('invalid billing address property');
 		}//end if
 			
 		return $this->$method();
@@ -50,7 +50,19 @@ class Application_Model_BillingAddress
 		}// endforeach
 		
 	}//end function 
-	
+
+	public function toArray(){
+		$a = array( 'id'		=> $this->_id,
+					'sesh_id'	=> $this->_sesh_id,
+			 		'type'		=> $this->_type,
+					'promo'		=> $this->_promo,
+					'ref_pid'	=> $this->_ref_pid,
+					'ref_uid'	=> $this->_ref_uid,
+				    'quantity'	=> $this->_quantity,
+				    'created_at'=> $this->_created_at
+				   );
+		return $a;
+	}
 // =================================================
 // ================ Getters / Setters
 // =================================================

@@ -19,7 +19,7 @@ class Application_Model_PreOrderCart
 		$method = 'set'.$name;
 	
 		if(('mapper' == $name)|| !method_exists($this, $method)){
-			throw new Exeception($name.' is an invalid preorder_cart property');
+			throw new Exception($name.' is an invalid preorder_cart property');
 		}//end if
 	
 		$this->$method($value);

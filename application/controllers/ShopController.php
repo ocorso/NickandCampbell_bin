@@ -27,7 +27,7 @@ class ShopController extends Zend_Controller_Action
     public function mensAction()
     {
 		$req		= $this->getRequest();
-		
+		print_r($req);
     	if($req->isXmlHttpRequest()){
     		
     		//disable layout
@@ -53,9 +53,9 @@ class ShopController extends Zend_Controller_Action
 			
     	} else {
     		//figure out where to redirect to
-			$deeplink 	= $this->_deeplinkBase." mens/";
+			$deeplink 	= $this->_deeplinkBase."mens/";
 			$deeplink  .= $req->getParam('category') ? $req->getParam('category')."/" : "";
-			$deeplink  .= $req->getParam('product') ? $req->getParam('product')."/" : "";
+			$deeplink  .= $req->getParam('pretty') ? $req->getParam('pretty')."/" : "";
 			
 			$this->_redirector->gotoUrl($deeplink);						
     		

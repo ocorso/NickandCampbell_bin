@@ -21,7 +21,7 @@ class Application_Model_ShippingAddress
 		$method = 'set'.$name;
 		
 		if(('mapper' == $name)|| !method_exists($this, $method)){
-			throw new Exeception('invalid shipping address property');
+			throw new Exception('invalid shipping address property');
 		}//end if
 
 		$this->$method($value);

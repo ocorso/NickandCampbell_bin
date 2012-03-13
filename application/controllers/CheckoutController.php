@@ -238,10 +238,20 @@ class CheckoutController extends Zend_Controller_Action
 		echo "bid: ".$bid."\n<br />";
 		
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		//++++++++++++++++++++++	A	 +++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++	AUTHORIZE	 +++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//5. save order
+		//	- upon successful auth, 
+		//		- save cart items into postorder table
+		//		- construct order, save new record in orders table
+		
+		//	- upon unsuccessful auth,
+		//		- reload checkout page, 
+		//		- provide meaningful error
+		//		- populate form with everything EXCEPT credit card info
+		//		- auto scroll over to the credit card info segment
 		//
+		
 		$o			= ORed_Checkout_Utils::createOrder($uid,$shid,$bid,$shType);
 		//oc: todo: check internet connection before making call.
 		//$orderId = $this->_callAuthorizeDotNet($values);
