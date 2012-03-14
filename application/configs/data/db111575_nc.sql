@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 13, 2012 at 10:28 AM
+-- Generation Time: Mar 14, 2012 at 10:24 AM
 -- Server version: 5.1.54
 -- PHP Version: 5.2.17
 
@@ -25,7 +25,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `billing_addresses`
 --
 
-DROP TABLE IF EXISTS `billing_addresses`;
 CREATE TABLE IF NOT EXISTS `billing_addresses` (
   `bid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'billing address id',
   `ref_cid` bigint(20) unsigned NOT NULL COMMENT 'ref to customer id',
@@ -35,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `billing_addresses` (
   `state` varchar(30) NOT NULL,
   `country` varchar(255) NOT NULL,
   `zip` varchar(10) NOT NULL,
-  `created_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`bid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
@@ -44,7 +43,37 @@ CREATE TABLE IF NOT EXISTS `billing_addresses` (
 --
 
 INSERT INTO `billing_addresses` (`bid`, `ref_cid`, `address1`, `address2`, `city`, `state`, `country`, `zip`, `created_at`) VALUES
-(8, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-03-13 10:27:36');
+(8, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-03-14 10:23:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE IF NOT EXISTS `orders` (
+  `oid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `anet_id` varchar(255) NOT NULL,
+  `total_price` decimal(14,2) NOT NULL,
+  `total_weight` decimal(14,3) NOT NULL,
+  `total_tax` decimal(14,2) NOT NULL,
+  `ref_cart_id` int(11) NOT NULL,
+  `ref_uid` int(11) NOT NULL,
+  `ref_bid` int(11) NOT NULL,
+  `ref_shid` int(11) NOT NULL,
+  `ref_shipping_type` int(11) NOT NULL,
+  `shipping_date` datetime NOT NULL,
+  `shipping_price` decimal(14,2) NOT NULL,
+  `tracking_num` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` set('incomplete sale','accepted payment') NOT NULL,
+  UNIQUE KEY `oid` (`oid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `orders`
+--
+
 
 -- --------------------------------------------------------
 
@@ -52,7 +81,6 @@ INSERT INTO `billing_addresses` (`bid`, `ref_cid`, `address1`, `address2`, `city
 -- Table structure for table `preorder_cart`
 --
 
-DROP TABLE IF EXISTS `preorder_cart`;
 CREATE TABLE IF NOT EXISTS `preorder_cart` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `sesh_id` varchar(30) NOT NULL,
@@ -79,7 +107,6 @@ INSERT INTO `preorder_cart` (`id`, `sesh_id`, `type`, `discount`, `promo`, `ref_
 -- Table structure for table `products`
 --
 
-DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `pid` tinyint(100) unsigned NOT NULL AUTO_INCREMENT,
   `ref_sid` mediumint(100) unsigned NOT NULL,
@@ -131,7 +158,6 @@ INSERT INTO `products` (`pid`, `ref_sid`, `ref_size`, `color`, `weight`, `sku`) 
 -- Table structure for table `product_styles`
 --
 
-DROP TABLE IF EXISTS `product_styles`;
 CREATE TABLE IF NOT EXISTS `product_styles` (
   `sid` mediumint(100) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -164,7 +190,6 @@ INSERT INTO `product_styles` (`sid`, `name`, `pretty`, `description1`, `descript
 -- Table structure for table `roles_chart`
 --
 
-DROP TABLE IF EXISTS `roles_chart`;
 CREATE TABLE IF NOT EXISTS `roles_chart` (
   `rid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'role id',
   `name` varchar(50) NOT NULL,
@@ -186,7 +211,6 @@ INSERT INTO `roles_chart` (`rid`, `name`, `description`) VALUES
 -- Table structure for table `shipping_addresses`
 --
 
-DROP TABLE IF EXISTS `shipping_addresses`;
 CREATE TABLE IF NOT EXISTS `shipping_addresses` (
   `shid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'shipping address id',
   `ref_cid` bigint(20) unsigned NOT NULL COMMENT 'ref to customer id',
@@ -196,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `shipping_addresses` (
   `state` varchar(30) NOT NULL,
   `country` varchar(255) NOT NULL,
   `zip` varchar(10) NOT NULL,
-  `created_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`shid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
@@ -205,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `shipping_addresses` (
 --
 
 INSERT INTO `shipping_addresses` (`shid`, `ref_cid`, `address1`, `address2`, `city`, `state`, `country`, `zip`, `created_at`) VALUES
-(16, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-03-13 10:27:36');
+(16, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-03-14 10:23:57');
 
 -- --------------------------------------------------------
 
@@ -213,7 +237,6 @@ INSERT INTO `shipping_addresses` (`shid`, `ref_cid`, `address1`, `address2`, `ci
 -- Table structure for table `shipping_types`
 --
 
-DROP TABLE IF EXISTS `shipping_types`;
 CREATE TABLE IF NOT EXISTS `shipping_types` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -234,7 +257,6 @@ CREATE TABLE IF NOT EXISTS `shipping_types` (
 -- Table structure for table `sizing_chart`
 --
 
-DROP TABLE IF EXISTS `sizing_chart`;
 CREATE TABLE IF NOT EXISTS `sizing_chart` (
   `size_id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `size_name` varchar(255) NOT NULL,
@@ -260,7 +282,6 @@ INSERT INTO `sizing_chart` (`size_id`, `size_name`, `description`) VALUES
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `uid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'user id',
   `first_name` varchar(255) NOT NULL,
