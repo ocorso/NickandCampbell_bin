@@ -3,10 +3,13 @@
 class Application_Model_PostOrderCart
 {
 	protected $_cart_id;
-	protected $_type;
-	protected $_promo;
+	protected $_ref_oid;
 	protected $_ref_pid;
 	protected $_ref_uid;
+	protected $_price_paid;
+	protected $_tax;
+	protected $_promo;
+	protected $_discount;
 	protected $_quantity;
 	protected $_created_at;
 

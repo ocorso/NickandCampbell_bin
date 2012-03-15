@@ -7,7 +7,6 @@ class Application_Model_Order
 	protected $_total_price;
 	protected $_total_weight;
 	protected $_total_tax;
-	protected $_ref_cart_id;
 	protected $_ref_uid;
 	protected $_ref_bid;
 	protected $_ref_shid;
@@ -62,7 +61,6 @@ class Application_Model_Order
 			 		'total_price'		=> $this->_total_price,
 					'total_weight'		=> $this->_total_weight,
 					'total_tax'			=> $this->_ref_pid,
-					'ref_cart_id'		=> $this->_ref_cart_id,
 					'ref_uid'			=> $this->_ref_uid,
 				    'ref_shid'			=> $this->_ref_shid,
 				    'ref_shipping_type'	=> $this->_ref_shipping_type,
@@ -92,10 +90,7 @@ class Application_Model_Order
 	
 	public function setTotal_tax($d){ $this->_total_tax = $d; return $this; }
 	public function getTotal_tax(){ return $this->_total_tax; }
-	
-	public function setCart_id($d){ $this->_ref_cart_id = $d; return $this; }
-	public function getCart_id(){ return $this->_ref_cart_id; }
-	
+
 	public function setRef_uid($d){ $this->_ref_uid = $d; return $this; }
 	public function getRef_uid(){ return $this->_ref_uid; }
 	
