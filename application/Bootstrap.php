@@ -147,6 +147,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$view->headScript()->appendFile("/js/site/campaignController.js");
 		
     }
+    protected function _initAuthorizeDotNet(){
+    	$opts = $this->getOptions();
+    	define("AUTHORIZENET_API_LOGIN_ID", $opts['anet']['api']);
+		define("AUTHORIZENET_TRANSACTION_KEY", $opts['anet']['transactionkey']);
+		
+		//oc: while in sandbox mode
+		define("AUTHORIZENET_SANDBOX", $opts['anet']['sandbox']);
+    }
 }//end bootstrap
 
 	

@@ -26,27 +26,30 @@ class CheckoutController extends Zend_Controller_Action
 	protected function _callAuthorizeDotNet($order)
 	{
 		// action body
-		print_r("hey there");
-		print_r($order);
+		//print_r($order);
 		$transaction_id = 69;
 	
-		require_once 'anet_php_sdk/AuthorizeNet.php';
-		define("AUTHORIZENET_API_LOGIN_ID", "94EtqH8y");
-		define("AUTHORIZENET_TRANSACTION_KEY", "64UyF8TFt7cUA22U");
-		define("AUTHORIZENET_SANDBOX", true);
+		require_once 'ANet/AuthorizeNet.php';
+		$fields				= array( 
+									'first_name'=> $order['shipping1']['cust_first_name'],
+									'last_name'=> $order['shipping1']['cust_last_name'],
+									'amount'=> $order['subtotal'],
+									'card_num'=> $order['billing2']['card_num'],
+									'exp_date'=> $order['billing2']['exp_date'],
+		
+								);
 		$sale = new AuthorizeNetAIM;
-	
-		$sale->amount 		= $order['subtotal'];
-		$sale->card_num 	= $order['billing2']['card_num'];
-		$sale->exp_date 	= $order['billing2']['exp_date'];
+		$sale->setFields($fields);
 		$response 			= $sale->authorizeAndCapture();
 	
 		if ($response->approved) {
 			$transaction_id = $response->transaction_id;
 			echo "trans id: ".$transaction_id;
 		}//end if
-		else echo "fail";
-	
+		else {
+			echo "fail<br/>";
+			print_r($response);
+		}
 		//todo: dump more meaningful stuff about the fail.
 	
 		return $transaction_id;
@@ -61,7 +64,7 @@ class CheckoutController extends Zend_Controller_Action
 		Kind regards,
 		Nick + Campbell';  
 		$mail->setFrom('info@nickandcampbell.com', 'Nick + Campbell');
-		$mail->addTo('owen.corso@yahoo.com', 'Owen Admin');
+		$mail->addTo('dev@nickandcampbell.com', 'Owen Admin');
 		$mail->setSubject("Order Submitted");
 		$mail->setBodyText($body);
 		// $mail->send();
@@ -119,9 +122,7 @@ class CheckoutController extends Zend_Controller_Action
 		// action body
 		print_r("hey there");
 		require_once 'ANet/AuthorizeNet.php';
-		define("AUTHORIZENET_API_LOGIN_ID", "94EtqH8y");
-		define("AUTHORIZENET_TRANSACTION_KEY", "64UyF8TFt7cUA22U");
-		define("AUTHORIZENET_SANDBOX", true);
+
 		$sale = new AuthorizeNetAIM();
 		$sale->amount 		= "25.99";
 		$sale->card_num 	= '6011000000000012';
@@ -138,8 +139,6 @@ class CheckoutController extends Zend_Controller_Action
 
 	public function transactionResultsAction()
 	{
-		
-		echo "<h1>Good Day Sir, lets see what happened.</h1>\n<br />";
 		
 		//disable layout
 		$layout = $this->_helper->layout();
@@ -176,9 +175,9 @@ class CheckoutController extends Zend_Controller_Action
 					),
 				'billing2'=>array(	'name_on_card'=>"Owen M Corso",
 									'card_type'=>'visa',
-									'card_num'=>12341234122341234,
+									'card_num'=>'6011000000000012',
 									'ccv'=>123,
-									'exp_date'=>122012
+									'exp_date'=>'04/15'
 					)
 			
 			);
@@ -189,7 +188,7 @@ class CheckoutController extends Zend_Controller_Action
 	
 			$form 		= $this->_getForm();
 			$formValues = $form->getValues();
-			$values = $formValues;
+			$values 	= $formValues;
 		}
 
 		//MODELS
@@ -215,7 +214,7 @@ class CheckoutController extends Zend_Controller_Action
 		
 		$user 		= ORed_Checkout_Utils::createUser($values['shipping1']);
 		$uid		= $uModel->save($user);
-		echo "uid: ".$uid."\n<br />";
+		echo "<br />uid: ".$uid."\n<br />";
 		$allCusts	= $uModel->fetchAll(array('email'=>$user->getEmail()));
 		//print_r($allCusts);
 		
@@ -225,7 +224,7 @@ class CheckoutController extends Zend_Controller_Action
 		//3. save shipping address
 		$sh			= ORed_Checkout_Utils::createShippingAddress($uid, $values['shipping1']);
 		$shid		= $shModel->save($sh);
-		echo "shid: ".$shid."\n<br />";
+		echo "<br />shid: ".$shid."\n<br />";
 		
 		//3.5 add shipping cost to 
 		$shType		= $values['shipping2']['sh_type'];
@@ -235,7 +234,7 @@ class CheckoutController extends Zend_Controller_Action
 		//4. save billing address
 		$b			= ORed_Checkout_Utils::createBillingAddress($uid, $values['billing1']);
 		$bid		= $bModel->save($b);
-		echo "bid: ".$bid."\n<br />";
+		echo "<br />bid: ".$bid."\n<br />";
 		
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	AUTHORIZE	 +++++++++++++++++++++++++++++++++
@@ -254,7 +253,7 @@ class CheckoutController extends Zend_Controller_Action
 		
 		$o			= ORed_Checkout_Utils::createOrder($uid,$shid,$bid,$shType);
 		//oc: todo: check internet connection before making call.
-		//$orderId = $this->_callAuthorizeDotNet($values);
+		$orderId = $this->_callAuthorizeDotNet($values);
 		$this->view->orderId	= $orderId;
 		$this->view->form 		= $this->_getForm();
 	}
