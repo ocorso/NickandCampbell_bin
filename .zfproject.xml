@@ -99,6 +99,8 @@
         <modelFile modelName="SiteModel"/>
         <modelFile modelName="CartMapper"/>
         <modelFile modelName="PostOrderCart"/>
+        <modelFile modelName="ShippingInfo"/>
+        <modelFile modelName="AbstractModel"/>
       </modelsDirectory>
       <modulesDirectory>
         <moduleDirectory moduleName="Shop">
