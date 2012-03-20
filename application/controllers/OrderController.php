@@ -15,8 +15,9 @@ class OrderController extends Zend_Controller_Action
     		$layout->disableLayout();
     	//spit out fake data for now
     		$tempData  = file_get_contents('orders.txt', FILE_USE_INCLUDE_PATH);
-			//echo $tempData;
-			$o = new Application_Model_Order();
+			echo $tempData;
+			$opts		= array('oid'=>69);
+			$o = new Application_Model_Order($opts);
 			$o->toArray();
     }
 

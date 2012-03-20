@@ -4,6 +4,8 @@ class CheckoutController extends Zend_Controller_Action
 {
 	protected $_form;
 
+	protected $_devEmail;
+	
 	// =================================================
 	// ================ Callable
 	// =================================================
@@ -55,19 +57,21 @@ class CheckoutController extends Zend_Controller_Action
 		return $transaction_id;
 	}
 	protected function _sendEmail($order){
+		
+		//oc: todo: config Zend_Mail in bootstrap.
+		
 		$mail = new Zend_Mail();
 		$body = 'Hi,
 		
 		An order has been submitted.
 		
-		
 		Kind regards,
 		Nick + Campbell';  
 		$mail->setFrom('info@nickandcampbell.com', 'Nick + Campbell');
-		$mail->addTo('dev@nickandcampbell.com', 'Owen Admin');
+		$mail->addTo($this->_devEmail, 'Owen Admin');
 		$mail->setSubject("Order Submitted");
 		$mail->setBodyText($body);
-		// $mail->send();
+		$mail->send();
 		//echo $body;
 	}
 	// =================================================
@@ -205,7 +209,7 @@ class CheckoutController extends Zend_Controller_Action
 		//$this->_sendEmail($values);
 		
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		//++++++++++++++++++++++	CUSTOMER	 +++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++	SAVE USER	 +++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//2. save cust data
 		//oc: todo: put password from identity into $values
@@ -219,7 +223,7 @@ class CheckoutController extends Zend_Controller_Action
 		//print_r($allCusts);
 		
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		//++++++++++++++++++++++	SHIPPING	 +++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++ CREATE SHIPPING TICKET	 +++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//3. save shipping address
 		$sh			= ORed_Checkout_Utils::createShippingAddress($uid, $values['shipping1']);

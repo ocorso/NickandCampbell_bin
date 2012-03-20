@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2012 at 10:48 AM
+-- Generation Time: Mar 20, 2012 at 09:31 AM
 -- Server version: 5.1.54
 -- PHP Version: 5.2.17
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `billing_addresses` (
 --
 
 INSERT INTO `billing_addresses` (`bid`, `ref_cid`, `address1`, `address2`, `city`, `state`, `country`, `zip`, `created_at`) VALUES
-(8, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-03-15 10:47:49');
+(8, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-03-19 21:59:51');
 
 -- --------------------------------------------------------
 
@@ -54,7 +54,7 @@ INSERT INTO `billing_addresses` (`bid`, `ref_cid`, `address1`, `address2`, `city
 CREATE TABLE IF NOT EXISTS `orders` (
   `oid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `anet_id` varchar(255) NOT NULL,
-  `total_price` decimal(14,2) NOT NULL,
+  `amount` decimal(14,2) NOT NULL,
   `total_weight` decimal(14,3) NOT NULL,
   `total_tax` decimal(14,2) NOT NULL,
   `ref_uid` int(11) NOT NULL,
@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `shipping_addresses` (
 --
 
 INSERT INTO `shipping_addresses` (`shid`, `ref_cid`, `address1`, `address2`, `city`, `state`, `country`, `zip`, `created_at`) VALUES
-(16, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-03-15 10:47:49');
+(16, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-03-19 21:59:51');
 
 -- --------------------------------------------------------
 
