@@ -27,7 +27,7 @@ class CheckoutController extends Zend_Controller_Action
 	// =================================================
 	protected function _callAuthorizeDotNet($order)
 	{
-		// action body
+		//todo: action body
 		//print_r($order);
 		$transaction_id = 69;
 	
@@ -71,7 +71,7 @@ class CheckoutController extends Zend_Controller_Action
 		$mail->addTo($this->_devEmail, 'Owen Admin');
 		$mail->setSubject("Order Submitted");
 		$mail->setBodyText($body);
-		$mail->send();
+		//$mail->send();
 		//echo $body;
 	}
 	// =================================================
@@ -226,9 +226,12 @@ class CheckoutController extends Zend_Controller_Action
 		//++++++++++++++++++++++ CREATE SHIPPING TICKET	 +++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//3. save shipping address
-		$sh			= ORed_Checkout_Utils::createShippingAddress($uid, $values['shipping1']);
-		$shid		= $shModel->save($sh);
-		echo "<br />shid: ".$shid."\n<br />";
+		$destination	= ORed_Checkout_Utils::createShippingAddress($uid, $values['shipping1']);
+		$destination_id	= $shModel->save($destination);
+		$origin_id		= 1;
+		
+print_r("destination id: $destination_id <br />");		
+		$shipping_id	= ORed_Shipping_LabelFactory::createInstance();
 		
 		//3.5 add shipping cost to 
 		$shType		= $values['shipping2']['sh_type'];

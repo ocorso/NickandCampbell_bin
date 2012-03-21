@@ -37,12 +37,8 @@ class Application_Model_Order extends Application_Model_AbstractModel
 	public function setRef_bid($d){ $this->_ref_bid = $d; return $this; }
 	public function getRef_bid(){ return $this->_ref_uid; }
 	
-	public function setRef_shipping_type($d){
-		$this->_ref_shipping_id = $d; return $this;
-	}
-	public function getRef_shipping_id(){
-		return $this->_ref_shipping_id;
-	}
+	public function setRef_shipping_id($d){	$this->_ref_shipping_id = $d; return $this;}
+	public function getRef_shipping_id(){ return $this->_ref_shipping_id; }
 	
 	public function setDescription($d){ $this->_description = $d; return $this; }
 	public function getDescription(){ return $this; }

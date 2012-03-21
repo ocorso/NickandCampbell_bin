@@ -82,6 +82,7 @@
           <dbTableFile dbTableName="ProductStyles"/>
           <dbTableFile dbTableName="PreorderCart"/>
           <dbTableFile dbTableName="PostorderCart"/>
+          <dbTableFile dbTableName="ShippingInfo"/>
         </dbTableDirectory>
         <modelFile modelName="ProductMapper"/>
         <modelFile modelName="Product"/>

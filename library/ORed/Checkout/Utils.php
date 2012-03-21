@@ -61,7 +61,7 @@ class ORed_Checkout_Utils{
 		return $b;
 	}//end function
 	
-	public function createOrder($cid, $shid, $bid, $shType){
+	public function createOrder($cid, $origin, $destination, $shType){
 		$o	= new Application_Model_Order();
 	}
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
