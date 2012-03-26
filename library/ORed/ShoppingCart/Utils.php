@@ -71,6 +71,13 @@ class ORed_ShoppingCart_Utils{
 		return $subTotal.".00";
 	}
 	
+	public function calcCartWeight($type){
+		$cMapper	= new Application_Model_CartMapper();
+		$weight 	= $cMapper->fetchCartWeight($type);
+
+		return $weight;
+	}
+	
 	public function renewSession(){
 		
 		$auth 		= Zend_Auth::getInstance();

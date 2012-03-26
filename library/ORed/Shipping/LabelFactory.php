@@ -1,7 +1,7 @@
 <?php
 class ORed_Shipping_LabelFactory{
 	
-	public function createInstance(){
+	public function create(){
 		
 		$opts	= array();
 		

@@ -25,22 +25,37 @@ class CheckoutController extends Zend_Controller_Action
 	// =================================================
 	// ================ Handlers
 	// =================================================
-	protected function _callAuthorizeDotNet($order)
+	protected function _callAuthorizeDotNet($data, $order)
 	{
 		//todo: action body
 		//print_r($order);
 		$transaction_id = 69;
 	
+		/*
+		 * x_type
+		 * 
+		 * AUTH_CAPTURE (default), 
+		 * AUTH_ONLY, 
+		 * CAPTURE_ONLY, 
+		 * CREDIT, 
+		 * PRIOR_AUTH_CAPTURE, 
+		 * VOID 
+		 */
 		require_once 'ANet/AuthorizeNet.php';
 		$fields				= array( 
-									'first_name'=> $order['shipping1']['cust_first_name'],
-									'last_name'=> $order['shipping1']['cust_last_name'],
-									'amount'=> $order['subtotal'],
-									'card_num'=> $order['billing2']['card_num'],
-									'exp_date'=> $order['billing2']['exp_date'],
+									'version'=>3.1,
+									'first_name'=> $data['shipping1']['cust_first_name'],
+									'last_name'=> $data['shipping1']['cust_last_name'],
+									'phone'=> $data['shipping1']['cust_phone'],
+									'email'=> $data['shipping1']['cust_email'],
+									'amount'=> $data['subtotal'],
+									'card_num'=> $data['billing2']['card_num'],
+									'exp_date'=> $data['billing2']['exp_date'],
+									'card_code'=>$data['billing2']['ccv'],
+									'invoice_num'=> $order->getOid(),
 		
 								);
-		$sale = new AuthorizeNetAIM;
+		$sale = new AuthorizeNetAIM();
 		$sale->setFields($fields);
 		$response 			= $sale->authorizeAndCapture();
 	
@@ -228,10 +243,10 @@ class CheckoutController extends Zend_Controller_Action
 		//3. save shipping address
 		$destination	= ORed_Checkout_Utils::createShippingAddress($uid, $values['shipping1']);
 		$destination_id	= $shModel->save($destination);
-		$origin_id		= 1;
+		$origin_id		= 1;//oc: the shippingAddress id of the N+C office
 		
 print_r("destination id: $destination_id <br />");		
-		$shipping_id	= ORed_Shipping_LabelFactory::createInstance();
+		$shippingInfo	= ORed_Shipping_LabelFactory::create();
 		
 		//3.5 add shipping cost to 
 		$shType		= $values['shipping2']['sh_type'];
@@ -260,7 +275,9 @@ print_r("destination id: $destination_id <br />");
 		
 		$o			= ORed_Checkout_Utils::createOrder($uid,$shid,$bid,$shType);
 		//oc: todo: check internet connection before making call.
-		$orderId = $this->_callAuthorizeDotNet($values);
+		
+		$orderId = $this->_callAuthorizeDotNet($values, $o);
+		
 		$this->view->orderId	= $orderId;
 		$this->view->form 		= $this->_getForm();
 	}

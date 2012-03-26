@@ -13,7 +13,21 @@ class Application_Model_CartMapper
 		if (null === $this->_postOTable) $this->setTable('Application_Model_DbTable_PostOTable');
 		return $this->_postOTable;
 	}
-	
+	protected function _getTableByType($type){
+			//oc: determine cart type
+		switch($type){
+			case Application_Model_SiteModel::$CART_TYPE_REAL:
+			case Application_Model_SiteModel::$CART_TYPE_WISHLIST:
+				 $db = $this->getPreOTable();
+				 break;
+			case Application_Model_SiteModel::$CART_TYPE_POST:
+				$db = $this->getPostOTable();
+				break;
+			default : throw new Exception("Which cart are you talkin' bout Willis?");
+			
+		}//end switch
+		return $db;
+	}
 	public function setTable($t){
 		
 		switch ($t){
@@ -51,21 +65,25 @@ class Application_Model_CartMapper
 			$db->insert($c->toArray());
 		}
 	}//end function 
-	
-	public function fetchAllWithOptions($cartType, array $opts){
+	public function fetchCartWeight($cartType){
+		$db 		= $this->_getTableByType($cartType)->getDefaultAdapter();
+		$select 	= $db->select();
 		
-		//oc: determine cart type
-		switch($cartType){
-			case Application_Model_SiteModel::$CART_TYPE_REAL:
-			case Application_Model_SiteModel::$CART_TYPE_WISHLIST:
-				 $db = $this->getPreOTable();
-				 break;
-			case Application_Model_SiteModel::$CART_TYPE_POST:
-				$db = $this->getPostOTable();
-				break;
-			default : throw new Exception("Which cart are you talkin' bout Willis?");
+		$select->from(array('c'=>'preorder_cart'))
+			->where("sesh_id =?", Zend_Session::getId())
+			->join(array('p'=>'products'), 'p.pid = ref_pid')
+			->join(array('s'=>'product_styles'),'p.ref_sid = s.sid');
 			
-		}//end switch
+		$results	= $db->fetchAll($select);
+		(float)$total 		= 0;
+		foreach ($results as $i){
+			$total += $i['quantity'] * $i['weight'];			
+		}
+		return $total;
+	}
+	public function fetchAllWithOptions($cartType, array $opts = null){
+		
+		$db	= $this->_getTableByType($cartType);
 	
 		//begin setting up query
 		$select = $db->select();

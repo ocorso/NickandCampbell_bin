@@ -30,6 +30,7 @@
           <actionMethod actionName="remove"/>
           <actionMethod actionName="empty"/>
           <actionMethod actionName="dump"/>
+          <actionMethod actionName="calcCartWeight"/>
         </controllerFile>
         <controllerFile controllerName="Shop">
           <actionMethod actionName="index"/>
@@ -270,6 +271,12 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Account">
             <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="calcCartWeight"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShoppingCart">
+            <viewScriptFile forActionName="calcCartWeight"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

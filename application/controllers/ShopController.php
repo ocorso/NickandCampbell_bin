@@ -27,7 +27,7 @@ class ShopController extends Zend_Controller_Action
     public function mensAction()
     {
 		$req		= $this->getRequest();
-		print_r($req);
+		//print_r($req);
     	if($req->isXmlHttpRequest()){
     		
     		//disable layout

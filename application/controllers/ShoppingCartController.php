@@ -2,6 +2,7 @@
 
 class ShoppingCartController extends Zend_Controller_Action
 {
+
     public function init()
     {
   //	print_r('session id: '.Zend_Session::getId());
@@ -49,6 +50,17 @@ class ShoppingCartController extends Zend_Controller_Action
 		print_r($this->_cart->items);
     }
 
+    public function calcCartWeightAction()
+    {
+    	$req	= $this->getRequest();
+    	$type	=  $req->getParam("type") ? $req->getParam("type") : Application_Model_SiteModel::$CART_TYPE_REAL;
+    	
+       $this->view->weight = ORed_ShoppingCart_Utils::calcCartWeight($type);
+
+    }
+
 
 }
+
+
 
