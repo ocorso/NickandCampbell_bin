@@ -88,4 +88,7 @@ class ORed_ShoppingCart_Utils{
 		$cMapper->updateCartWithNewSession($uid, Zend_Session::getId());
 	}
 	
+	public function movePreToPost(){
+		
+	}
 }

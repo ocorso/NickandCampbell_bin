@@ -64,11 +64,5 @@ class ORed_Checkout_Utils{
 	public function createOrder($cid, $origin, $destination, $shType){
 		$o	= new Application_Model_Order();
 	}
-	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	//++++++++++++++++++++++ SHIPPING CALCULATIONS +++++++++++++++++++++++++++
-	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	
-	public function calcShipping(){
-		return array (2=>4.95,4=>6.95,9=>10.95);
-	}//end function 
+
 }//end class

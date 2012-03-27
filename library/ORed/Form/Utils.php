@@ -37,13 +37,4 @@ class ORed_Form_Utils{
 		return $returnObj;
 	}//end function 
 	
-	public function getShippingOpts(){
-		//oc: todo: create a good array of options
-		$pricesById = ORed_Checkout_Utils::calcShipping();
-		return array(			
-								1=>"Express Mail 5-7 Business Days $4.95",	
-								4=>"Priority Mail 3-4 Business Days $6.95",
-								9=>"First Class 1-2 Business Days $10.95"
-		);
-	}
 }

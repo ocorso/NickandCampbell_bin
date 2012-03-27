@@ -149,7 +149,7 @@ class Application_Form_Checkout extends Zend_Form
 		$shType->setLabel("Please select a type of shipping")
 			->setAttrib('class', 'co-shipping-type')
 			->setRequired(true)
-			->setMultiOptions(ORed_Form_Utils::getShippingOpts());
+			->setMultiOptions(ORed_Shipping_LabelFactory::getShippingOpts());
 		$shipping2->addElement($shType);
 		
 // =================================================

@@ -25,7 +25,7 @@ class CheckoutController extends Zend_Controller_Action
 	// =================================================
 	// ================ Handlers
 	// =================================================
-	protected function _callAuthorizeDotNet($data, $order)
+	protected function _callAuthorizeDotNet($data, Application_Model_Order $order)
 	{
 		//todo: action body
 		//print_r($order);
@@ -216,7 +216,7 @@ class CheckoutController extends Zend_Controller_Action
 		$bModel		= new Application_Model_BillingAddressMapper();
 		//$oModel		= new Application_Model_OrderMapper();
 		
-		
+		print_r($values);
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	EMAIL	  ++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
