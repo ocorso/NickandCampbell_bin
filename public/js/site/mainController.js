@@ -292,7 +292,7 @@ mainController.utils.hideSidebar	= function(){
 //*****************************************************
 mainController.handleResize 	= function ($e){
 	var w		= window.innerWidth;
-	log('resize. window width: '+w);
+//	log('resize. window width: '+w);
 	if (w > 1024 + 96* 2){
 //		$('#prev_arrow').animate({left: "-96px"});
 //		$('#next_arrow').animate({right: "-96px"});
