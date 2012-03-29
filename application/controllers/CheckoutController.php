@@ -3,7 +3,7 @@
 class CheckoutController extends Zend_Controller_Action
 {
 	protected $_form;
-
+	protected $_chaChing = "cha-ching";
 	protected $_devEmail;
 	
 	// =================================================
@@ -21,7 +21,12 @@ class CheckoutController extends Zend_Controller_Action
 		$view->headScript()->appendFile("/js/site/checkout.js");
 		$this->_redirector = $this->_helper->getHelper('Redirector');
 	}
-
+	protected function _checkMessagesForValidForm(){
+		$messages	= $this->_helper->flashMessenger->getMessages();
+		if (count($messages)) {
+			foreach ($messages as $message){ if ($message == $this->_chaChing) return true;}
+		}//endif		
+	}//end function
 	// =================================================
 	// ================ Handlers
 	// =================================================
@@ -124,6 +129,7 @@ class CheckoutController extends Zend_Controller_Action
 			
 			if($form->isValid($request->getPost())){
 				//oc: todo: redirect
+				$this->_helper->flashMessenger->addMessage($this->_chaChing);
 				$this->_helper->redirector('transaction-results', 'checkout');
 			}else{
 				$form->populate($form->getUnfilteredValues());
@@ -158,7 +164,7 @@ class CheckoutController extends Zend_Controller_Action
 
 	public function transactionResultsAction()
 	{
-		
+		$this->_checkMessagesForValidForm();
 		//disable layout
 		$layout = $this->_helper->layout();
 		$layout->disableLayout();
@@ -168,7 +174,7 @@ class CheckoutController extends Zend_Controller_Action
 		$this->view->isGet 	=  $this->getRequest()->isGet();
 
 		// we don't have results go to checkout page
-		if ($this->getRequest()->isGet()) {
+		if (!$this->_checkMessagesForValidForm()) {
 			echo "temp results\n<br />";
 			$tempValues = array(
 				'subtotal'=> 35.00,
@@ -244,9 +250,13 @@ class CheckoutController extends Zend_Controller_Action
 		$destination	= ORed_Checkout_Utils::createShippingAddress($uid, $values['shipping1']);
 		$destination_id	= $shModel->save($destination);
 		$origin_id		= 1;//oc: the shippingAddress id of the N+C office
-		
+		$shippingLabelOpts	= array(
+									'origin'=>$origin_id,
+									'destination'=>$destination_id,
+									'shipping_price_paid'=>4.95
+		);
 print_r("destination id: $destination_id <br />");		
-		$shippingInfo	= ORed_Shipping_LabelFactory::create();
+		$shippingInfo	= ORed_Shipping_LabelFactory::create($shippingLabelOpts);
 		
 		//3.5 add shipping cost to 
 		$shType		= $values['shipping2']['sh_type'];

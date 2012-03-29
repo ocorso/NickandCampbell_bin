@@ -150,7 +150,10 @@ class Application_Form_Checkout extends Zend_Form
 			->setAttrib('class', 'co-shipping-type')
 			->setRequired(true)
 			->setMultiOptions(ORed_Shipping_LabelFactory::getShippingOpts());
-		$shipping2->addElement($shType);
+		
+		$shTypeToSubmit = new Zend_Form_Element_Hidden('speed');
+
+		$shipping2->addElements(array($shType, $shTypeToSubmit));
 		
 // =================================================
 // ============= Billing1 : Billing Address
