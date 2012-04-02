@@ -5,6 +5,9 @@ class ORed_Shipping_LabelFactory{
 		
 		
 		$s		= new Application_Model_ShippingInfo($opts);
+		$db 	= new Application_Model_DbTable_ShippingInfo();
+		$s->setShipping_id($db->insert($s->toArray()));
+		
 		return $s;
 	}
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

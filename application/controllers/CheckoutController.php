@@ -58,7 +58,7 @@ class CheckoutController extends Zend_Controller_Action
 									'exp_date'=> $data['billing2']['exp_date'],
 									'card_code'=>$data['billing2']['ccv'],
 									'invoice_num'=> $order->getOid(),
-		
+									
 								);
 		$sale = new AuthorizeNetAIM();
 		$sale->setFields($fields);
