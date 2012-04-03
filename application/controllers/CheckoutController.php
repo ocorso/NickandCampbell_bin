@@ -216,13 +216,13 @@ class CheckoutController extends Zend_Controller_Action
 			$values 	= $formValues;
 		}
 
-		//MODELS
-		$uModel		= new Application_Model_UserMapper();
-		$shModel	= new Application_Model_ShippingAddressMapper();
-		$bModel		= new Application_Model_BillingAddressMapper();
+		//Helpers
+		$coUtils		= new ORed_Checkout_Utils();
+		$shMachine		= new ORed_Shipping_LabelFactory();
+
 		//$oModel		= new Application_Model_OrderMapper();
 		
-		print_r($values);
+		//print_r($values);
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	EMAIL	  ++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -236,37 +236,24 @@ class CheckoutController extends Zend_Controller_Action
 		//oc: todo: put password from identity into $values
 		$auth 		= Zend_Auth::getInstance();
 		$whoAmI 	= $auth->getIdentity();
-		
-		$user 		= ORed_Checkout_Utils::createUser($values['shipping1']);
-		$uid		= $uModel->save($user);
-		echo "<br />uid: ".$uid."\n<br />";
-		$allCusts	= $uModel->fetchAll(array('email'=>$user->getEmail()));
-		//print_r($allCusts);
+		//oc: todo: use $whoAmiI as uid;
+		$uid 		= $coUtils->createUser($values['shipping1']);
+
 		
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++ CREATE SHIPPING TICKET	 +++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//3. save shipping address
-		$destination	= ORed_Checkout_Utils::createShippingAddress($uid, $values['shipping1']);
-		$destination_id	= $shModel->save($destination);
 		$origin_id		= 1;//oc: the shippingAddress id of the N+C office
-		$shippingLabelOpts	= array(
-									'origin'=>$origin_id,
-									'destination'=>$destination_id,
-									'shipping_price_paid'=>4.95
-		);
-print_r("destination id: $destination_id <br />");		
-		$shippingInfo	= ORed_Shipping_LabelFactory::create($shippingLabelOpts);
+		$destination_id	= $coUtils->createShippingAddress($uid, $values['shipping1']);
+		$shType			= $values['shipping2']['sh_type'];
+		$shipId			= $shMachine->createLabel($origin_id, $destination_id, $shType);
 		
-		//3.5 add shipping cost to 
-		$shType		= $values['shipping2']['sh_type'];
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	BILLING		 +++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//4. save billing address
-		$b			= ORed_Checkout_Utils::createBillingAddress($uid, $values['billing1']);
-		$bid		= $bModel->save($b);
-		echo "<br />bid: ".$bid."\n<br />";
+		$bid			= $coUtils->createBillingAddress($uid, $values['billing1']);
 		
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	AUTHORIZE	 +++++++++++++++++++++++++++++++++
@@ -283,7 +270,7 @@ print_r("destination id: $destination_id <br />");
 		//		- auto scroll over to the credit card info segment
 		//
 		
-		$o			= ORed_Checkout_Utils::createOrder($uid,$shid,$bid,$shType);
+		$o			= $coUtils->createOrder($uid,$bid,$shipId);
 		//oc: todo: check internet connection before making call.
 		
 		$orderId = $this->_callAuthorizeDotNet($values, $o);

@@ -40,10 +40,10 @@ class Application_Model_UserMapper
 		
 		//oc: this checking seems to work.
 		if(!$exists){
-			echo "insert user\n";
+			//echo "insert user\n";
 			$uid = $this->getDbTable()->insert($data);
 		}else {
-			echo "update user\n";
+			//echo "update user\n";
 			$uid = $custWithMatchingEmail[0]['uid'];
 			$updateResults = $this->getDbTable()->update($data, array('uid = ?'=> $uid));
 		}//endif

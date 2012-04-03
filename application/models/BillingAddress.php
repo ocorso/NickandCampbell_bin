@@ -1,7 +1,9 @@
 <?php
 
-class Application_Model_BillingAddress
+class Application_Model_BillingAddress extends Application_Model_AbstractModel
 {
+	public function getClassName(){ return 'Application_Model_AbstractModel';}
+	
 	protected $_bid;		//billing id
 	protected $_ref_cid;	//customer id
 	protected $_address1;
@@ -13,56 +15,7 @@ class Application_Model_BillingAddress
 	protected $_created_at;
 
 	        
-// =================================================
-// ================ Workers
-// =================================================
-	public function __set($name, $value){
-		
-		$method = 'set'.$name;
-		
-		if(('mapper' == $name)|| !method_exists($this, $method)){
-			throw new Exception('invalid billing address property');
-		}//end if
 
-		$this->$method($value);
-		
-	}//end function
-	
-	public function __get($name){
-
-		$method = 'get'.$name;
-		
-		if(('mapper' == $name)|| !method_exists($this, $method)){
-			throw new Exception('invalid billing address property');
-		}//end if
-			
-		return $this->$method();
-		
-	}//end function
-	
-	public function setOptions(array $options){
-		$methods = get_class_methods($this);
-		foreach($options as $key => $value){
-			$method = 'set' . ucfirst($key);
-			if (in_array($method, $methods)){
-				$this->$method($value);
-			}//endif
-		}// endforeach
-		
-	}//end function 
-
-	public function toArray(){
-		$a = array( 'id'		=> $this->_id,
-					'sesh_id'	=> $this->_sesh_id,
-			 		'type'		=> $this->_type,
-					'promo'		=> $this->_promo,
-					'ref_pid'	=> $this->_ref_pid,
-					'ref_uid'	=> $this->_ref_uid,
-				    'quantity'	=> $this->_quantity,
-				    'created_at'=> $this->_created_at
-				   );
-		return $a;
-	}
 // =================================================
 // ================ Getters / Setters
 // =================================================

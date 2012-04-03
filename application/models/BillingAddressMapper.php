@@ -46,10 +46,10 @@ class Application_Model_BillingAddressMapper
 		);
 		
 		if(!$exists){
-			echo "billing address insert";
+		//	echo "billing address insert";
 			$bid = $this->getDbTable()->insert($data);
 		} else {
-			echo "billing address overwrite";
+		//	echo "billing address update";
 			$bid = $addresses[0]['bid'];
 			$this->getDbTable()->update($data, array('bid = ?'=> $bid));
 		}//endif

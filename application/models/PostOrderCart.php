@@ -2,6 +2,8 @@
 
 class Application_Model_PostOrderCart extends Application_Model_AbstractModel
 {
+	public function getClassName(){ return 'Application_Model_PostOrderCart';}
+	
 	protected $_cart_id;
 	protected $_ref_oid;
 	protected $_ref_pid;

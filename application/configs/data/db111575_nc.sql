@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 29, 2012 at 01:28 AM
+-- Generation Time: Apr 03, 2012 at 02:39 AM
 -- Server version: 5.1.54
 -- PHP Version: 5.2.17
 
@@ -25,6 +25,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `billing_addresses`
 --
 
+DROP TABLE IF EXISTS `billing_addresses`;
 CREATE TABLE IF NOT EXISTS `billing_addresses` (
   `bid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'billing address id',
   `ref_cid` bigint(20) unsigned NOT NULL COMMENT 'ref to customer id',
@@ -43,8 +44,7 @@ CREATE TABLE IF NOT EXISTS `billing_addresses` (
 --
 
 INSERT INTO `billing_addresses` (`bid`, `ref_cid`, `address1`, `address2`, `city`, `state`, `country`, `zip`, `created_at`) VALUES
-(8, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-03-29 01:21:12'),
-(9, 10, '', '', '', '', 'United States', '0', '2012-03-29 01:22:11');
+(8, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-04-03 02:38:57');
 
 -- --------------------------------------------------------
 
@@ -52,24 +52,28 @@ INSERT INTO `billing_addresses` (`bid`, `ref_cid`, `address1`, `address2`, `city
 -- Table structure for table `orders`
 --
 
+DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `oid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `anet_id` varchar(255) NOT NULL,
+  `anet_id` varchar(255) DEFAULT NULL,
   `amount` decimal(14,2) NOT NULL,
-  `total_weight` decimal(14,3) NOT NULL,
   `total_tax` decimal(14,2) NOT NULL,
   `ref_uid` int(11) NOT NULL,
   `ref_bid` int(11) NOT NULL,
   `ref_shipping_id` int(11) NOT NULL,
+  `details` text,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` set('incomplete sale','accepted payment','order received','accepted payment','order closed','payment declined') NOT NULL,
   UNIQUE KEY `oid` (`oid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
 --
 
+INSERT INTO `orders` (`oid`, `anet_id`, `amount`, `total_tax`, `ref_uid`, `ref_bid`, `ref_shipping_id`, `details`, `created_at`, `status`) VALUES
+(1, NULL, 69.00, 6.12, 9, 9, 27, 'NA', '2012-04-03 01:46:38', 'order received'),
+(2, NULL, 69.00, 6.12, 9, 9, 28, 'NA', '2012-04-03 02:38:57', 'order received');
 
 -- --------------------------------------------------------
 
@@ -77,6 +81,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- Table structure for table `postorder_cart`
 --
 
+DROP TABLE IF EXISTS `postorder_cart`;
 CREATE TABLE IF NOT EXISTS `postorder_cart` (
   `cart_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `ref_oid` int(11) NOT NULL,
@@ -102,6 +107,7 @@ CREATE TABLE IF NOT EXISTS `postorder_cart` (
 -- Table structure for table `preorder_cart`
 --
 
+DROP TABLE IF EXISTS `preorder_cart`;
 CREATE TABLE IF NOT EXISTS `preorder_cart` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `sesh_id` varchar(30) NOT NULL,
@@ -122,7 +128,8 @@ CREATE TABLE IF NOT EXISTS `preorder_cart` (
 INSERT INTO `preorder_cart` (`id`, `sesh_id`, `type`, `discount`, `promo`, `ref_pid`, `ref_uid`, `quantity`, `created_at`) VALUES
 (30, 'jv9eg318duufrut6io5lp1vag1', 'real', '0', '0', 22, -1, 4, '2012-03-12 16:28:14'),
 (31, 'f5csc82qesbpa321i6slcnocd5', 'real', '0', '0', 10, -1, 1, '2012-03-24 11:59:25'),
-(32, 'f5csc82qesbpa321i6slcnocd5', 'real', '0', '0', 11, -1, 1, '2012-03-24 11:59:32');
+(32, 'f5csc82qesbpa321i6slcnocd5', 'real', '0', '0', 11, -1, 1, '2012-03-24 11:59:32'),
+(33, 'thc8si2dcop79ob01hd1uk8h14', 'real', '0', '0', 10, -1, 1, '2012-04-02 22:21:26');
 
 -- --------------------------------------------------------
 
@@ -130,6 +137,7 @@ INSERT INTO `preorder_cart` (`id`, `sesh_id`, `type`, `discount`, `promo`, `ref_
 -- Table structure for table `products`
 --
 
+DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `pid` tinyint(100) unsigned NOT NULL AUTO_INCREMENT,
   `ref_sid` mediumint(100) unsigned NOT NULL,
@@ -181,6 +189,7 @@ INSERT INTO `products` (`pid`, `ref_sid`, `ref_size`, `color`, `weight`, `sku`) 
 -- Table structure for table `product_styles`
 --
 
+DROP TABLE IF EXISTS `product_styles`;
 CREATE TABLE IF NOT EXISTS `product_styles` (
   `sid` mediumint(100) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -213,6 +222,7 @@ INSERT INTO `product_styles` (`sid`, `name`, `pretty`, `description1`, `descript
 -- Table structure for table `roles_chart`
 --
 
+DROP TABLE IF EXISTS `roles_chart`;
 CREATE TABLE IF NOT EXISTS `roles_chart` (
   `rid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'role id',
   `name` varchar(50) NOT NULL,
@@ -234,6 +244,7 @@ INSERT INTO `roles_chart` (`rid`, `name`, `description`) VALUES
 -- Table structure for table `shipping_addresses`
 --
 
+DROP TABLE IF EXISTS `shipping_addresses`;
 CREATE TABLE IF NOT EXISTS `shipping_addresses` (
   `shid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'shipping address id',
   `ref_cid` bigint(20) unsigned NOT NULL COMMENT 'ref to customer id',
@@ -252,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `shipping_addresses` (
 --
 
 INSERT INTO `shipping_addresses` (`shid`, `ref_cid`, `address1`, `address2`, `city`, `state`, `country`, `zip`, `created_at`) VALUES
-(17, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-03-29 01:21:12'),
+(17, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-04-03 02:38:57'),
 (1, 2, '648 broadway', 'suite 303', 'new york', 'ny', 'united states', '10012', '2012-03-20 23:56:05'),
 (18, 10, '', '', '', '', 'United States', '0', '2012-03-29 01:22:11');
 
@@ -262,6 +273,7 @@ INSERT INTO `shipping_addresses` (`shid`, `ref_cid`, `address1`, `address2`, `ci
 -- Table structure for table `shipping_info`
 --
 
+DROP TABLE IF EXISTS `shipping_info`;
 CREATE TABLE IF NOT EXISTS `shipping_info` (
   `shipping_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `shipping_price_paid` decimal(14,2) NOT NULL,
@@ -274,12 +286,41 @@ CREATE TABLE IF NOT EXISTS `shipping_info` (
   `tracking_num` varchar(255) DEFAULT NULL,
   `ship_date` datetime DEFAULT NULL,
   UNIQUE KEY `shipping_id` (`shipping_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `shipping_info`
 --
 
+INSERT INTO `shipping_info` (`shipping_id`, `shipping_price_paid`, `shipping_cost`, `label_id`, `carrier`, `origin`, `destination`, `total_weight`, `tracking_num`, `ship_date`) VALUES
+(1, 4.95, NULL, NULL, NULL, 1, 5, NULL, NULL, NULL),
+(2, 4.95, NULL, NULL, NULL, 1, -1, NULL, NULL, NULL),
+(3, 4.95, NULL, NULL, NULL, 1, -1, NULL, NULL, NULL),
+(4, 4.95, NULL, NULL, NULL, 1, -1, NULL, NULL, NULL),
+(5, 4.95, NULL, NULL, NULL, 1, 17, NULL, NULL, NULL),
+(6, 4.95, NULL, NULL, NULL, 1, 17, NULL, NULL, NULL),
+(7, 4.95, NULL, NULL, NULL, 1, 17, NULL, NULL, NULL),
+(8, 4.95, NULL, NULL, NULL, 1, 17, NULL, NULL, NULL),
+(9, 4.95, NULL, NULL, NULL, 1, 17, NULL, NULL, NULL),
+(10, 4.95, NULL, NULL, NULL, 1, 17, NULL, NULL, NULL),
+(11, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(12, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(13, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(14, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(15, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(16, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(17, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(18, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(19, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(20, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(21, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(22, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(23, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(24, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(25, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(26, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(27, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
+(28, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -287,6 +328,7 @@ CREATE TABLE IF NOT EXISTS `shipping_info` (
 -- Table structure for table `sizing_chart`
 --
 
+DROP TABLE IF EXISTS `sizing_chart`;
 CREATE TABLE IF NOT EXISTS `sizing_chart` (
   `size_id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `size_name` varchar(255) NOT NULL,
@@ -312,6 +354,7 @@ INSERT INTO `sizing_chart` (`size_id`, `size_name`, `description`) VALUES
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `uid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'user id',
   `first_name` varchar(255) NOT NULL,

@@ -11,7 +11,7 @@ class Application_Model_Order extends Application_Model_AbstractModel
 	protected $_ref_uid;
 	protected $_ref_bid;
 	protected $_ref_shipping_id;
-	protected $_description;
+	protected $_details;
 	protected $_created_at;
 	protected $_status;
 	
@@ -26,7 +26,7 @@ class Application_Model_Order extends Application_Model_AbstractModel
 	public function getAnet_id(){ return $this->_anet_id; }
 	
 	public function setAmount($d){ $this->_amount = $d; return $this; }
-	public function getAmount(){ $this->_amount; }
+	public function getAmount(){ return $this->_amount; }
 	
 	public function setTotal_tax($d){ $this->_total_tax = $d; return $this; }
 	public function getTotal_tax(){ return $this->_total_tax; }
@@ -40,8 +40,8 @@ class Application_Model_Order extends Application_Model_AbstractModel
 	public function setRef_shipping_id($d){	$this->_ref_shipping_id = $d; return $this;}
 	public function getRef_shipping_id(){ return $this->_ref_shipping_id; }
 	
-	public function setDescription($d){ $this->_description = $d; return $this; }
-	public function getDescription(){ return $this; }
+	public function setDetails($d){ $this->_details = $d; return $this; }
+	public function getDetails(){ return $this->_details; }
 	
 	public function setCreated_At($d){ $this->_created_at = $d; return $this; }
 	public function getCreated_At(){ return $this->_created_at; }

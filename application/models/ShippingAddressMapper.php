@@ -51,10 +51,10 @@ class Application_Model_ShippingAddressMapper
 		);
 		
 		if(!$exists){
-			echo "shipping address insert";
+			//echo "shipping address insert";
 			$shid = $this->getDbTable()->insert($data);
 		} else {
-			echo "shipping address overwrite";
+			//echo "shipping address update";
 			$shid = $addresses[0]['shid'];
 			$this->getDbTable()->update($data, array('shid = ?'=> $shid));
 		}//endif
