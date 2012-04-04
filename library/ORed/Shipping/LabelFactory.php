@@ -2,8 +2,8 @@
 class ORed_Shipping_LabelFactory{
 	
 	protected $_regular		= 4.95;
-	protected $_oneDay		= 14.95;
 	protected $_twoDay		= 14.95;
+	protected $_oneDay		= 22.95;
 	
 	public function getShippingOpts(){
 		
@@ -33,7 +33,7 @@ class ORed_Shipping_LabelFactory{
 		$db 	= new Application_Model_DbTable_ShippingInfo();
 		$s->setShipping_id($db->insert($s->toArray()));
 		
-		return $s->getShipping_id();
+		return $s;
 	}
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//++++++++++++++++++++++ SHIPPING CALCULATIONS +++++++++++++++++++++++++++

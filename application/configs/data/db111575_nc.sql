@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 03, 2012 at 02:39 AM
+-- Generation Time: Apr 04, 2012 at 08:40 AM
 -- Server version: 5.1.54
 -- PHP Version: 5.2.17
 
@@ -43,8 +43,6 @@ CREATE TABLE IF NOT EXISTS `billing_addresses` (
 -- Dumping data for table `billing_addresses`
 --
 
-INSERT INTO `billing_addresses` (`bid`, `ref_cid`, `address1`, `address2`, `city`, `state`, `country`, `zip`, `created_at`) VALUES
-(8, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-04-03 02:38:57');
 
 -- --------------------------------------------------------
 
@@ -71,9 +69,6 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`oid`, `anet_id`, `amount`, `total_tax`, `ref_uid`, `ref_bid`, `ref_shipping_id`, `details`, `created_at`, `status`) VALUES
-(1, NULL, 69.00, 6.12, 9, 9, 27, 'NA', '2012-04-03 01:46:38', 'order received'),
-(2, NULL, 69.00, 6.12, 9, 9, 28, 'NA', '2012-04-03 02:38:57', 'order received');
 
 -- --------------------------------------------------------
 
@@ -129,7 +124,8 @@ INSERT INTO `preorder_cart` (`id`, `sesh_id`, `type`, `discount`, `promo`, `ref_
 (30, 'jv9eg318duufrut6io5lp1vag1', 'real', '0', '0', 22, -1, 4, '2012-03-12 16:28:14'),
 (31, 'f5csc82qesbpa321i6slcnocd5', 'real', '0', '0', 10, -1, 1, '2012-03-24 11:59:25'),
 (32, 'f5csc82qesbpa321i6slcnocd5', 'real', '0', '0', 11, -1, 1, '2012-03-24 11:59:32'),
-(33, 'thc8si2dcop79ob01hd1uk8h14', 'real', '0', '0', 10, -1, 1, '2012-04-02 22:21:26');
+(33, 'thc8si2dcop79ob01hd1uk8h14', 'real', '0', '0', 10, -1, 1, '2012-04-02 22:21:26'),
+(34, 'qb91me4dc4vt8cmvahap88gt17', 'real', '0', '0', 10, -1, 1, '2012-04-04 08:08:41');
 
 -- --------------------------------------------------------
 
@@ -263,9 +259,7 @@ CREATE TABLE IF NOT EXISTS `shipping_addresses` (
 --
 
 INSERT INTO `shipping_addresses` (`shid`, `ref_cid`, `address1`, `address2`, `city`, `state`, `country`, `zip`, `created_at`) VALUES
-(17, 9, '410 E13th Street', 'Apt 1E', 'New York', 'NY', 'United States', '10003', '2012-04-03 02:38:57'),
-(1, 2, '648 broadway', 'suite 303', 'new york', 'ny', 'united states', '10012', '2012-03-20 23:56:05'),
-(18, 10, '', '', '', '', 'United States', '0', '2012-03-29 01:22:11');
+(1, 2, '648 broadway', 'suite 303', 'new york', 'ny', 'united states', '10012', '2012-03-20 23:56:05');
 
 -- --------------------------------------------------------
 
@@ -292,35 +286,6 @@ CREATE TABLE IF NOT EXISTS `shipping_info` (
 -- Dumping data for table `shipping_info`
 --
 
-INSERT INTO `shipping_info` (`shipping_id`, `shipping_price_paid`, `shipping_cost`, `label_id`, `carrier`, `origin`, `destination`, `total_weight`, `tracking_num`, `ship_date`) VALUES
-(1, 4.95, NULL, NULL, NULL, 1, 5, NULL, NULL, NULL),
-(2, 4.95, NULL, NULL, NULL, 1, -1, NULL, NULL, NULL),
-(3, 4.95, NULL, NULL, NULL, 1, -1, NULL, NULL, NULL),
-(4, 4.95, NULL, NULL, NULL, 1, -1, NULL, NULL, NULL),
-(5, 4.95, NULL, NULL, NULL, 1, 17, NULL, NULL, NULL),
-(6, 4.95, NULL, NULL, NULL, 1, 17, NULL, NULL, NULL),
-(7, 4.95, NULL, NULL, NULL, 1, 17, NULL, NULL, NULL),
-(8, 4.95, NULL, NULL, NULL, 1, 17, NULL, NULL, NULL),
-(9, 4.95, NULL, NULL, NULL, 1, 17, NULL, NULL, NULL),
-(10, 4.95, NULL, NULL, NULL, 1, 17, NULL, NULL, NULL),
-(11, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(12, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(13, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(14, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(15, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(16, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(17, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(18, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(19, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(20, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(21, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(22, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(23, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(24, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(25, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(26, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(27, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL),
-(28, 14.95, NULL, NULL, NULL, 1, 17, 2.000, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -374,6 +339,4 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`uid`, `first_name`, `last_name`, `email`, `phone`, `password`, `salt`, `ref_rid`, `created_at`) VALUES
 (1, 'Owen', 'Corso', 'owen@nickandcampbell.com', '2016020069', 'Vamp5near', '', 1, '2012-02-27 13:46:26'),
-(4, 'nick', 'lemons', 'nick@nickandcampbell.com', '9179876543', 'studionc', '', 2, '2012-03-03 16:25:59'),
-(10, '', '', '', '0', 'f5csc82qesbpa321i6slcnocd5', '', 2, '2012-03-29 01:22:11'),
-(9, 'Owen', 'Corso', 'owen@ored.net', '2016020069', 'studionc', '', 2, '2012-03-12 18:37:09');
+(2, 'nick', 'lemons', 'nick@nickandcampbell.com', '9179876543', 'studionc', '', 1, '2012-03-03 16:25:59');

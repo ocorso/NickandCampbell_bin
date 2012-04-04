@@ -20,9 +20,8 @@ class Application_Form_Checkout extends Zend_Form
 			->setMethod("post")
 			->setAttrib('id', 'checkout_form');
 		
-    	//oc: add data from session obj
-    	//oc: wtf is this doing here?
-    	//ORed_Form_Utils::addHid('subtotal', $cart->subTotal);
+    	//oc: shipping factory instance
+    	$shMachine = new ORed_Shipping_LabelFactory();
 		
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
 //++++++++++++++++++++++ ZEND FILTERS ++++++++++++++++++++++++++++++++++++	
@@ -149,7 +148,7 @@ class Application_Form_Checkout extends Zend_Form
 		$shType->setLabel("Please select a type of shipping")
 			->setAttrib('class', 'co-shipping-type')
 			->setRequired(true)
-			->setMultiOptions(ORed_Shipping_LabelFactory::getShippingOpts());
+			->setMultiOptions($shMachine->getShippingOpts());
 		
 		$shTypeToSubmit = new Zend_Form_Element_Hidden('speed');
 

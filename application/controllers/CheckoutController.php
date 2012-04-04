@@ -16,10 +16,11 @@ class CheckoutController extends Zend_Controller_Action
 
 	public function init()
 	{
-		$view = $this->view;
-		$this->_form = new Application_Form_Checkout();
+		$view 				= $this->view;
+		$this->_form 		= new Application_Form_Checkout();
+		$this->_devEmail	= 'owen@nickandcampbell.com';
 		$view->headScript()->appendFile("/js/site/checkout.js");
-		$this->_redirector = $this->_helper->getHelper('Redirector');
+		$this->_redirector 	= $this->_helper->getHelper('Redirector');
 	}
 	protected function _checkMessagesForValidForm(){
 		$messages	= $this->_helper->flashMessenger->getMessages();
@@ -30,52 +31,6 @@ class CheckoutController extends Zend_Controller_Action
 	// =================================================
 	// ================ Handlers
 	// =================================================
-	protected function _callAuthorizeDotNet($data, Application_Model_Order $order)
-	{
-		//todo: action body
-		//print_r($order);
-		$transaction_id = 69;
-	
-		/*
-		 * x_type
-		 * 
-		 * AUTH_CAPTURE (default), 
-		 * AUTH_ONLY, 
-		 * CAPTURE_ONLY, 
-		 * CREDIT, 
-		 * PRIOR_AUTH_CAPTURE, 
-		 * VOID 
-		 */
-		require_once 'ANet/AuthorizeNet.php';
-		$fields				= array( 
-									'version'=>3.1,
-									'first_name'=> $data['shipping1']['cust_first_name'],
-									'last_name'=> $data['shipping1']['cust_last_name'],
-									'phone'=> $data['shipping1']['cust_phone'],
-									'email'=> $data['shipping1']['cust_email'],
-									'amount'=> $data['subtotal'],
-									'card_num'=> $data['billing2']['card_num'],
-									'exp_date'=> $data['billing2']['exp_date'],
-									'card_code'=>$data['billing2']['ccv'],
-									'invoice_num'=> $order->getOid(),
-									
-								);
-		$sale = new AuthorizeNetAIM();
-		$sale->setFields($fields);
-		$response 			= $sale->authorizeAndCapture();
-	
-		if ($response->approved) {
-			$transaction_id = $response->transaction_id;
-			echo "trans id: ".$transaction_id;
-		}//end if
-		else {
-			echo "fail<br/>";
-			print_r($response);
-		}
-		//todo: dump more meaningful stuff about the fail.
-	
-		return $transaction_id;
-	}
 	protected function _sendEmail($order){
 		
 		//oc: todo: config Zend_Mail in bootstrap.
@@ -91,7 +46,7 @@ class CheckoutController extends Zend_Controller_Action
 		$mail->addTo($this->_devEmail, 'Owen Admin');
 		$mail->setSubject("Order Submitted");
 		$mail->setBodyText($body);
-		//$mail->send();
+		$mail->send();
 		//echo $body;
 	}
 	// =================================================
@@ -219,10 +174,9 @@ class CheckoutController extends Zend_Controller_Action
 		//Helpers
 		$coUtils		= new ORed_Checkout_Utils();
 		$shMachine		= new ORed_Shipping_LabelFactory();
-
-		//$oModel		= new Application_Model_OrderMapper();
+		$anet			= new ORed_Checkout_ANet();
 		
-		//print_r($values);
+print_r($values);
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	EMAIL	  ++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -239,41 +193,24 @@ class CheckoutController extends Zend_Controller_Action
 		//oc: todo: use $whoAmiI as uid;
 		$uid 		= $coUtils->createUser($values['shipping1']);
 
-		
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++ CREATE SHIPPING TICKET	 +++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//3. save shipping address
-		$origin_id		= 1;//oc: the shippingAddress id of the N+C office
+		$origin_id		= 1;	//oc: the shippingAddress id of the N+C office
 		$destination_id	= $coUtils->createShippingAddress($uid, $values['shipping1']);
 		$shType			= $values['shipping2']['sh_type'];
-		$shipId			= $shMachine->createLabel($origin_id, $destination_id, $shType);
-		
+		//$shippingTicket	= $shMachine->createLabel($origin_id, $destination_id, $shType);
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	BILLING		 +++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		//4. save billing address
-		$bid			= $coUtils->createBillingAddress($uid, $values['billing1']);
-		
+		//$bid			= $coUtils->createBillingAddress($uid, $values['billing1']);
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		//++++++++++++++++++++++	AUTHORIZE	 +++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++	CREATE ORDER	++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		//5. save order
-		//	- upon successful auth, 
-		//		- save cart items into postorder table
-		//		- construct order, save new record in orders table
+		//$o			= $coUtils->createOrder($uid,$bid,$shippingTicket->getShipping_id());
 		
-		//	- upon unsuccessful auth,
-		//		- reload checkout page, 
-		//		- provide meaningful error
-		//		- populate form with everything EXCEPT credit card info
-		//		- auto scroll over to the credit card info segment
-		//
-		
-		$o			= $coUtils->createOrder($uid,$bid,$shipId);
-		//oc: todo: check internet connection before making call.
-		
-		$orderId = $this->_callAuthorizeDotNet($values, $o);
+		//$orderId = $anet->authAndCapture($values, $o, $shippingTicket);
 		
 		$this->view->orderId	= $orderId;
 		$this->view->form 		= $this->_getForm();
