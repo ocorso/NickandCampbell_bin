@@ -22,15 +22,13 @@ class CheckoutController extends Zend_Controller_Action
 		$view->headScript()->appendFile("/js/site/checkout.js");
 		$this->_redirector 	= $this->_helper->getHelper('Redirector');
 	}
-	protected function _checkMessagesForValidForm(){
+	protected function _checkMessagesForValidCheckout(){
 		$messages	= $this->_helper->flashMessenger->getMessages();
 		if (count($messages)) {
 			foreach ($messages as $message){ if ($message == $this->_chaChing) return true;}
 		}//endif		
 	}//end function
-	// =================================================
-	// ================ Handlers
-	// =================================================
+
 	protected function _sendEmail($order){
 		
 		//oc: todo: config Zend_Mail in bootstrap.
@@ -49,87 +47,29 @@ class CheckoutController extends Zend_Controller_Action
 		$mail->send();
 		//echo $body;
 	}
+	
 	// =================================================
-	// ================ Animation
+	// ================ Handlers
 	// =================================================
-
-	// =================================================
-	// ================ Getters / Setters
-	// =================================================
-	private function _getForm(){
-
-		return $this->_form;
-	}
-
-	// =================================================
-	// ================ Actions
-	// =================================================
-
-	public function indexAction()
-	{
-		//disable layout
-		$layout = $this->_helper->layout();
-		//$layout->disableLayout();
-
-
-		//todo redirect to https if we're on production
-		if (!isset ($_ENV["HTTPS"]) && $_SERVER["HTTP_HOST"] != 'nc.dev' && APPLICATION_ENV != "mamp")    	$this->_redirector->gotoUrl("https://".$_SERVER["SERVER_NAME"]."/checkout/");
-		 
-
-		$request	= $this->getRequest();
-		$form		= $this->_getForm();
-
-
-		if($this->getRequest()->isPost()){
-			
-			if($form->isValid($request->getPost())){
-				//oc: todo: redirect
-				$this->_helper->flashMessenger->addMessage($this->_chaChing);
-				$this->_helper->redirector('transaction-results', 'checkout');
-			}else{
-				$form->populate($form->getUnfilteredValues());
-				$this->view->isValid = false;
-			}
-			
-		}//end if there's post data present
+	/**
+	 * 
+	 * This is the method where the checkout magic happens
+	 * the formValues are used to 
+	 * create a new user in db
+	 * create a new shipping address in db
+	 * create a new billing address in db
+	 * create a new shipping ticket in db
+	 * create a new order in db
+	 * make an API call to authorize.net
+	 * send a confirmation email
+	 * 
+	 * @param unknown_type $formValues
+	 */
+	protected function _handleCheckout($values){
 		
-		$this->view->isGet = $request->isGet();
-		$this->view->form = $form;
-	}
-
-	public function testAction()
-	{
-		// action body
-		print_r("hey there");
-		require_once 'ANet/AuthorizeNet.php';
-
-		$sale = new AuthorizeNetAIM();
-		$sale->amount 		= "25.99";
-		$sale->card_num 	= '6011000000000012';
-		$sale->exp_date 	= '04/15';
-		$response 			= $sale->authorizeAndCapture();
-	print_r($response);
-		if ($response->approved) {
-			$transaction_id = $response->transaction_id;
-			echo "trans id: ".$transaction_id;
-		}//end if
-		else echo "fail";
-	}
-
-
-	public function transactionResultsAction()
-	{
-		$this->_checkMessagesForValidForm();
-		//disable layout
-		$layout = $this->_helper->layout();
-		$layout->disableLayout();
-		
-		//
-		$orderId 			= 69;
-		$this->view->isGet 	=  $this->getRequest()->isGet();
-
+				$orderId 			= 69;
 		// we don't have results go to checkout page
-		if (!$this->_checkMessagesForValidForm()) {
+		if (!$this->_checkMessagesForValidCheckout()) {
 			echo "temp results\n<br />";
 			$tempValues = array(
 				'subtotal'=> 35.00,
@@ -165,9 +105,10 @@ class CheckoutController extends Zend_Controller_Action
 		}//endif
 		else {
 			echo "real values";
-	
-			$form 		= $this->_getForm();
-			$formValues = $form->getValues();
+			$req		= $this->getRequest();
+//			$form 		= $this->_getForm();
+	//		$formValues = $form->getValues();
+	$formValues = $req->getParam('values');
 			$values 	= $formValues;
 		}
 
@@ -211,6 +152,94 @@ print_r($values);
 		//$o			= $coUtils->createOrder($uid,$bid,$shippingTicket->getShipping_id());
 		
 		//$orderId = $anet->authAndCapture($values, $o, $shippingTicket);
+		return array('orderId'=>$orderId, );
+	}
+	// =================================================
+	// ================ Animation
+	// =================================================
+
+	// =================================================
+	// ================ Getters / Setters
+	// =================================================
+	private function _getForm(){
+
+		return $this->_form;
+	}
+
+	// =================================================
+	// ================ Actions
+	// =================================================
+
+	public function indexAction()
+	{
+		//disable layout
+		$layout = $this->_helper->layout();
+		//$layout->disableLayout();
+
+
+		//todo redirect to https if we're on production
+		if (!isset ($_ENV["HTTPS"]) && $_SERVER["HTTP_HOST"] != 'nc.dev' && APPLICATION_ENV != "mamp")    	$this->_redirector->gotoUrl("https://".$_SERVER["SERVER_NAME"]."/checkout/");
+		 
+
+		$request	= $this->getRequest();
+		$form		= $this->_getForm();
+
+
+		if($this->getRequest()->isPost()){
+			
+			if($form->isValid($request->getPost())){
+				//oc: todo: redirect
+				$this->_helper->flashMessenger->addMessage($this->_chaChing);
+				
+				$checkoutResponse = $this->_handleCheckout($form->getValues());
+				
+				// 
+				$this->_helper->redirector('transaction-results', 'checkout', 'default', $checkoutResponse);
+			
+			
+			}else{
+				$form->populate($form->getUnfilteredValues());
+				$this->view->isValid = false;
+			}
+			
+		}//end if there's post data present
+		
+		$this->view->isGet = $request->isGet();
+		$this->view->form = $form;
+	}
+
+	public function testAction()
+	{
+		// action body
+		print_r("hey there");
+		require_once 'ANet/AuthorizeNet.php';
+
+		$sale = new AuthorizeNetAIM();
+		$sale->amount 		= "25.99";
+		$sale->card_num 	= '6011000000000012';
+		$sale->exp_date 	= '04/15';
+		$response 			= $sale->authorizeAndCapture();
+	print_r($response);
+		if ($response->approved) {
+			$transaction_id = $response->transaction_id;
+			echo "trans id: ".$transaction_id;
+		}//end if
+		else echo "fail";
+	}
+
+
+	public function transactionResultsAction()
+	{
+		//disable layout
+		$layout = $this->_helper->layout();
+		$layout->disableLayout();
+		
+		//
+		$req	= $this->getRequest();
+		$orderId	= $req->getParam('orderId');
+		$this->view->isGet 	=  $this->getRequest()->isGet();
+
+
 		
 		$this->view->orderId	= $orderId;
 		$this->view->form 		= $this->_getForm();
