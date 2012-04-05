@@ -35,12 +35,12 @@ class Application_Model_ShippingAddressMapper
 	 */
 	public function save(Application_Model_ShippingAddress $shippingAddress){
 		
-		//oc: check by ref_cid
-		$addresses	= $this->fetchAll(array('ref_cid'=>$shippingAddress->getRef_cid()));
+		//oc: check by ref_uid
+		$addresses	= $this->fetchAll(array('ref_uid'=>$shippingAddress->getRef_uid()));
 		$exists = count($addresses) > 0 ? true : false;
 		
 		$data 	= array(
-			'ref_cid'	=> $shippingAddress->getRef_cid(),
+			'ref_uid'	=> $shippingAddress->getRef_uid(),
 			'address1'	=> $shippingAddress->getAddress1(),
 			'address2'	=> $shippingAddress->getAddress2(),
 			'city'		=> $shippingAddress->getCity(),

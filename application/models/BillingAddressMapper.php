@@ -31,11 +31,11 @@ class Application_Model_BillingAddressMapper
 	public function save(Application_Model_BillingAddress $billingAddress){
 		
 		//oc: check by ref_cid
-		$addresses	= $this->fetchAll(array('ref_cid'=>$billingAddress->getRef_cid()));
+		$addresses	= $this->fetchAll(array('ref_uid'=>$billingAddress->getRef_uid()));
 		$exists = count($addresses) > 0 ? true : false;
 		
 		$data 	= array(
-			'ref_cid'	=> $billingAddress->getRef_cid(),
+			'ref_uid'	=> $billingAddress->getRef_uid(),
 			'address1'	=> $billingAddress->getAddress1(),
 			'address2'	=> $billingAddress->getAddress2(),
 			'city'		=> $billingAddress->getCity(),

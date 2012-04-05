@@ -65,6 +65,7 @@ class Application_Model_CartMapper
 			$db->insert($c->toArray());
 		}
 	}//end function 
+
 	public function fetchCartWeight($cartType){
 		$db 		= $this->_getTableByType($cartType)->getDefaultAdapter();
 		$select 	= $db->select();

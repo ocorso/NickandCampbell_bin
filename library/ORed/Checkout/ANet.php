@@ -30,7 +30,7 @@ class ORed_Checkout_ANet{
 		*
 		* x_line_item=item1<|>golf balls<|><|>2<|>18.95<|>Y&x_line_item=item2<|>golf bag<|>Wilson golf carry bag, red<|>1<|>39.99<|>Y&x_line_item=item3<|>book<|>Golf for Dummies<|>1<|>21.99<|>Y&
 		*/
-		//	require_once 'ANet/AuthorizeNet.php';
+			require_once 'ANet/AuthorizeNet.php';
 		$billingAddress 	= $data['billing1']['addr1'].($data['billing1']['addr2'] != "" ? " ".$data['billing1']['addr2'] : "");
 		$shippingAddress 	= $data['shipping1']['addr1'].($data['shipping1']['addr2'] != "" ? " ".$data['shipping1']['addr2'] : "");
 		

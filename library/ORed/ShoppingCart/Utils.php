@@ -56,7 +56,7 @@ class ORed_ShoppingCart_Utils{
 	}
 	
 	
-	public function calcSubTotal($items, $shippingCost = 1.00){
+	public function calcSubTotal($items, $shippingCost = 0){
 		
 		$subTotal = 0;
 		

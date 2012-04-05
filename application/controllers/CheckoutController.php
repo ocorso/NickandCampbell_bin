@@ -67,55 +67,12 @@ class CheckoutController extends Zend_Controller_Action
 	 */
 	protected function _handleCheckout($values){
 		
-				$orderId 			= 69;
-		// we don't have results go to checkout page
-		if (!$this->_checkMessagesForValidCheckout()) {
-			echo "temp results\n<br />";
-			$tempValues = array(
-				'subtotal'=> 35.00,
-				'shipping1'=>array(	'cust_first_name'=>'Owen',
-									'cust_last_name'=>'Corso',
-									'cust_email'=>'owen@ored.net',
-									'password'=>'studionc',
-									'cust_phone'=>'2016020069',
-									'addr1'=>'410 E13th Street',
-									'addr2'=>'Apt 1E',
-									'city'=>'New York',
-									'state'=>'NY',
-									'zip'=>10003,
-									'country'=>"United States"
-					),
-				'shipping2'=>array('sh_type'=>1	),
-				'billing1'=>array(	'addr1'=>'410 E13th Street',
-									'addr2'=>'Apt 1E',
-									'city'=>'New York',
-									'state'=>'NY',
-									'zip'=>10003,
-									'country'=>"United States"
-					),
-				'billing2'=>array(	'name_on_card'=>"Owen M Corso",
-									'card_type'=>'visa',
-									'card_num'=>'6011000000000012',
-									'ccv'=>123,
-									'exp_date'=>'04/15'
-					)
-			
-			);
-			$values = $tempValues;
-		}//endif
-		else {
-			echo "real values";
-			$req		= $this->getRequest();
-//			$form 		= $this->_getForm();
-	//		$formValues = $form->getValues();
-	$formValues = $req->getParam('values');
-			$values 	= $formValues;
-		}
+		$orderId 			= 69;
 
 		//Helpers
 		$coUtils		= new ORed_Checkout_Utils();
-		$shMachine		= new ORed_Shipping_LabelFactory();
 		$anet			= new ORed_Checkout_ANet();
+		$shMachine		= new ORed_Shipping_LabelFactory();
 		
 print_r($values);
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -141,22 +98,21 @@ print_r($values);
 		$origin_id		= 1;	//oc: the shippingAddress id of the N+C office
 		$destination_id	= $coUtils->createShippingAddress($uid, $values['shipping1']);
 		$shType			= $values['shipping2']['sh_type'];
-		//$shippingTicket	= $shMachine->createLabel($origin_id, $destination_id, $shType);
+		$shippingTicket	= $shMachine->createLabel($origin_id, $destination_id, $shType);
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	BILLING		 +++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		//$bid			= $coUtils->createBillingAddress($uid, $values['billing1']);
+		$bid			= $coUtils->createBillingAddress($uid, $values['billing1']);
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	CREATE ORDER	++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		//$o			= $coUtils->createOrder($uid,$bid,$shippingTicket->getShipping_id());
+		$o			= $coUtils->createOrder($uid,$bid,$shippingTicket->getShipping_id());
 		
-		//$orderId = $anet->authAndCapture($values, $o, $shippingTicket);
+		$anet_trans_id = $anet->authAndCapture($values, $o, $shippingTicket);
+		$o->setAnet_id($anet_trans_id);
+		
 		return array('orderId'=>$orderId, );
 	}
-	// =================================================
-	// ================ Animation
-	// =================================================
 
 	// =================================================
 	// ================ Getters / Setters
@@ -210,45 +166,21 @@ print_r($values);
 
 	public function testAction()
 	{
-		// action body
-		print_r("hey there");
-		require_once 'ANet/AuthorizeNet.php';
-
-		$sale = new AuthorizeNetAIM();
-		$sale->amount 		= "25.99";
-		$sale->card_num 	= '6011000000000012';
-		$sale->exp_date 	= '04/15';
-		$response 			= $sale->authorizeAndCapture();
-	print_r($response);
-		if ($response->approved) {
-			$transaction_id = $response->transaction_id;
-			echo "trans id: ".$transaction_id;
-		}//end if
-		else echo "fail";
-	}
-
-
-	public function transactionResultsAction()
-	{
 		//disable layout
 		$layout = $this->_helper->layout();
 		$layout->disableLayout();
 		
-		//
-		$req	= $this->getRequest();
-		$orderId	= $req->getParam('orderId');
-		$this->view->isGet 	=  $this->getRequest()->isGet();
-
-
-		
-		$this->view->orderId	= $orderId;
-		$this->view->form 		= $this->_getForm();
+		$orderId =	$this->_handleCheckout(Application_Model_SiteModel::$TEMP_CHECKOUT);
+		echo "Order id: $orderId";
 	}
 
 
+	public function transactionResultsAction()
+	{	
+		//
+		$req					= $this->getRequest();
+		$orderId				= $req->getParam('orderId');
+		$this->view->isGet 		=  $this->getRequest()->isGet();
+		$this->view->orderId	= $orderId;
+	}
 }
-
-
-
-
-

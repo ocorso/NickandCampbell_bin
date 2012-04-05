@@ -5,7 +5,7 @@ class Application_Model_ShippingAddress extends Application_Model_AbstractModel
 	public function getClassName(){ return 'Application_Model_ShippingAddress'; }
 	
 	protected $_shid;		//shipping id
-	protected $_ref_cid;	//customer id
+	protected $_ref_uid;	//user id
 	protected $_address1;
 	protected $_address2;
 	protected $_city;
@@ -27,12 +27,12 @@ class Application_Model_ShippingAddress extends Application_Model_AbstractModel
 	
 	public function getShid(){ return $this->_shid; }
 
-	//ref cid
-	public function setRef_cid($cid){
-		$this->_ref_cid	= (int) $cid;
+	//ref uid
+	public function setRef_uid($d){
+		$this->_ref_uid	= (int) $d;
 		return $this;
 	}
-	public function getRef_cid(){ return $this->_ref_cid;}
+	public function getRef_uid(){ return $this->_ref_uid;}
 	
 	//address1
 	public function setAddress1($addr1){

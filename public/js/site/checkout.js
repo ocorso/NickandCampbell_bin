@@ -188,22 +188,23 @@ coController.animation.moveIndicator = function (){
 //================ Utility
 //=================================================
 coController.populateFakeData = function () {
-	$('#shipping1-cust_first_name').val("Owen");
-	$('#shipping1-cust_last_name').val("Corso");
+	$('#shipping1-cust_first_name').val("Javascript");
+	$('#shipping1-cust_last_name').val("tester");
 	$('#shipping1-cust_email').val("owen@ored.net");
 	$('#shipping1-cust_phone').val("2016020069");
-	$('#shipping1-addr1').val("281 Stewart Lane");
+	$('#shipping1-addr1').val("69 Javascript Lane");
+	$('#shipping1-addr2').val("Suite 2");
 	$('#shipping1-city').val("Franklin Lakes");
 	$('#shipping1-zip').val("07417");
 	$('#shipping1-state').val("NJ");
 	
-	$('#billing1-addr1').val("281 Stewart Lane");
+	$('#billing1-addr1').val("69 Javascript Lane");
 	$('#billing1-addr2').val("");
 	$('#billing1-city').val("Franklin Lakes");
 	$('#billing1-state').val("NJ");
 	$('#billing1-zip').val("07417");
 	
-	$('#billing2-name_on_card').val("Owen M Corso");
+	$('#billing2-name_on_card').val("Java M Script");
 	$('#billing2-card_type').val(1);
 	$('#billing2-card_num').val(6011000000000012);
 	$('#billing2-ccv').val(123);

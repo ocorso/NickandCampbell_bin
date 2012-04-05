@@ -32,7 +32,7 @@ class ORed_Checkout_Utils{
 	* */
 	public function createShippingAddress($uid, $data){
 		$shModel	= new Application_Model_ShippingAddressMapper();
-		$options	= array('ref_cid'=>$uid,
+		$options	= array('ref_uid'=>$uid,
 							'address1'=>$data['addr1'],
 							'address2'=>$data['addr2'],
 							'city'=>$data['city'],
@@ -49,9 +49,9 @@ class ORed_Checkout_Utils{
 	* @param  $billing1 	- the first subform on the checkout
 	* @return $sh			- the first class citizen Customer object
 	* */
-	public function createBillingAddress($cid, $billing1){
+	public function createBillingAddress($uid, $billing1){
 		$bModel		= new Application_Model_BillingAddressMapper();
-		$options	= array('ref_cid'=>$cid,
+		$options	= array('ref_uid'=>$uid,
 							'address1'=>$billing1['addr1'],
 							'address2'=>$billing1['addr2'],
 							'city'=>$billing1['city'],
@@ -65,10 +65,12 @@ class ORed_Checkout_Utils{
 	}//end function
 	
 	public function createOrder($uid, $bid, $shipId ){
+		
+		$cartM	= new Application_Model_CartMapper();
 		$tbl	= new Application_Model_DbTable_Order();
 		
 		$status	= Application_Model_SiteModel::$ORDER_STATUS[1];//order received
-		$amount = 69;
+		$amount = 	$cartM->getCartTotal($type);
 		$tax	= $amount*Application_Model_SiteModel::$NEW_YORK_CITY_TAX;
 		
 		$opts = array(
