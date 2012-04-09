@@ -37,7 +37,7 @@ campaign.addListeners = function(){
 	
 	$('#next_arrow').bind('click', campaign.nextHandler);
 	$('#prev_arrow').bind('click', campaign.prevHandler);
-	$('#campaign_scroller').bind('mouse-down', campaign.scroller.on)
+	$('#campaign_scroller').bind('mousedown', campaign.scroller.onMouseDown);
 }
 
 campaign.removeListeners = function(){
@@ -71,5 +71,17 @@ campaign.prevHandler = function($e){
 };//end prev handler
 
 campaign.scroller.onMouseDown	= function ($e){
-	
+	log("mouse down");
+	$('#campaign_scroller').bind('mousemove', campaign.scroller.onMouseMove);
+	$('#campaign_scroller').bind('mouseup', campaign.scroller.onMouseUp);
+	return false;
+};
+campaign.scroller.onMouseMove	= function ($e){
+	$(this).css('left', $e.pageX);
+	return false;
+};
+campaign.scroller.onMouseUp	= function ($e){
+	log("mouse up");
+	$(this).unbind().bind('mousedown', campaign.scroller.onMouseDown);
+	return false;
 };

@@ -1,6 +1,14 @@
+-- phpMyAdmin SQL Dump
+-- version 3.3.3
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Apr 09, 2012 at 12:51 AM
+-- Server version: 5.1.54
+-- PHP Version: 5.2.17
+
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
-DROP TABLE IF EXISTS `billing_addresses`;
 CREATE TABLE IF NOT EXISTS `billing_addresses` (
   `bid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'billing address id',
   `ref_uid` bigint(20) unsigned NOT NULL COMMENT 'ref to customer id',
@@ -12,9 +20,8 @@ CREATE TABLE IF NOT EXISTS `billing_addresses` (
   `zip` varchar(10) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`bid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `oid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `anet_id` varchar(255) DEFAULT NULL,
@@ -27,9 +34,8 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` set('incomplete sale','accepted payment','order received','accepted payment','order closed','payment declined') NOT NULL,
   UNIQUE KEY `oid` (`oid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `postorder_cart`;
 CREATE TABLE IF NOT EXISTS `postorder_cart` (
   `cart_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `ref_oid` int(11) NOT NULL,
@@ -42,9 +48,8 @@ CREATE TABLE IF NOT EXISTS `postorder_cart` (
   `quantity` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY `cart_id` (`cart_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `preorder_cart`;
 CREATE TABLE IF NOT EXISTS `preorder_cart` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `sesh_id` varchar(30) NOT NULL,
@@ -56,9 +61,8 @@ CREATE TABLE IF NOT EXISTS `preorder_cart` (
   `quantity` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `pid` tinyint(100) unsigned NOT NULL AUTO_INCREMENT,
   `ref_sid` mediumint(100) unsigned NOT NULL,
@@ -67,7 +71,11 @@ CREATE TABLE IF NOT EXISTS `products` (
   `weight` decimal(19,2) NOT NULL,
   `sku` int(11) NOT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+
+--
+-- Dumping data for table `products`
+--
 
 INSERT INTO `products` (`pid`, `ref_sid`, `ref_size`, `color`, `weight`, `sku`) VALUES
 (1, 1, 0, 'black', 2.00, 0),
@@ -100,7 +108,6 @@ INSERT INTO `products` (`pid`, `ref_sid`, `ref_size`, `color`, `weight`, `sku`) 
 (29, 5, 4, 'black', 2.00, 1000),
 (30, 5, 5, 'black', 2.00, 0);
 
-DROP TABLE IF EXISTS `product_styles`;
 CREATE TABLE IF NOT EXISTS `product_styles` (
   `sid` mediumint(100) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -116,6 +123,10 @@ CREATE TABLE IF NOT EXISTS `product_styles` (
   PRIMARY KEY (`sid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `product_styles`
+--
+
 INSERT INTO `product_styles` (`sid`, `name`, `pretty`, `description1`, `description2`, `campaign`, `label`, `category`, `gender`, `price`, `discount`) VALUES
 (1, 'Brazil Boxer Brief', 'brazil-boxer-brief', 'Seamless Front and Back', NULL, 'SS12', 'select', 'underwear', 'mens', 35.00, 0),
 (2, 'Original Boxer Brief', 'original-boxer-brief', 'The Fundamental Boxer Brief', NULL, 'SS12', 'select', 'underwear', 'mens', 35.00, 0),
@@ -123,19 +134,23 @@ INSERT INTO `product_styles` (`sid`, `name`, `pretty`, `description1`, `descript
 (4, 'Sexy Campbell Brief', 'sexy-campbell-brief', 'Less coverage than Classic Brief', NULL, 'SS12', 'select', 'underwear', 'mens', 35.00, 0),
 (5, 'Cowboy Brief', 'cowboy-brief', 'Two buttons for the open seam', NULL, 'SS12', 'select', 'underwear', 'mens', 35.00, 0);
 
-DROP TABLE IF EXISTS `roles_chart`;
 CREATE TABLE IF NOT EXISTS `roles_chart` (
   `rid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'role id',
   `name` varchar(50) NOT NULL,
   `description` text NOT NULL,
   UNIQUE KEY `rid` (`rid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 INSERT INTO `roles_chart` (`rid`, `name`, `description`) VALUES
 (1, 'administrators', 'these guys get to see everything.'),
 (2, 'customers', 'this guys only get to check their own order history, track current orders, and access a returns form.');
 
-DROP TABLE IF EXISTS `shipping_addresses`;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipping_addresses`
+--
+
 CREATE TABLE IF NOT EXISTS `shipping_addresses` (
   `shid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'shipping address id',
   `ref_uid` bigint(20) unsigned NOT NULL COMMENT 'ref to customer id',
@@ -147,12 +162,11 @@ CREATE TABLE IF NOT EXISTS `shipping_addresses` (
   `zip` varchar(10) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`shid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2;
 
 INSERT INTO `shipping_addresses` (`shid`, `ref_uid`, `address1`, `address2`, `city`, `state`, `country`, `zip`, `created_at`) VALUES
 (1, 2, '648 broadway', 'suite 303', 'new york', 'ny', 'united states', '10012', '2012-03-20 23:56:05');
 
-DROP TABLE IF EXISTS `shipping_info`;
 CREATE TABLE IF NOT EXISTS `shipping_info` (
   `shipping_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `shipping_price_paid` decimal(14,2) NOT NULL,
@@ -161,19 +175,19 @@ CREATE TABLE IF NOT EXISTS `shipping_info` (
   `carrier` varchar(255) DEFAULT NULL,
   `origin` int(11) NOT NULL,
   `destination` int(11) NOT NULL,
+  `taxable` tinyint(1) DEFAULT NULL,
   `total_weight` decimal(14,3) DEFAULT NULL,
   `tracking_num` varchar(255) DEFAULT NULL,
   `ship_date` datetime DEFAULT NULL,
   UNIQUE KEY `shipping_id` (`shipping_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
-DROP TABLE IF EXISTS `sizing_chart`;
 CREATE TABLE IF NOT EXISTS `sizing_chart` (
   `size_id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `size_name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`size_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 INSERT INTO `sizing_chart` (`size_id`, `size_name`, `description`) VALUES
 (0, 'extra extra small', 'this size is for extremely skinny guys'),
@@ -183,7 +197,6 @@ INSERT INTO `sizing_chart` (`size_id`, `size_name`, `description`) VALUES
 (4, 'large', 'this is for slightly bigger guys'),
 (5, 'extra large', 'this is for big guys');
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `uid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'user id',
   `first_name` varchar(255) NOT NULL,
@@ -195,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `ref_rid` tinyint(4) NOT NULL COMMENT 'reference to roles_chart',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 INSERT INTO `users` (`uid`, `first_name`, `last_name`, `email`, `phone`, `password`, `salt`, `ref_rid`, `created_at`) VALUES
 (1, 'Owen', 'Corso', 'owen@nickandcampbell.com', '2016020069', 'Vamp5near', '', 1, '2012-02-27 13:46:26'),
