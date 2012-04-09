@@ -5,6 +5,9 @@ class ORed_Shipping_LabelFactory{
 	protected $_twoDay		= 14.95;
 	protected $_oneDay		= 22.95;
 	
+	public function getShippingArr(){
+		return array($this->_regular, $this->_twoDay, $this->_oneDay);
+	}
 	public function getShippingOpts(){
 		
 		
@@ -16,9 +19,9 @@ class ORed_Shipping_LabelFactory{
 			"Overnight 1-2 Business Days $$this->_oneDay"
 		);
 	}
-	public function getRegular(){ return $this->_regular; }
+
 	
-	public function createLabel($origin_id, $destination_id, $shType){
+	public function createLabel($origin_id, $destination_id, $shType, $taxable){
 		
 		$shTypeArr 		= $this->calcShipping();
 		$shPricePaid	= $shTypeArr[$shType];
@@ -28,7 +31,8 @@ class ORed_Shipping_LabelFactory{
 						'origin'		=>$origin_id,
 						'destination'	=>$destination_id,
 						'shipping_price_paid'=>$shPricePaid,
-						'total_weight'	=>$cartMapper->fetchCartWeight(Application_Model_SiteModel::$CART_TYPE_REAL)
+						'total_weight'	=>$cartMapper->fetchCartWeight(Application_Model_SiteModel::$CART_TYPE_REAL),
+						'taxable'		=>$taxable
 					);
 		$s		= new Application_Model_ShippingInfo($opts);
 		$db 	= new Application_Model_DbTable_ShippingInfo();

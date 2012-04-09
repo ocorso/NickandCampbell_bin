@@ -16,7 +16,7 @@ mainController.cart.emptyText	= "<h2>Your shopping cart is empty.</h2>";
 
 var shopController				= {};
 var campaign					= {};
-
+campaign.scroller				= {};
 //*****************************************************
 //oc: Address Change Handler Functions
 //*****************************************************

@@ -119,10 +119,39 @@ class Application_Model_CartMapper
 			->where('c.sesh_id = ?', Zend_Session::getId());
 		
 		$cart = $db->fetchAll($select);
-		return $cart;
 		//print_r($cart);
+		return $cart;
 	}
 	
+	
+	/**
+	 * This function parses the items in the cart for transmission to Authorize.net 
+	 * x_line_item
+		*
+		* x_line_item=item1<|>golf balls<|><|>2<|>18.95<|>Y&
+		* x_line_item=item2<|>golf bag<|>Wilson golf carry bag, red<|>1<|>39.99<|>Y&
+		* x_line_item=item3<|>book<|>Golf for Dummies<|>1<|>21.99<|>Y&
+		* 
+	 * Enter description here ...
+	 */
+	public function fetchCartForANet(){
+		$items 		= $this->fetchCartForDisplay();
+		$c 			= 1;
+		$lineItems	= "";
+		
+		foreach($items as $i){
+			$pid		= $i['pid'];
+			$name		= $i['name'];
+			$size		= $i['size_name'];
+			$quantity	= $i['quantity'];
+			$s			= "<|>";
+			$cost 		= (1-$i['discount']) * $i['price'];
+			$lineItems .= "x_line_item=product".$pid.$s.$name.$s.$size.$s.$quantity.$s.$cost.$s."Y&";
+			$c++;
+		}
+		print_r($lineItems);
+		return $lineItems;
+	}
 	public function deleteCartByPid($pid){
 		$db			= Zend_Registry::get("db");
 		$db->delete('preorder_cart', "ref_pid = $pid");

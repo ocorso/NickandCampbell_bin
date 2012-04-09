@@ -11,7 +11,12 @@
 		</p>
 	</li>
 <?php endforeach; ?>
-	<li class="shipping-total" style="display: none;"></li>
-	<li class='subtotal'>subtotal: <span class='right'>$<?= $this->cartObj->subTotal; ?></span></li>
+	<li class="shipping-total" style="display: none;">shipping: <span id="shipping_cost" class="right">$0.00</span></li>
+	<li class="tax" style="display:none;">tax: <span id="tax_cost" class="right">$0.00</span></li>
+	<li class='subtotal'>subtotal: <span id="total_cost" class='right'>$<?= $this->cartObj->subTotal; ?></span></li>
 </ul>
 <?php endif; ?>
+<script type="text/javascript">
+	var cart = {};
+	cart.origTotal = <?= $this->cartObj->subTotal; ?>;
+</script>

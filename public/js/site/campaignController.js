@@ -10,16 +10,18 @@ campaign.change = function (){
 	params.wmode	= "transparent";
 	var attributes 	= {};
 	attributes.class= "section";
-	swfobject.embedSWF("/swf/ncCampaign.swf",
+/*	swfobject.embedSWF("/swf/ncCampaign.swf",
 	"s_campaign", "1024", "619",
 	"9.0.0", false, flashvars, params, attributes);
-	
+*/	
 	//show div
 	$('#s_campaign').show('slow', campaign.addListeners);
 }
 
 campaign.init = function (){
+	
 	//todo: create a horizontal viewing system.
+
 	campaign.curPage 	= mainController.dlArr[1];
 	campaign.leftOffset	=  parseInt($('#lookbook_container').css('left'));
 	log("campaign init, left offset: "+campaign.leftOffset);
@@ -35,6 +37,7 @@ campaign.addListeners = function(){
 	
 	$('#next_arrow').bind('click', campaign.nextHandler);
 	$('#prev_arrow').bind('click', campaign.prevHandler);
+	$('#campaign_scroller').bind('mouse-down', campaign.scroller.on)
 }
 
 campaign.removeListeners = function(){
@@ -53,7 +56,7 @@ campaign.nextHandler = function($e){
 	
 	//go
 	$('#lookbook_container').animate({'left':campaign.leftOffset}, campaign.addListeners);
-}//end next handler
+};//end next handler
 campaign.prevHandler = function($e){
 	log ("prevClick");
 	
@@ -65,4 +68,8 @@ campaign.prevHandler = function($e){
 	
 	//go
 	$('#lookbook_container').animate({'left':campaign.leftOffset}, campaign.addListeners);
-}//end prev handler
+};//end prev handler
+
+campaign.scroller.onMouseDown	= function ($e){
+	
+};

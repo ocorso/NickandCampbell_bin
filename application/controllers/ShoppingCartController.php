@@ -47,7 +47,9 @@ class ShoppingCartController extends Zend_Controller_Action
 
     public function dumpAction()
     {
-		print_r($this->_cart->items);
+		$cMapper 	= new Application_Model_CartMapper();
+		$lineItems 	= $cMapper->fetchCartForANet();
+		echo "LineItems: $lineItems";
     }
 
     public function calcCartWeightAction()

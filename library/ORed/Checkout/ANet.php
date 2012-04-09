@@ -10,12 +10,27 @@
  *
  */
 class ORed_Checkout_ANet{
+	//	- upon successful auth,
+	//		- save cart items into postorder table
+	//		- construct order, save new record in orders table
 	
-	public function authAndCapture($data, Application_Model_Order $order, Application_Model_ShippingInfo $shipping){
-		//todo: action body
-		//print_r($order);
-		$transaction_id = 69;
+	//	- upon unsuccessful auth,
+	//		- reload checkout page,
+	//		- provide meaningful error
+	//		- populate form with everything EXCEPT credit card info
+	//		- auto scroll over to the credit card info segment
+	//
+	/**
+	 * This method takes all
+	 * Enter description here ...
+	 * @param array $data
+	 * @param Application_Model_Order $order
+	 * @param Application_Model_ShippingInfo $shipping
+	 * @return Ambigous <number, multitype:>
+	 */
+	public function authAndCapture(array $data, Application_Model_Order $order, Application_Model_ShippingInfo $shipping){
 		
+		$transaction_id = -1;
 		/*
 		 * x_type
 		*
@@ -30,7 +45,9 @@ class ORed_Checkout_ANet{
 		*
 		* x_line_item=item1<|>golf balls<|><|>2<|>18.95<|>Y&x_line_item=item2<|>golf bag<|>Wilson golf carry bag, red<|>1<|>39.99<|>Y&x_line_item=item3<|>book<|>Golf for Dummies<|>1<|>21.99<|>Y&
 		*/
-			require_once 'ANet/AuthorizeNet.php';
+		require_once 'ANet/AuthorizeNet.php';
+		$cMapper 			= new Application_Model_CartMapper();
+		$lineItems 			= $cMapper->fetchCartForANet();
 		$billingAddress 	= $data['billing1']['addr1'].($data['billing1']['addr2'] != "" ? " ".$data['billing1']['addr2'] : "");
 		$shippingAddress 	= $data['shipping1']['addr1'].($data['shipping1']['addr2'] != "" ? " ".$data['shipping1']['addr2'] : "");
 		
@@ -47,7 +64,7 @@ class ORed_Checkout_ANet{
 											'last_name'		=> $data['shipping1']['cust_last_name'],
 											'phone'			=> $data['shipping1']['cust_phone'],
 											'email'			=> $data['shipping1']['cust_email'],
-											'amount'		=> $data['subtotal'],
+											'amount'		=> $order->getAmount(),
 											'card_num'		=> $data['billing2']['card_num'],
 											'exp_date'		=> $data['billing2']['exp_date'],
 											'card_code'		=> $data['billing2']['ccv'],
@@ -60,7 +77,8 @@ class ORed_Checkout_ANet{
 											'country'		=> $data['billing1']['country'],
 											'cust_id'		=> $order->getRef_uid(),
 											'tax'			=> $order->getTotal_tax(),
-											'freight'		=> $shipping->getShipping_cost()
+											'freight'		=> $shipping->getShipping_cost(),
+											'line_item'		=> $lineItems
 										);
 
 		$sale = new AuthorizeNetAIM();
@@ -72,7 +90,7 @@ class ORed_Checkout_ANet{
 			echo "trans id: ".$transaction_id;
 		}//end if
 		else {
-			echo "fail<br/>";
+			echo "\nfail<br/>";
 			print_r($response);
 		}
 		//todo: dump more meaningful stuff about the fail.

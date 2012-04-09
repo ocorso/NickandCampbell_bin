@@ -64,28 +64,30 @@ class ORed_Checkout_Utils{
 		return $bid;
 	}//end function
 	
-	public function createOrder($uid, $bid, $shipId ){
+	public function createOrder($uid, $bid, Application_Model_ShippingInfo $shippingInfo ){
 		
 		$cartM	= new Application_Model_CartMapper();
 		$tbl	= new Application_Model_DbTable_Order();
 		
 		$status	= Application_Model_SiteModel::$ORDER_STATUS[1];//order received
-		$amount = 	$cartM->getCartTotal($type);
-		$tax	= $amount*Application_Model_SiteModel::$NEW_YORK_CITY_TAX;
+		$shCost	= $shippingInfo->getShipping_price_paid();
+		$cart	= ORed_ShoppingCart_Utils::getCart();
+		$tax	= $shippingInfo->getTaxable() ? $cart->subTotal*Application_Model_SiteModel::$NEW_YORK_CITY_TAX : 0;
+		$amount	= $cart->subTotal + $tax + $shCost;
 		
 		$opts = array(
 						'amount'			=>$amount,
 						'total_tax'			=>$tax,
 						'ref_uid'			=>$uid,
 						'ref_bid'			=>$bid,
-						'ref_shipping_id'	=>$shipId,
+						'ref_shipping_id'	=>$shippingInfo->getShipping_id(),
 						'details'			=>"NA",
 						'status'			=>$status
 			);
 		$o		= new Application_Model_Order($opts);
-		print_r($o->toArray());
 		$oid 	= $tbl->insert($o->toArray());
 		$o->setOid($oid);
+		print_r($o->toArray());
 		return $o;
 	}
 

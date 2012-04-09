@@ -1,3 +1,11 @@
+<script type="text/javascript">
+<!--
+	var shippingArr = [];
+	<?php foreach($this->shipping as $sh){
+		echo "shippingArr.push($sh);\n";
+	} ?>
+//-->
+</script>
 <div id="s_checkout" class="section" role="main">
 	<h1>Checkout</h1>
 	<!-- <h3><? //echo $this->form->isValid($_POST) ? "You're Almost Done!" : "<span style='color: red;'>Please Fix Errors Below.</span>"; ?></h3> -->

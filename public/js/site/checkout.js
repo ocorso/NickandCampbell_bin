@@ -128,9 +128,14 @@ coController.onNextClick = function($e){
 };
 
 coController.onShippingTypeClick = function ($e){
-	log("shipping type: "+$(this).attr('id'));
-	
+	var shCost = shippingArr[$(this).attr('id').replace("shipping2-sh_type-", "")];
+	log("shipping cost: "+ shCost);
+	$('#shipping_cost').text(shCost).parent().show('slow');
+	var total = cart.origTotal + shCost;
+	log("total: "+total);
+	$('#total_cost').text("$"+total);
 };
+
 
 coController.focus.onShipping2	= function($e){
 	log("focus");
@@ -190,13 +195,13 @@ coController.animation.moveIndicator = function (){
 coController.populateFakeData = function () {
 	$('#shipping1-cust_first_name').val("Javascript");
 	$('#shipping1-cust_last_name').val("tester");
-	$('#shipping1-cust_email').val("owen@ored.net");
+	$('#shipping1-cust_email').val("dev@nickandcampbell.com");
 	$('#shipping1-cust_phone').val("2016020069");
 	$('#shipping1-addr1').val("69 Javascript Lane");
 	$('#shipping1-addr2').val("Suite 2");
 	$('#shipping1-city').val("Franklin Lakes");
 	$('#shipping1-zip').val("07417");
-	$('#shipping1-state').val("NJ");
+	$('#shipping1-state').val("NY");
 	
 	$('#billing1-addr1').val("69 Javascript Lane");
 	$('#billing1-addr2').val("");

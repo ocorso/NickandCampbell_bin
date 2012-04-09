@@ -55,8 +55,14 @@ class ORed_ShoppingCart_Utils{
 		return $items;
 	}
 	
-	
-	public function calcSubTotal($items, $shippingCost = 0){
+	/**
+	 * This function loops through the items in the cart
+	 * returns the tallied costs of the items
+	 * @param array $items
+	 * @param float $shippingCost
+	 * @return string
+	 */
+	public function calcSubTotal(array $items, $shippingCost = 0){
 		
 		$subTotal = 0;
 		
@@ -68,7 +74,7 @@ class ORed_ShoppingCart_Utils{
 		//oc: todo: check to see if shipping is there.
 		$subTotal += $shippingCost;
 		
-		return $subTotal.".00";
+		return number_format($subTotal, 2, '.', ',');
 	}
 	
 	public function calcCartWeight($type){

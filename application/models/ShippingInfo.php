@@ -11,6 +11,7 @@ class Application_Model_ShippingInfo extends Application_Model_AbstractModel
 	protected $_carrier;
 	protected $_origin;
 	protected $_destination;
+	protected $_taxable;
 	protected $_total_weight;
 	protected $_tracking_num;
 	protected $_ship_date;
@@ -38,6 +39,9 @@ class Application_Model_ShippingInfo extends Application_Model_AbstractModel
 	
 	public function setDestination($d){ $this->_destination = $d; return $this; }
 	public function getDestination(){ return $this->_destination; }
+	
+	public function setTaxable($d){ $this->_taxable = $d; return $this; }
+	public function getTaxable(){ return $this->_taxable; }
 	
 	public function setTotal_weight($d){ $this->_total_weight = $d; return $this; }
 	public function getTotal_weight(){ return $this->_total_weight; }

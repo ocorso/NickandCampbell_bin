@@ -684,54 +684,80 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 #cart_pulldown .checkout-btn:hover:after{
 	background-position: -34px -13px;	
 }
+.shipping-total{
+	color: #a78383;
+}
 /* =============================================================================
    @Campaign
    ========================================================================== */
 #s_campaign{
 	outline: none;
-	height: 312px;
+
 	position: relative;
-	border: 1px solid #777;
 	margin-top: 28px;
+	margin-bottom: 10px;
 }
 #lookbook_wrapper{
 	display: block;
-	height: 683px;
+	height: 641px;
 	width: 1024px;
 	position: relative;
 	overflow: hidden;
 }
 #lookbook_container{
+	border-bottom: 5px solid #3e3c3c;
 	position: absolute;
 	left: 0px;
+}
+#campaign_scroller{
+	height: 5px;
+	width: 80px;
+	background-color: white;
+	cursor: pointer;
+	position: absolute;
+	bottom: -22px;	
 }
 #s_campaign img{
 	float:left;
 }
-.campaign-arrow{
-	top: 280px;
-	/*position: absolute;*/	
+#nc_pattern{
+	position:absolute;
+	width: 789px;
+	height: 636px;
+	left: 789px;
+}
+#campaign_controls{ 
+	height: 40px;
+	width: 58px;
+	position: absolute;
+	top:115px;
+}
 
+.campaign-arrow{
+ background-image: url('/../img/icons/sprite-sheet.png');
+ background-repeat: no-repeat;
+	background-color: #222;
+	width: 29px;
+	height: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	position: relative;
+	cursor: pointer;
+}
+.campaign-arrow:hover{
+	background-color: #2f2f2f;
 }
 
 #next_arrow{
-	left: 928px;
+background-position: -175px 10px;
+float: right;
+}
+#prev_arrow{
+	background-position: -34px 0;
+	background-position: -142px 10px;
 	
-}
-#campaign_controls{ 
-	position: relative;
-	margin: 20px 0;
-	padding-top: 9px;
-	border-top: solid 1px #333;
-}
-#s_campaign h2{
-	font-size: 40px;
-	font-weight: normal;
 	float: left;
-	margin-left: 227px;
-	margin-top: 5px;
 }
-
 /* =============================================================================
    @Contact
    ========================================================================== */
@@ -815,10 +841,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	cursor: pointer;
 	text-indent: -9999px;
 }
-#co_prev, #prev_arrow{background-position: 	-98px 0; }
-#co_prev:hover, #prev_arrow:hover{background-position: -98px -98px; }
-#co_next, #next_arrow{background-position: 	0 0; }
-#co_next:hover, #next_arrow:hover{background-position: 0 -98px; }
+#co_prev{background-position: 	-98px 0; }
+#co_prev:hover{background-position: -98px -98px; }
+#co_next{background-position: 	0 0; }
+#co_next:hover{background-position: 0 -98px; }
 
 
 #shipping2-sh_type1-label label, #shipping2-sh_type2-label label, #shipping2-sh_type3-label label, #billing1-bill_as_ship-label label {

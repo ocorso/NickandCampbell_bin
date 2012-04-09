@@ -3,6 +3,7 @@
 class Application_Model_SiteModel
 {
 	public static $NEW_YORK_CITY_TAX	= 0.08875;//8.875%
+	public static $ORIGIN_STATE			= "NY";
 	
 	public static $CART_TYPE_REAL 		= "real";
 	public static $CART_TYPE_WISHLIST 	= "wishlist";

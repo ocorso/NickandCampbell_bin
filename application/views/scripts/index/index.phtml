@@ -58,20 +58,20 @@
 	
 	
 	<section id="s_campaign" class="section">
-	<div id="lookbook_wrapper">
-		<div id="lookbook_container" style="width: <?= $this->campaignWidth; ?>px;">
-			<?php for($i=1;$i<=$this->lookbookPgs ;$i++): ?>
-			<img src="img/lookbook/<?= $i; ?>.jpg" alt="Nick and Campbell Lookbook Page <?= $i; ?>" />
-			<?php endfor; ?>
-			<div class="clearfix"></div>
-		</div>	
-	</div>
-	<div id="campaign_controls">
-	
-		<div id="prev_arrow" class="co-arrow campaign-arrow left"></div>
-		<h2 >Click arrows to browse.</h2>
-		<div id="next_arrow" class="co-arrow campaign-arrow right"></div>
-	</div>
+		<div id="lookbook_wrapper">
+			<div id="lookbook_container" style="width: <?= $this->campaignWidth; ?>px;">
+				<?php for($i=1;$i<=$this->lookbookPgs ;$i++): ?>
+				<img src="img/lookbook/ss12/<?= $i; ?>.jpg" alt="Nick and Campbell Lookbook Page <?= $i; ?>" />
+				<?php endfor; ?>
+				<div class="clearfix"></div>
+			</div>	
+			<img id="nc_pattern" src="img/icons/pattern.png" alt="Nick and Campbell Pattern" />
+		</div>
+		<a href="#" id="campaign_scroller"></a>
+		<div id="campaign_controls" class="shadow">
+			<div id="prev_arrow" class="campaign-arrow"></div>
+			<div id="next_arrow" class="campaign-arrow"></div>
+		</div>
 	</section>
 	
 	
