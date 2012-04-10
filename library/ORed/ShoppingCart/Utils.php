@@ -41,10 +41,9 @@ class ORed_ShoppingCart_Utils{
 			'promo'		=>0,//todo: uhhhh..??
 		    'quantity'	=>$item['quantity']
 		);
-		$c = new Application_Model_PreOrderCart($itemArr);
+		$c 		= new Application_Model_PreOrderCart($itemArr);
 		$cMapper->savePre($c);
-//		$items = $cMapper->fetchAllWithOptions($item['cart_type'], array('sesh_id'=>Zend_Session::getId()));
-		$items = $cMapper->fetchCartForDisplay();
+		$items 	= $cMapper->fetchCartForDisplay();
 		return $items;
 	}
 	
