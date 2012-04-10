@@ -93,7 +93,7 @@ class Application_Model_CartMapper
 			$select->where('sesh_id = ?', $opts['sesh_id']);
 		}
 		
-		
+		print_r($select->__toString());
 		$records = $db->fetchAll($select);
 		return $records;
 		
