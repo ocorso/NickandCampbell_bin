@@ -117,7 +117,8 @@ campaign.scroller.onMouseUp	= function ($e){
 campaign.swipeCallback		= function ($e, $i, $element){
 	log("swipe callback");
 	log("curPage: "+$i);
-	$.address.parameter('page',$i);
+	campaign.curPage = $i+1;
+	$.address.parameter('page',campaign.curPage);
 } 
 // =================================================
 // ================ Animation
