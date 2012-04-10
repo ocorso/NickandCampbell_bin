@@ -43,7 +43,7 @@ class Application_Model_CartMapper
 //		oc: 1. check if ref_pid exists in any of the records that match the session_id
 		$records 	= $this->fetchAllWithOptions($c->getType(), array('sesh_id'=>$c->getSesh_id()));
 		$exists		= false;
-		print_r($records);
+		print_r($records->toArray());
 		if (count($records)>0){
 			
 			foreach($records as $possibleMatch){
