@@ -135,13 +135,13 @@ mainController.homeHandler = function(){
 	
 	//todo: put flash on page if possible.
 	$('#s_loader, section, .section').hide();
-	var flashvars 	= {baseUrl:$.address.baseURL()};
-	var params 		= {};
-	params.menu 	= "false";
-	params.quality 	= "high";
-	params.wmode	= "transparent";
-	var attributes 	= {};
-	attributes.class= "section";
+	var flashvars 		= {baseUrl:$.address.baseURL()};
+	var params 			= {};
+	params.menu 		= "false";
+	params.quality 		= "high";
+	params.wmode		= "transparent";
+	var attributes 		= {};
+	attributes.class	= "section";
 	swfobject.embedSWF("/swf/ncLoader.swf",
 	"s_home", "1024", "619",
 	"9.0.0", false, flashvars, params, attributes);
