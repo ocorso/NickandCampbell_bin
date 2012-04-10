@@ -11,6 +11,7 @@ campaign.init = function (){
 	log("campaign init. total pages: "+campaign.slides.length);
 	
 	if ( Modernizr.csstransforms ) {
+		log("SWIPE!");
 		  window.mySwipe = new Swipe(
 		    document.getElementById('lookbook_wrapper')
 		  );
