@@ -42,7 +42,9 @@ class ShoppingCartController extends Zend_Controller_Action
 
     public function emptyAction()
     {
-       $this->_cart->items = array();
+           $bootstrap = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+    $userAgent = $bootstrap->getResource('useragent');
+    
     }
 
     public function dumpAction()

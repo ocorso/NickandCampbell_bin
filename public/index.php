@@ -8,11 +8,11 @@ defined('APPLICATION_PATH')
 if (!defined('APPLICATION_ENV')){
 	switch ($_SERVER["HTTP_HOST"]){
 		case "staging.nickandcampbell.com": define('APPLICATION_ENV','staging'); break;
-		case "owen.local": define('APPLICATION_ENV','development'); break;
+		case "owen.local": define('APPLICATION_ENV','click3x'); break;
 		default : define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 	}
 }else echo "app_env: ".APPLICATION_ENV;
-
+echo "app_env: ".APPLICATION_ENV;
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
     realpath(APPLICATION_PATH . '/../library'),
