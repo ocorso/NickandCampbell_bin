@@ -14,12 +14,11 @@ campaign.init = function (){
 		log("SWIPE init");
 		campaign.isSwipeEnabled = true;
 		campaign.swipeIndex 	= 0;
+		var element				= document.getElementById('lookbook_wrapper');
 		var opts 				= {};
 		opts.callback			= campaign.swipeCallback;
-		window.mySwipe = new Swipe(
-		    document.getElementById('lookbook_wrapper'),
-		    opts
-		  );
+		window.mySwipe = new Swipe(element//,opts
+				);
 		}
 };
 
