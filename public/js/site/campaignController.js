@@ -1,61 +1,81 @@
-campaign.change = function (){
-	log("campaign change");
-	$('#s_loader, #s_campaign .section-content, section, .section').hide();
-	
-	//embed flash 
-	var flashvars 	= {baseUrl:$.address.baseURL()};
-	var params 		= {};
-	params.menu 	= "false";
-	params.quality 	= "high";
-	params.wmode	= "transparent";
-	var attributes 	= {};
-	attributes.class= "section";
-/*	swfobject.embedSWF("/swf/ncCampaign.swf",
-	"s_campaign", "1024", "619",
-	"9.0.0", false, flashvars, params, attributes);
-*/	
-	//show div
-	$('#s_campaign').show('slow', campaign.addListeners);
-}
+/**
+ * @author Owen Corso
+ */
 
+// =================================================
+// ================ Initialize
+// =================================================
 campaign.init = function (){
+
+	campaign.slides = $("#lookbook_container img");
+	log("campaign init. total pages: "+campaign.slides.length);
+};
+
+
+// =================================================
+// ================ Callable
+// =================================================
+campaign.change = function (){
 	
-	//todo: create a horizontal viewing system.
-
-	campaign.curPage 	= mainController.dlArr[1];
-	campaign.leftOffset	=  parseInt($('#lookbook_container').css('left'));
-	log("campaign init, left offset: "+campaign.leftOffset);
-}
-
+	//oc: set curPage using query string
+	campaign.curPage 	= $.address.parameter('page') ?$.address.parameter('page') : 1;
+	log("campaign change. curPage: "+campaign.curPage);
+	
+	//show div if necessary
+	if( $('#s_campaign').css('display') == "block"){
+		campaign.animation.slide();
+	}else{
+		campaign.animation.show();
+	} 
+};
+// =================================================
+// ================ Workers
+// =================================================
 campaign.addListeners = function(){
-	log("addListeners");
+	$('.campaign-arrow').unbind();
 	
-//	$('#lookbook_container, .arrow').hover(
-//			function(){$('.arrow').fadeIn();},
-//			function(){$('.arrow').fadeOut();}
-//	);
-	
-	$('#next_arrow').bind('click', campaign.nextHandler);
-	$('#prev_arrow').bind('click', campaign.prevHandler);
+	//config next.
+	log("addListeners, max: "+campaign.slides.length);
+	if (campaign.curPage >= campaign.slides.length){
+		$('#next_arrow').addClass('inactive');
+	}else{
+		$('#next_arrow').removeClass('inactive').bind('click', campaign.nextHandler);
+	}
+
+	//config prev.
+	if (campaign.curPage == 1){
+		$('#prev_arrow').addClass('inactive');
+	}else{
+		$('#prev_arrow').removeClass('inactive').bind('click', campaign.prevHandler);
+	}
+
+	//oc: TODO make scroller handle swipe touch event.
 	$('#campaign_scroller').bind('mousedown', campaign.scroller.onMouseDown);
-}
+};
 
 campaign.removeListeners = function(){
+	log("campaign removeListeners")
 	$('#next_arrow, #prev_arrow').unbind();
-}
+};
 
+campaign.getOffset = function(){
+	
+	var multiplier 		= campaign.curPage-1;
+	campaign.leftOffset =  multiplier * -789;
+	log("offset: "+campaign.leftOffset );
+	
+};
+// =================================================
+// ================ Handlers
+// =================================================
 campaign.nextHandler = function($e){
 	log ("nextClick");
 	
 	//make sure they don't keep clicking
 	campaign.removeListeners();
+	campaign.curPage++;
+	$.address.parameter('page', campaign.curPage);
 	
-	//find new offset
-	campaign.leftOffset -= 1024;
-	log("offset: "+campaign.leftOffset );
-	
-	//go
-	$('#lookbook_container').animate({'left':campaign.leftOffset}, campaign.addListeners);
 };//end next handler
 campaign.prevHandler = function($e){
 	log ("prevClick");
@@ -63,11 +83,9 @@ campaign.prevHandler = function($e){
 	//make sure they don't keep clicking
 	campaign.removeListeners();
 	//find new offset
-	campaign.leftOffset += 1024;
-	log("offset: "+campaign.leftOffset );
+	campaign.curPage--;
+	$.address.parameter('page', campaign.curPage);
 	
-	//go
-	$('#lookbook_container').animate({'left':campaign.leftOffset}, campaign.addListeners);
 };//end prev handler
 
 campaign.scroller.onMouseDown	= function ($e){
@@ -84,4 +102,24 @@ campaign.scroller.onMouseUp	= function ($e){
 	log("mouse up");
 	$(this).unbind().bind('mousedown', campaign.scroller.onMouseDown);
 	return false;
+};
+        
+// =================================================
+// ================ Animation
+// =================================================
+campaign.animation.show			= function (){
+	log("campaign show");
+	
+	$('#s_loader, #s_campaign .section-content, section, .section').hide();
+	if (campaign.curPage == 1) 	$('#s_campaign').show('slow', campaign.addListeners);
+	else 						$('#s_campaign').show('slow', campaign.animation.slide);
+};
+
+campaign.animation.slide 		= function ($e){
+	log("campaign slide");
+	
+	//calc how far to move
+	campaign.getOffset();
+	//go
+	$('#lookbook_container').animate({'left':campaign.leftOffset}, 1500, "easeInOutQuint",campaign.addListeners);
 };

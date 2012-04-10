@@ -734,8 +734,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 
 .campaign-arrow{
- background-image: url('/../img/icons/sprite-sheet.png');
- background-repeat: no-repeat;
+	background-image: url('/../img/icons/sprite-sheet.png');
+ 	background-repeat: no-repeat;
 	background-color: #222;
 	width: 29px;
 	height: 20px;
@@ -747,7 +747,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .campaign-arrow:hover{
 	background-color: #2f2f2f;
 }
-
+.inactive{
+	cursor: default;
+	opacity: .5;
+}
 #next_arrow{
 background-position: -175px 10px;
 float: right;
@@ -755,7 +758,6 @@ float: right;
 #prev_arrow{
 	background-position: -34px 0;
 	background-position: -142px 10px;
-	
 	float: left;
 }
 /* =============================================================================
