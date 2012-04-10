@@ -9,6 +9,12 @@ campaign.init = function (){
 
 	campaign.slides = $("#lookbook_container img");
 	log("campaign init. total pages: "+campaign.slides.length);
+	
+	if ( Modernizr.csstransforms ) {
+		  window.mySwipe = new Swipe(
+		    document.getElementById('lookbook_wrapper')
+		  );
+		}
 };
 
 

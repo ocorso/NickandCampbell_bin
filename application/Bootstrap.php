@@ -141,6 +141,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	$view->headScript()->appendFile("/js/libs/jquery.hoverIntent.minified.js");
     	$view->headScript()->appendFile("/js/libs/jquery.easing.1.3.js");
     	$view->headScript()->appendFile("/js/libs/swfobject.js");
+    	$view->headScript()->appendFile("/js/libs/swipe.min.js");
 		$view->headScript()->appendFile("/js/libs/plugins.js");
 		$view->headScript()->appendFile("/js/site/mainController.js");
 		$view->headScript()->appendFile("/js/site/shopController.js");
