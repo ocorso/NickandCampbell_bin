@@ -11,12 +11,13 @@ campaign.init = function (){
 	log("campaign init. total pages: "+campaign.slides.length);
 	
 	if ( Modernizr.csstransforms ) {
-		log("SWIPE!");
+		log("SWIPE init");
 		campaign.isSwipeEnabled = true;
 		var opts 				= {};
 		opts.callback			= campaign.swipeCallback;
 		window.mySwipe = new Swipe(
-		    document.getElementById('lookbook_wrapper')
+		    document.getElementById('lookbook_wrapper'),
+		    opts
 		  );
 		}
 };
