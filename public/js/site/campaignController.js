@@ -12,7 +12,10 @@ campaign.init = function (){
 	
 	if ( Modernizr.csstransforms ) {
 		log("SWIPE!");
-		  window.mySwipe = new Swipe(
+		campaign.isSwipeEnabled = true;
+		var opts 				= {};
+		opts.callback			= campaign.swipeCallback;
+		window.mySwipe = new Swipe(
 		    document.getElementById('lookbook_wrapper')
 		  );
 		}
@@ -110,7 +113,11 @@ campaign.scroller.onMouseUp	= function ($e){
 	$(this).unbind().bind('mousedown', campaign.scroller.onMouseDown);
 	return false;
 };
-        
+campaign.swipeCallback		= function ($e, $i, $element){
+	log("swipe callback");
+	log("curPage: "+$i);
+	$.address.parameter('page',$i);
+} 
 // =================================================
 // ================ Animation
 // =================================================

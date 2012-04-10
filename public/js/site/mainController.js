@@ -18,6 +18,7 @@ var shopController				= {};
 var campaign					= {};
 campaign.scroller				= {};
 campaign.animation				= {};
+campaign.isSwipeEnabled			= false;
 
 //*****************************************************
 //oc: Address Change Handler Functions
