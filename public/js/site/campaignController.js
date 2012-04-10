@@ -13,6 +13,7 @@ campaign.init = function (){
 	if ( Modernizr.csstransforms ) {
 		log("SWIPE init");
 		campaign.isSwipeEnabled = true;
+		campaign.swipeIndex 	= 0;
 		var opts 				= {};
 		opts.callback			= campaign.swipeCallback;
 		window.mySwipe = new Swipe(
@@ -29,11 +30,13 @@ campaign.init = function (){
 campaign.change = function (){
 	
 	//oc: set curPage using query string
-	campaign.curPage 	= $.address.parameter('page') ?$.address.parameter('page') : 1;
+	
+	campaign.curPage 	= campaign.isSwipeEnabled ? campaign.swipeIndex+1 : $.address.parameter('page') ?$.address.parameter('page') : 1;
 	log("campaign change. curPage: "+campaign.curPage);
 	
 	//show div if necessary
 	if( $('#s_campaign').css('display') == "block"){
+		
 		campaign.animation.slide();
 	}else{
 		campaign.animation.show();
@@ -85,6 +88,7 @@ campaign.nextHandler = function($e){
 	//make sure they don't keep clicking
 	campaign.removeListeners();
 	campaign.curPage++;
+	campaign.swipeIndex = campaign.curPage -1;
 	$.address.parameter('page', campaign.curPage);
 	
 };//end next handler
@@ -95,6 +99,8 @@ campaign.prevHandler = function($e){
 	campaign.removeListeners();
 	//find new offset
 	campaign.curPage--;
+	campaign.swipeIndex = campaign.curPage -1;
+	
 	$.address.parameter('page', campaign.curPage);
 	
 };//end prev handler
@@ -116,9 +122,9 @@ campaign.scroller.onMouseUp	= function ($e){
 };
 campaign.swipeCallback		= function ($e, $i, $element){
 	log("swipe callback");
-	log("curPage: "+$i);
+	log("swipe's index: "+$i);
 	campaign.curPage = $i+1;
-	$.address.parameter('page',campaign.curPage);
+	//$.address.parameter('page',campaign.curPage);
 } 
 // =================================================
 // ================ Animation
