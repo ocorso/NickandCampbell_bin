@@ -156,6 +156,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		//oc: while in sandbox mode
 		define("AUTHORIZENET_SANDBOX", $opts['anet']['sandbox']);
     }
+    protected function _initAcl(){
+    						
+    	$helper		= new ORed_Controller_Helpers_Acl();
+    	$helper->setRoles();
+    	$helper->setResources();
+		$helper->setPrivilages();
+	  	$helper->setAcl();
+	    $front = Zend_Controller_Front::getInstance();
+	  	$front->registerPlugin(new ORed_Controller_Plugins_Acl());
+    }
 }//end bootstrap
 
 	
