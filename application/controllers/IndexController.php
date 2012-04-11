@@ -12,7 +12,7 @@ class IndexController extends Zend_Controller_Action
     {
     	
 		//shop
-        //todo: figure out how to handle different gender/category combinations
+        //TODO: figure out how to handle different gender/category combinations
         	//default: men's underwear, 
         		//accordion of gender/categories on sidebar
         		//main nav pulldown of gender/categories also, 
@@ -22,10 +22,10 @@ class IndexController extends Zend_Controller_Action
         $pMapper 					= new Application_Model_ProductMapper();	
         $options					= array('gender'=>'mens', 'category'=>'underwear');
         $productStyles				= $pMapper->fetchAllWithOptions($options);
-        $this->view->products		= array();
         
         //print_r($productStyles);
 		//filter out various sizes of same product
+        $this->view->products		= array();
         foreach ($productStyles as $p){
         	//todo loop through what's already in the products
         	if (!array_key_exists($p->getPretty(), $this->view->products)) {
@@ -34,15 +34,15 @@ class IndexController extends Zend_Controller_Action
         	} 
         }
         
-        //lookbook stuff
-		$this->view->lookbookPgs 	= 17;
-		$this->view->campaignWidth	= $this->view->lookbookPgs*1024;//789x636
-
 		//contact stuff
         $contactForm				= new Application_Form_Contact();
         $contactForm->setAction("/contact");
-        $this->view->contactForm	= $contactForm;
 
+        //lookbook stuff
+		$this->view->lookbookPgs 	= 17;
+		$this->view->campaignWidth	= $this->view->lookbookPgs*1024;//789x636
+        $this->view->contactForm	= $contactForm;
+		$this->view->userAgent		= $_SERVER['HTTP_USER_AGENT'];
     }
 
     public function sitemapAction()

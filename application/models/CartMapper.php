@@ -135,22 +135,20 @@ class Application_Model_CartMapper
 	 * Enter description here ...
 	 */
 	public function fetchCartForANet(){
-		$items 		= $this->fetchCartForDisplay();
-		$c 			= 1;
-		$lineItems	= "";
+		$items 			= $this->fetchCartForDisplay();
+		$lineItemsArr	= array();
 		
 		foreach($items as $i){
 			$pid		= $i['pid'];
 			$name		= $i['name'];
 			$size		= $i['size_name'];
 			$quantity	= $i['quantity'];
-			$s			= "<|>";
 			$cost 		= (1-$i['discount']) * $i['price'];
-			$lineItems .= "x_line_item=product".$pid.$s.$name.$s.$size.$s.$quantity.$s.$cost.$s."Y&";
-			$c++;
+			$lineItemsArr[] = array($pid,$name,$size,$quantity,$cost,"Y");
 		}
-		print_r($lineItems);
-		return $lineItems;
+		//print_r($lineItemsArr);
+
+		return $lineItemsArr;
 	}
 	public function deleteCartByPid($pid){
 		$db			= Zend_Registry::get("db");

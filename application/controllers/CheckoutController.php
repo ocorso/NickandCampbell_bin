@@ -103,8 +103,20 @@ class CheckoutController extends Zend_Controller_Action
 		//++++++++++++++++++++++	CREATE ORDER	++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		$o				= $coUtils->createOrder($uid,$bid,$shippingTicket);
-		$anet_trans_id 	= $anet->authAndCapture($values, $o, $shippingTicket);
+		$anet_response 	= $anet->authAndCapture($values, $o, $shippingTicket);
 		$o->setAnet_id($anet_trans_id);
+		
+		//oc TODO gracefully handle all types of responses.
+		if ($response->approved) {
+			$transaction_id = $response->transaction_id;
+			echo "trans id: ".$transaction_id;
+		}//end if
+		else {
+			echo "\nfail<br/>";
+			print_r($response);
+		}
+		//todo: dump more meaningful stuff about the fail.
+		
 		$tbl			= new Application_Model_DbTable_Order();
 		$data			= array('anet_id'=>$anet_trans_id);
 		$where 			= $tbl->getAdapter()->quoteInto('oid = ?', $o->getOid());

@@ -46,8 +46,6 @@ class ORed_Checkout_ANet{
 		* x_line_item=item1<|>golf balls<|><|>2<|>18.95<|>Y&x_line_item=item2<|>golf bag<|>Wilson golf carry bag, red<|>1<|>39.99<|>Y&x_line_item=item3<|>book<|>Golf for Dummies<|>1<|>21.99<|>Y&
 		*/
 		require_once 'ANet/AuthorizeNet.php';
-		$cMapper 			= new Application_Model_CartMapper();
-		$lineItems 			= $cMapper->fetchCartForANet();
 		$billingAddress 	= $data['billing1']['addr1'].($data['billing1']['addr2'] != "" ? " ".$data['billing1']['addr2'] : "");
 		$shippingAddress 	= $data['shipping1']['addr1'].($data['shipping1']['addr2'] != "" ? " ".$data['shipping1']['addr2'] : "");
 		
@@ -77,24 +75,17 @@ class ORed_Checkout_ANet{
 											'country'		=> $data['billing1']['country'],
 											'cust_id'		=> $order->getRef_uid(),
 											'tax'			=> $order->getTotal_tax(),
-											'freight'		=> $shipping->getShipping_cost(),
-											'line_item'		=> $lineItems
+											'freight'		=> $shipping->getShipping_cost()
 										);
-
-		$sale = new AuthorizeNetAIM();
+		
+		
+		$sale 				= new AuthorizeNetAIM();
+		$cMapper 			= new Application_Model_CartMapper();
+		$lineItemsArr		= $cMapper->fetchCartForANet();
+		foreach( $lineItemsArr as $li ) $sale->addLineItem($li[0], $li[1], $li[2], $li[3], $li[4], $li[5]);
 		$sale->setFields($fields);
 		$response 			= $sale->authorizeAndCapture();
 		
-		if ($response->approved) {
-			$transaction_id = $response->transaction_id;
-			echo "trans id: ".$transaction_id;
-		}//end if
-		else {
-			echo "\nfail<br/>";
-			print_r($response);
-		}
-		//todo: dump more meaningful stuff about the fail.
-		
-		return $transaction_id;
+		return $response;
 	}
 }
