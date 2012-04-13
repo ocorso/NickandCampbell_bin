@@ -104,6 +104,7 @@ class CheckoutController extends Zend_Controller_Action
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		$o				= $coUtils->createOrder($uid,$bid,$shippingTicket);
 		$anet_response 	= $anet->authAndCapture($values, $o, $shippingTicket);
+		$anet_trans_id	= $anet_response->transaction_id;
 		$o->setAnet_id($anet_trans_id);
 		
 		//oc TODO gracefully handle all types of responses.
