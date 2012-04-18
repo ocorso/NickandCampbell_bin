@@ -30,7 +30,6 @@ class ORed_Checkout_ANet{
 	 */
 	public function authAndCapture(array $data, Application_Model_Order $order, Application_Model_ShippingInfo $shipping){
 		
-		$transaction_id = -1;
 		/*
 		 * x_type
 		*

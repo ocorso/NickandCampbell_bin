@@ -70,6 +70,7 @@ class CheckoutController extends Zend_Controller_Action
 		$orderId 			= 69;
 
 		//Helpers
+		$cartUtils		= new ORed_ShoppingCart_Utils();
 		$coUtils		= new ORed_Checkout_Utils();
 		$anet			= new ORed_Checkout_ANet();
 		$shMachine		= new ORed_Shipping_LabelFactory();
@@ -104,30 +105,60 @@ class CheckoutController extends Zend_Controller_Action
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		$o				= $coUtils->createOrder($uid,$bid,$shippingTicket);
 		$anet_response 	= $anet->authAndCapture($values, $o, $shippingTicket);
-		$anet_trans_id	= $anet_response->transaction_id;
-		$o->setAnet_id($anet_trans_id);
-		
+
 		//oc TODO gracefully handle all types of responses.
-		if ($response->approved) {
-			$transaction_id = $response->transaction_id;
-			echo "trans id: ".$transaction_id;
-		}//end if
-		else {
-			echo "\nfail<br/>";
-			print_r($response);
-		}
-		//todo: dump more meaningful stuff about the fail.
+		switch ($anet_response->response_code){
+			case 1 : //approved, great!
+				echo "trans id: ".$anet_response->transaction_id;
+				
+				//save post order cart
+				$cartUtils->movePreToPost($o->getOid(), $o->getRef_uid());
+				
+				//prepare the order for updating
+				$o->setAnet_id($anet_response->transaction_id);
+				$o->setStatus(Application_Model_SiteModel::$ORDER_STATUS[2]);
+				$o->setDetails($anet_response->response_reason_text);
+				break;
+				
+			case 2 : //declined, uh oh!
+				echo "\ndeclined<br/>";
+				
+				//prepare the order for updating
+				$o->setStatus(Application_Model_SiteModel::$ORDER_STATUS[5]);
+				$o->setDetails($anet_response->response_reason_text);
+				break;
+			
+			case 3 : //error, wtf!
+				echo "\nerror<br/>";
+				
+				//prepare the order for updating
+				$o->setStatus(Application_Model_SiteModel::$ORDER_STATUS[5]);
+				$o->setDetails($anet_response->response_reason_text);
+				break;
+				
+			case 4 : //held for review, hmmmmmm!
+				echo "\nheld for review<br/>";
+				
+				//prepare the order for updating
+				$o->setStatus(Application_Model_SiteModel::$ORDER_STATUS[5]);
+				$o->setDetails($anet_response->response_reason_text);
+				break;
+				
+			default : echo "unknown response code.";
+				$o->setStatus(Application_Model_SiteModel::$ORDER_STATUS[5]);
+				$o->setDetails($anet_response->response_reason_text);
+					
+		}//endswitch
 		
 		$tbl			= new Application_Model_DbTable_Order();
-		$data			= array('anet_id'=>$anet_trans_id);
 		$where 			= $tbl->getAdapter()->quoteInto('oid = ?', $o->getOid());
-		$tbl->update($data, $where);
+		$tbl->update($o->toArray(), $where);
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++	CONFIRMATION EMAIL	  ++++++++++++++++++++++++
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//$this->_sendEmail($values);
 		
-		return array('orderId'=>$o->getOid(), );
+		return array('orderId'=>$o->getOid());
 	}
 
 	// =================================================

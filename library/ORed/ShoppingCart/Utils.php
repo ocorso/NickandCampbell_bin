@@ -93,7 +93,24 @@ class ORed_ShoppingCart_Utils{
 		$cMapper->updateCartWithNewSession($uid, Zend_Session::getId());
 	}
 	
-	public function movePreToPost(){
+	public function movePreToPost($oid, $uid){
+		$cMapper		= new Application_Model_CartMapper();
+		$pre			= $cMapper->fetchCartForDisplay();
+		foreach($pre as $i){
+			$pricePaid = (1-$i['discount']) * $i['price'];
+			$d	= array(
+						'ref_oid'=>$oid,
+						'ref_pid'=>$i['pid'],
+						'ref_uid'=>$uid,
+						'price_paid'=>$pricePaid,
+						'tax'=>$pricePaid*Application_Model_SiteModel::$NEW_YORK_CITY_TAX,	
+						'promo'=>$i['promo'],
+						'discount'=>$i['discount'],
+						'quantity'=>$i['quantity']		
+			);
+			$p 	= new Application_Model_PostOrderCart($d);
+			$cMapper->savePost($p);
+		}//endforeach
 		
-	}
+	}//end function
 }

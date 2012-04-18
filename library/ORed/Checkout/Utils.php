@@ -87,7 +87,7 @@ class ORed_Checkout_Utils{
 		$o		= new Application_Model_Order($opts);
 		$oid 	= $tbl->insert($o->toArray());
 		$o->setOid($oid);
-		print_r($o->toArray());
+//print_r($o->toArray());
 		return $o;
 	}
 

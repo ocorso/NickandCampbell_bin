@@ -18,6 +18,7 @@ class Application_Model_SiteModel
 												'Close Order',
 												'Payment Declined'
 											);
+	public static $ORDER_RESPONSE_CODES	= array(1=>"Approved",2=>"Declined",3 => "Error",4 => "Held for Review");										
 	public static $CART_TYPES			= array('real','wishlist','preorder');
 	public static $TEMP_CHECKOUT		= array(
 				'subtotal'=> 35.00,

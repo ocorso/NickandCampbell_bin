@@ -6,7 +6,8 @@ class ErrorController extends Zend_Controller_Action
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');
-        
+        $layout = $this->_helper->layout();
+	    	$layout->setLayout('admin');	
         if (!$errors) {
             $this->view->message = 'You have reached the error page';
             return;

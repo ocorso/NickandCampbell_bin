@@ -65,7 +65,11 @@ class Application_Model_CartMapper
 			$db->insert($c->toArray());
 		}
 	}//end function 
-
+	
+	public function savePost(Application_Model_PostOrderCart $c){
+		$db = $this->getPostOTable();
+		$db->insert($c->toArray());
+	}
 	public function fetchCartWeight($cartType){
 		$db 		= $this->_getTableByType($cartType)->getDefaultAdapter();
 		$select 	= $db->select();
