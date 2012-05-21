@@ -154,6 +154,28 @@ class Application_Model_CartMapper
 
 		return $lineItemsArr;
 	}
+	public function fetchCartForOrderInfo($oid){
+		
+		$db			= Zend_Registry::get("db");
+		$select		= $db->select();
+		
+		//'preorder_cart',
+		/* The third argument to join() is an array of column names, like that used in the from() method.
+		 * It de- faults to "*", supports correlation names, expressions,
+		* and Zend_Db_Expr in the same way as the array of column names in the from() method.
+		*/
+		//oc: todo: filter results down to only the fields we need.
+		$fromProducts = array('');
+		
+		$select->from(array('c'=>'postorder_cart'))
+					->join(array('p'=>'products'), 'p.pid = c.ref_pid')
+					->join(array('s'=>'product_styles'),'p.ref_sid = s.sid')
+					->join(array('z'=>'sizing_chart'), 'p.ref_size = z.size_id')
+					->where('c.ref_oid = ?', $oid);
+		
+		$cart = $db->fetchAll($select);
+		return $cart;
+	}
 	public function deleteCartByPid($pid){
 		$db			= Zend_Registry::get("db");
 		$db->delete('preorder_cart', "ref_pid = $pid");

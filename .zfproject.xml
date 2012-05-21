@@ -58,6 +58,7 @@
         </controllerFile>
         <controllerFile controllerName="Order">
           <actionMethod actionName="index"/>
+          <actionMethod actionName="info"/>
         </controllerFile>
         <controllerFile controllerName="Account">
           <actionMethod actionName="index"/>
@@ -277,6 +278,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="ShoppingCart">
             <viewScriptFile forActionName="calcCartWeight"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Order">
+            <viewScriptFile forActionName="info"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

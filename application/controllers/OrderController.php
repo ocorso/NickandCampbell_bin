@@ -5,22 +5,35 @@ class OrderController extends Zend_Controller_Action
 
     public function init()
     {
-        /* Initialize action controller here */
+	       //disable layout
+    		$layout = $this->_helper->layout();
+    		$layout->disableLayout();
     }
 
     public function indexAction()
     {
-       //disable layout
-    		$layout = $this->_helper->layout();
-    		$layout->disableLayout();
-    	//spit out fake data for now
+	    	//spit out fake data for now
     		$tempData  = file_get_contents('orders.txt', FILE_USE_INCLUDE_PATH);
-			echo $tempData;
-			$opts		= array('oid'=>69);
-			$o = new Application_Model_Order($opts);
-			$o->toArray();
+			//echo $tempData;
+    }
+
+    public function infoAction()
+    {
+			$req		= $this->getRequest();
+			$oid		= $req->getParam('oid');
+			$oManager	= new Application_Model_OrderMapper();
+			$oInfo		= $oManager->getOrderInfoById($oid);
+			print_r($oInfo);
+			
+			//oc: vars for view
+			$this->view->oid		= $oid;
+			$this->view->order		= $oInfo->order;
+			$this->view->shipping	= $oInfo->shipping;
+			
     }
 
 
 }
+
+
 
