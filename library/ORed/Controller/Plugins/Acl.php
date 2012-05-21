@@ -13,8 +13,8 @@ class ORed_Controller_Plugins_Acl extends Zend_Controller_Plugin_Abstract
 		
 		if(!$acl->isAllowed($roleName,null,$privilageName)){
 			
-			//$req->setControllerName('Error');
-			//$req->setActionName('Error');
+		// $req->setControllerName('Auth');
+		//	$req->setActionName('index');
 		
 		}
 	}

@@ -15,7 +15,9 @@
           <actionMethod actionName="shipping"/>
           <actionMethod actionName="returns"/>
         </controllerFile>
-        <controllerFile controllerName="Error"/>
+        <controllerFile controllerName="Error">
+          <actionMethod actionName="denied"/>
+        </controllerFile>
         <controllerFile controllerName="Checkout">
           <actionMethod actionName="index"/>
           <actionMethod actionName="test"/>
@@ -44,6 +46,7 @@
           <actionMethod actionName="index"/>
           <actionMethod actionName="add"/>
           <actionMethod actionName="listProducts"/>
+          <actionMethod actionName="edit"/>
         </controllerFile>
         <controllerFile controllerName="Campaign">
           <actionMethod actionName="index"/>
@@ -281,6 +284,12 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Order">
             <viewScriptFile forActionName="info"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Product">
+            <viewScriptFile forActionName="edit"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Error">
+            <viewScriptFile forActionName="denied"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

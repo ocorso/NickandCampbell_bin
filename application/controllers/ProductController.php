@@ -67,29 +67,36 @@ class ProductController extends Zend_Controller_Action
     	$layout = $this->_helper->layout();
     	$layout->disableLayout();
     	
-    	//todo gather existing products to know what categories to make a select boxes from
-    	
-		//sizes select box
-    	//first get sizing chart
-    	
-    	//$sizeArr	= $this->_sizes->fetchAll();
-		$sOpts		= array();
-		foreach($this->_sizes as $size){
-			$sOpts[] = $size['name'];
-		}
-    	$opts 		= array(
-    		'sizes'=>$sOpts,
-    		'categories'=>array('underwear', 'jackets', 'ready to wear'),
-    		'gender'=>array('male','female')
-    	);
-		//gender select box
-		//categories select box
-		//
-	//	print_r($opts);
-        $form				= new Application_Form_AddProduct($opts);
-        $this->view->form 	= $form;
-		$this->view->data 	= $this->_m->fetchAll();
-        //take post 
+    	$req 	= $this->getRequest();
+    	if ($req->isPost()){
+    		echo 'formSubmitted';
+    	}else{
+    		
+	    	//todo gather existing products to know what categories to make a select boxes from
+	    	
+			//sizes select box
+	    	//first get sizing chart
+	    	
+	    	//$sizeArr	= $this->_sizes->fetchAll();
+	    	//print_r($this->_sizes);
+			$sOpts		= array();
+			foreach($this->_sizes as $size){
+				$sOpts[] = $size['size_name'];
+			}
+	    	$opts 		= array(
+	    		'sizes'=>$sOpts,
+	    		'categories'=>array('underwear', 'jackets', 'ready to wear'),
+	    		'gender'=>array('male','female')
+	    	);
+			//gender select box
+			//categories select box
+			//
+		//	print_r($opts);
+	        $form				= new Application_Form_AddProduct($opts);
+	        $this->view->form 	= $form;
+			$this->view->data 	= $this->_m->fetchAll();
+	        //take post 
+    	}
     }
 
     public function listProductsAction()
@@ -99,8 +106,18 @@ class ProductController extends Zend_Controller_Action
         $this->view->json	= json_encode($obj);
     }
 
+    public function editAction()
+    {
+        $req = $this->getRequest();
+        if ($req->getParam("pid")){
+        	$form		= new Application_Form_AddProduct();
+        }
+    }
+
 
 }
+
+
 
 
 
