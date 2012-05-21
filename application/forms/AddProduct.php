@@ -144,7 +144,8 @@ class Application_Form_AddProduct extends Zend_Form
     	// ================ Product Images
     	// =================================================
     	$thumbImg	= new Zend_Form_Element_File('thumb_img');
-    	$thumbImg->setLabel("Thumbnail Image (183x137)");
+    	$thumbImg->setLabel("Thumbnail Image (183x137)")
+    		->setDestination('/');
     	$largeImg	= new Zend_Form_Element_File('large_img');
     	$largeImg->setLabel("Product Detail Image (457x304)");
 		

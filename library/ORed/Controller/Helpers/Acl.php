@@ -33,14 +33,16 @@ class ORed_Controller_Helpers_Acl{
     }
     				
     public function setResources(){
+    	$this->acl->add(new Zend_Acl_Resource('home'));
     	$this->acl->add(new Zend_Acl_Resource('view'));
     	$this->acl->add(new Zend_Acl_Resource('edit'));
     	$this->acl->add(new Zend_Acl_Resource('delete'));
     }
 	public function setPrivilages()
 	{
-		$this->acl->allow('customer',null,'view');
-		$this->acl->allow('staff',array('view','edit'));
+		$this->acl->allow('customer',null,array('view', 'home'));
+		$this->acl->allow('staff',array('view','edit', 'home'));
+		
 		$this->acl->allow('admin');
 	}
 	public function setAcl(){
