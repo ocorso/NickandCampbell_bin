@@ -4,9 +4,10 @@ class Application_Model_User extends Application_Model_AbstractModel
 {
 	public function getClassName(){ return 'Application_Model_User'; }
 	
-	protected $_cid; //customer id
-	protected $_fname;	// first name
-	protected $_lname;	//last name
+	protected $_uid; //customer or user id
+	protected $_first_name;	// first name
+	protected $_last_name;	//last name
+	protected $_name; // string manipulation of First_Name Last_Name
 	protected $_email;
 	protected $_password;
 	protected $_phone;
@@ -17,15 +18,17 @@ class Application_Model_User extends Application_Model_AbstractModel
 // =================================================
 // ================ Getters / Setters
 // =================================================
-	public function setCid($cid){ $this->_cid 	= (int) $cid; return $this; }	
-	public function getCid(){return $this->_cid; }
+	public function setUid($uid){ $this->_uid 	= (int) $uid; return $this; }	
+	public function getUid(){return $this->_uid; }
 	
-	public function setFname($fname){ $this->_fname	= (string) $fname; return $this; }
-	public function getFname(){ return $this->_fname; }
+	public function setFirst_name($first_name){ $this->_first_name	= (string) $first_name; return $this; }
+	public function getFirst_name(){ return $this->_first_name; }
 	
-	public function setLname($lname){ $this->_lname	= (string) $lname; return $this; }
-	public function getLname(){ return $this->_lname; }
+	public function setLast_name($last_name){ $this->_last_name	= (string) $last_name; return $this; }
+	public function getLast_name(){ return $this->_last_name; }
 
+	public function getName(){ return ucfirst($this->_first_name)." ".ucfirst($this->_last_name);}
+	
 	public function setEmail($email){ $this->_email	= (string) $email; return $this;}
 	public function getEmail(){ return $this->_email; }
 

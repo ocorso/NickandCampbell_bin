@@ -174,7 +174,7 @@ adminController.init = function() {
     	"bJQueryUI": true,
     	"fnInitComplete": adminController.ordersAJAXComplete,
     	"sAjaxDataProp": "orders",
-    	"sAjaxSource": "/order",
+    	"sAjaxSource": "/order/info/format/json",
     	"aoColumns": [
     	              { "mDataProp": "oid" },
     	              { "mDataProp": "total_price" },

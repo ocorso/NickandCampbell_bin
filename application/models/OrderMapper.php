@@ -45,5 +45,13 @@ class Application_Model_OrderMapper{
 		
 		$row = $result->current();
 		$o->setOptions($row->toArray());
+	}//end function
+	public function fetchAll(){
+		$oids	= $this->_orderTbl->fetchAll();
+		$orders	= array();
+		foreach ($oids as $o){
+			$orders[] = $this->getOrderInfoById($o['oid']);
+		}
+		return $orders;
 	}
 }

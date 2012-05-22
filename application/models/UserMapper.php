@@ -29,8 +29,8 @@ class Application_Model_UserMapper
 		$exists = count($custWithMatchingEmail) > 0 ? true : false;
 		
 		//oc: get new info from form data
-		$data 	= array(	'first_name'	=> $user->getFname(),
-							'last_name'		=> $user->getLname(),
+		$data 	= array(	'first_name'	=> $user->getFirst_name(),
+							'last_name'		=> $user->getLast_name(),
 							'email'			=> $user->getEmail(),
 							'phone'			=> $user->getPhone(),
 							'password'		=> $user->getPassword(),
@@ -51,7 +51,7 @@ class Application_Model_UserMapper
 		
 	}//end function
 
-	public function find($cid, Application_Model_User $user){
+	public function find($uid, Application_Model_User $user){
 		$result		= $this->getDbTable()->find($uid);
 		if(0 == count($result)){
 			return;

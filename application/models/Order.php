@@ -14,7 +14,6 @@ class Application_Model_Order extends Application_Model_AbstractModel
 	protected $_details;
 	protected $_created_at;
 	protected $_status;
-	
 // =================================================
 // ================ Getters / Setters
 // =================================================
